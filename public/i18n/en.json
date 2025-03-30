@@ -1,4 +1,5 @@
 {
   "title": "TinyGisViewer - Tiny web-viewer for geodata",
-  "layers": "Layers"
+  "layers": "Layers",
+  "wms-layer-tooltip": "WMS layer '{{name}}'"
 }

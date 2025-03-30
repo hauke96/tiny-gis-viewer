@@ -1,2 +1,2 @@
 <input type="checkbox" [name]="layer.name" [checked]="layer.isVisible()" (change)="onCheckboxClicked($event)">
-<label [title]="'WMS layer ' + layer.wmsLayerName">{{ layer.name }}</label>
+<label [title]="tooltipText">{{ layer.name }}</label>
