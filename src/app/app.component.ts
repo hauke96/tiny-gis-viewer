@@ -7,6 +7,7 @@ import {Title} from '@angular/platform-browser';
 import {ConfigService} from './config/config.service';
 import {SelectionSidebarComponent} from './selection-sidebar/selection-sidebar/selection-sidebar.component';
 import {NgIf} from '@angular/common';
+import {FeatureSelectionService} from './feature/feature-selection.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     protected layerService: LayerService,
+    protected featureSelectionService: FeatureSelectionService,
     private translate: TranslateService,
     private configService: ConfigService,
     title: Title
