@@ -53,6 +53,9 @@ export class MapComponent extends Unsubscriber implements OnInit {
     this.unsubscribeLater(this.layerService.layers.subscribe(layers => {
       console.log(`Updating layers. Got ${layers.length} new layers.`);
 
+      // Reverse layers so that the first layer is on top
+      layers.reverse();
+
       let olLayers: OlLayer[] = [
         new TileLayer({
           source: new OSM()
