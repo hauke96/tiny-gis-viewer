@@ -26,7 +26,7 @@ export class SelectionSidebarComponent extends Unsubscriber {
     super();
 
     this.unsubscribeLater(
-      featureSelectionService.selection
+      featureSelectionService.selectionOnMap
         .subscribe(layerToFeaturesMap => {
           this.layerToFeaturesMap = layerToFeaturesMap;
           this.selectedFeaturesFromMap = Array.from(this.layerToFeaturesMap.keys()).flatMap(key => this.layerToFeaturesMap.get(key) ?? []);
@@ -35,7 +35,7 @@ export class SelectionSidebarComponent extends Unsubscriber {
   }
 
   protected onCloseClicked(): void {
-    this.featureSelectionService.deselectAllFeatures();
+    this.featureSelectionService.deselectAllFeaturesOnMap();
   }
 
   protected onFeatureFromMenuSelected(feature: Feature): void {

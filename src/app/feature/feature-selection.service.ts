@@ -7,23 +7,23 @@ import {Feature} from 'ol';
   providedIn: 'root'
 })
 export class FeatureSelectionService {
-  private selectionMap$: BehaviorSubject<Map<Layer, Feature[]>> = new BehaviorSubject<Map<Layer, Feature[]>>(new Map<Layer, Feature[]>());
+  private selectionOnMap$: BehaviorSubject<Map<Layer, Feature[]>> = new BehaviorSubject<Map<Layer, Feature[]>>(new Map<Layer, Feature[]>());
 
   constructor() { }
 
-  public get selection(): Observable<Map<Layer, Feature[]>> {
-    return this.selectionMap$.asObservable();
+  public get selectionOnMap(): Observable<Map<Layer, Feature[]>> {
+    return this.selectionOnMap$.asObservable();
   }
 
-  public selectFeatureTuples(layerToFeaturesMap: Map<Layer, Feature[]>): void {
-    this.selectionMap$.next(layerToFeaturesMap);
+  public setSelectedFeaturesOnMap(layerToFeaturesMap: Map<Layer, Feature[]>): void {
+    this.selectionOnMap$.next(layerToFeaturesMap);
   }
 
-  deselectAllFeatures() {
-    this.selectFeatureTuples(new Map<Layer, Feature[]>());
+  deselectAllFeaturesOnMap() {
+    this.setSelectedFeaturesOnMap(new Map<Layer, Feature[]>());
   }
 
-  public get hasSelection(): boolean {
-    return this.selectionMap$.value.size > 0;
+  public get hasSelectionOnMap(): boolean {
+    return this.selectionOnMap$.value.size > 0;
   }
 }

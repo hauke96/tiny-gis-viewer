@@ -109,7 +109,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
             })
             .filter(tuple => tuple[1] && tuple[1].length > 0)
             .forEach(tuple => layerToFeaturesMap.set(tuple[0], tuple[1]));
-          this.featureSelectionService.selectFeatureTuples(layerToFeaturesMap);
+          this.featureSelectionService.setSelectedFeaturesOnMap(layerToFeaturesMap);
         });
     });
     this.map.on('moveend', (e: MapEvent) => {
