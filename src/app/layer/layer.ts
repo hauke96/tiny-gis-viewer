@@ -8,6 +8,7 @@ export class Layer {
     public wmsBaseUrl: string,
     public wmsLayerName: string
   ) {
+    this.setVisible(true);
   }
 
   public setVisible(visible: boolean): void {
