@@ -1,0 +1,4 @@
+<h3 class="title-heading">Layers</h3>
+<ng-container *ngFor="let layer of layerService.layers | async">
+  <app-layer-list-item [layer]="layer"></app-layer-list-item>
+</ng-container>

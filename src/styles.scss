@@ -50,6 +50,11 @@ select {
   font-size: $font-size-normal;
 }
 
+h1, h2, h3 {
+  margin-top: $space-small;
+  margin-bottom: $space-small;
+}
+
 hr {
   width: 100%;
   border: none;
