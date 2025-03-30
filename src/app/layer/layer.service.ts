@@ -5,14 +5,12 @@ import {WMSCapabilities} from 'ol/format';
 import {HttpClient} from '@angular/common/http';
 import {GetCapabilitiesDto} from './get-capabilities-dto';
 import {Config} from '../config/config';
-import {Feature} from 'ol';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LayerService {
   private layers$: BehaviorSubject<Layer[]> = new BehaviorSubject<Layer[]>([]);
-  private selectionMap$: BehaviorSubject<Map<Layer, Feature[]>> = new BehaviorSubject<Map<Layer, Feature[]>>(new Map<Layer, Feature[]>());
 
   constructor(private httpClient: HttpClient) {
   }
@@ -23,22 +21,6 @@ export class LayerService {
 
   public setLayers(layers: Layer[]): void {
     this.layers$.next(layers);
-  }
-
-  public get selection(): Observable<Map<Layer, Feature[]>> {
-    return this.selectionMap$.asObservable();
-  }
-
-  public selectFeatureTuples(layerToFeaturesMap: Map<Layer, Feature[]>): void {
-    this.selectionMap$.next(layerToFeaturesMap);
-  }
-
-  deselectAllFeatures() {
-    this.selectFeatureTuples(new Map<Layer, Feature[]>());
-  }
-
-  public get hasSelection(): boolean {
-    return this.selectionMap$.value.size > 0;
   }
 
   public loadFromConfig(config: Config) {

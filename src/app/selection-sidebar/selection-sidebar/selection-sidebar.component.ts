@@ -6,6 +6,7 @@ import {Layer} from '../../layer/layer';
 import {Feature} from 'ol';
 import {FeatureSelectionMenuComponent} from '../feature-selection-menu/feature-selection-menu.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {FeatureSelectionService} from '../../feature/feature-selection.service';
 
 @Component({
   selector: 'app-selection-sidebar',
@@ -19,22 +20,25 @@ import {TranslatePipe} from '@ngx-translate/core';
 })
 export class SelectionSidebarComponent extends Unsubscriber {
   protected layerToFeaturesMap: Map<Layer, Feature[]> = new Map<Layer, Feature[]>();
-  protected selectedFeatures: Feature[] = [];
+  protected selectedFeaturesFromMap: Feature[] = [];
 
-  constructor(private layerService: LayerService) {
+  constructor(private featureSelectionService: FeatureSelectionService) {
     super();
 
     this.unsubscribeLater(
-      layerService.selection
+      featureSelectionService.selection
         .subscribe(layerToFeaturesMap => {
           this.layerToFeaturesMap = layerToFeaturesMap;
-          this.selectedFeatures = Array.from(this.layerToFeaturesMap.keys()).flatMap(key => this.layerToFeaturesMap.get(key) ?? []);
-          console.log(this.selectedFeatures);
+          this.selectedFeaturesFromMap = Array.from(this.layerToFeaturesMap.keys()).flatMap(key => this.layerToFeaturesMap.get(key) ?? []);
         })
     );
   }
 
   protected onCloseClicked(): void {
-    this.layerService.deselectAllFeatures();
+    this.featureSelectionService.deselectAllFeatures();
+  }
+
+  protected onFeatureFromMenuSelected(feature: Feature): void {
+
   }
 }

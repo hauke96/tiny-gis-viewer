@@ -13,6 +13,7 @@ import {ConfigService} from '../config/config.service';
 import {ViewOptions} from 'ol/View';
 import {HttpClient} from '@angular/common/http';
 import {GeoJSON} from 'ol/format';
+import {FeatureSelectionService} from '../feature/feature-selection.service';
 
 @Component({
   selector: 'app-map',
@@ -28,6 +29,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
 
   public constructor(
     private layerService: LayerService,
+    private featureSelectionService: FeatureSelectionService,
     private httpClient: HttpClient,
     configService: ConfigService,
   ) {
@@ -107,7 +109,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
             })
             .filter(tuple => tuple[1] && tuple[1].length > 0)
             .forEach(tuple => layerToFeaturesMap.set(tuple[0], tuple[1]));
-          this.layerService.selectFeatureTuples(layerToFeaturesMap);
+          this.featureSelectionService.selectFeatureTuples(layerToFeaturesMap);
         });
     });
     this.map.on('moveend', (e: MapEvent) => {

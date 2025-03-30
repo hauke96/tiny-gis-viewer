@@ -4,4 +4,4 @@
 
 <h3 class="title-heading">{{ "selected-features" | translate }}</h3>
 
-<app-feature-selection-menu [features]="selectedFeatures"></app-feature-selection-menu>
+<app-feature-selection-menu [features]="selectedFeaturesFromMap" (featureSelected)="onFeatureFromMenuSelected($event)"></app-feature-selection-menu>
