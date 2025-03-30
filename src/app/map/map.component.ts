@@ -3,10 +3,11 @@ import {Attribution, ScaleLine} from 'ol/control';
 import TileLayer from 'ol/layer/Tile';
 import {OSM, TileWMS} from 'ol/source';
 import {Layer as OlLayer} from 'ol/layer';
-import {MapBrowserEvent, View, Map as OlMap} from 'ol';
+import {Map as OlMap, MapBrowserEvent, View} from 'ol';
 import {LayerService} from '../layer/layer.service';
 import {Unsubscriber} from '../common/unsubscriber';
 import {Layer} from '../layer/layer';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -17,6 +18,7 @@ import {Layer} from '../layer/layer';
 export class MapComponent extends Unsubscriber implements OnInit {
   public map: OlMap;
 
+  private layerSubscriptions: Subscription[] = [];
   private layerMapping: Map<Layer, OlLayer> = new Map<Layer, OlLayer>();
 
   public constructor(private layerService: LayerService) {
@@ -45,7 +47,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
   ngOnInit(): void {
     this.map.setTarget('map')
 
-    // TODO React to clicks, i.e. request feature information:
+    // TODO React to clicks, i.e. request feature information?
     this.map.on('click', (event: MapBrowserEvent<UIEvent>) => console.log('click on coordinate ' + event.coordinate));
 
     this.unsubscribeLater(this.layerService.layers.subscribe(layers => {
@@ -57,16 +59,22 @@ export class MapComponent extends Unsubscriber implements OnInit {
         })
       ];
 
-      // TODO maybe unsubscribe from visible observable if needed
       this.layerMapping.clear();
+      this.layerSubscriptions.forEach(subscription => subscription.unsubscribe());
+      this.layerSubscriptions = [];
+
       layers.forEach(layer => {
-        // TODO subscribe to layer visibility
+
         let wmsLayer = new TileLayer({
           source: new TileWMS({
             url: layer.wmsBaseUrl,
             params: {'LAYERS': layer.wmsLayerName, 'TILED': true},
           }),
         });
+
+        let subscription = layer.visible.subscribe((visible) => wmsLayer.setVisible(visible));
+        this.layerSubscriptions.push(subscription);
+
         this.layerMapping.set(layer, wmsLayer);
         olLayers.push(wmsLayer);
       });
