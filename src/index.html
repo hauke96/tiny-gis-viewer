@@ -5,6 +5,13 @@
     <title>TinyGisViewer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script>
+      // Prevent issues with relative paths and missing trailing slashes. Files are requested from wrong URLs when
+      // the trailing slash is missing.
+      if (!location.pathname.endsWith('/')) {
+        document.head.querySelector('base').href = location.pathname + '/';
+      }
+    </script>
   </head>
   <body>
     <app-root></app-root>
