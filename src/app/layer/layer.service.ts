@@ -33,6 +33,14 @@ export class LayerService {
     this.selectionMap$.next(layerToFeaturesMap);
   }
 
+  deselectAllFeatures() {
+    this.selectFeatureTuples(new Map<Layer, Feature[]>());
+  }
+
+  public get hasSelection(): boolean {
+    return this.selectionMap$.value.size > 0;
+  }
+
   public loadFromConfig(config: Config) {
     const layerObservables = config.layers.map(layer => this.loadLayersFromCapabilities(layer.capabilitiesUrl));
     forkJoin(layerObservables)

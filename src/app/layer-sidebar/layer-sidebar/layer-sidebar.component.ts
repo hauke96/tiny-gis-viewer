@@ -18,7 +18,7 @@ import {NgIf} from '@angular/common';
   styleUrl: './layer-sidebar.component.scss'
 })
 export class LayerSidebarComponent {
-  public version = packageInfo.version;
-  public sourceRepoUrl = environment.sourceRepoUrl;
-  public expanded = true;
+  protected version = packageInfo.version;
+  protected sourceRepoUrl = environment.sourceRepoUrl;
+  protected expanded = true;
 }

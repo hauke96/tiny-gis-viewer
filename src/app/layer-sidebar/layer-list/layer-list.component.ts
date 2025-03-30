@@ -19,6 +19,6 @@ import {TranslatePipe} from '@ngx-translate/core';
 export class LayerListComponent {
   @Input() expanded!: boolean;
 
-  constructor(public layerService: LayerService) {
+  constructor(protected layerService: LayerService) {
   }
 }

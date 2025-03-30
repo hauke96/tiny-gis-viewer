@@ -3,5 +3,5 @@
   <app-layer-sidebar class="sidebar"></app-layer-sidebar>
 </div>
 <div class="selection-sidebar-wrapper">
-  <app-selection-sidebar class="sidebar"></app-selection-sidebar>
+  <app-selection-sidebar class="sidebar" *ngIf="layerService.hasSelection"></app-selection-sidebar>
 </div>

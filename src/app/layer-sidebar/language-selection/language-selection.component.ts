@@ -14,17 +14,17 @@ export class LanguageSelectionComponent {
   constructor(private translate: TranslateService) {
   }
 
-  public get allLanguages(): string[] {
+  protected get allLanguages(): string[] {
     let languages = this.translate.langs;
     languages.sort();
     return languages;
   }
 
-  public isCurrentLanguage(language: string): boolean {
+  protected isCurrentLanguage(language: string): boolean {
     return this.translate.currentLang === language
   }
 
-  public onClick(language: string) {
+  protected onClick(language: string) {
     this.translate.use(language);
   }
 }

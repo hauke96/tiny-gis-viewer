@@ -14,11 +14,11 @@ export class LayerListItemComponent {
   constructor(private translate: TranslateService) {
   }
 
-  public onClick(layerVisible: boolean) {
+  protected onClick(layerVisible: boolean) {
     this.layer.setVisible(layerVisible);
   }
 
-  public get tooltipText(): string {
+  protected get tooltipText(): string {
     return this.translate.instant('wms-layer-tooltip', {name: this.layer.name});
   }
 }

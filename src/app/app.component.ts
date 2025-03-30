@@ -6,10 +6,11 @@ import {TranslateService} from '@ngx-translate/core';
 import {Title} from '@angular/platform-browser';
 import {ConfigService} from './config/config.service';
 import {SelectionSidebarComponent} from './selection-sidebar/selection-sidebar/selection-sidebar.component';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent],
+  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent, NgIf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
   private readonly defaultLanguage = 'en';
 
   constructor(
-    private layerService: LayerService,
+    protected layerService: LayerService,
     private translate: TranslateService,
     private configService: ConfigService,
     title: Title
