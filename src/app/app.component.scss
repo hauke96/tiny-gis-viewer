@@ -1,0 +1,19 @@
+@use "../styles";
+
+.sidebar-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+
+  width: 25%;
+  min-width: 300px;
+  max-width: 430px;
+  max-height: 100%;
+}
+
+app-sidebar {
+  margin: styles.$space-base;
+  padding: styles.$space-base;
+  width: 100%;
+}

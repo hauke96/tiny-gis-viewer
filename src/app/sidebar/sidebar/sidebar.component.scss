@@ -1,0 +1,20 @@
+@use "../../../styles";
+
+:host {
+  @extend .shadow;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: styles.$color-background;
+  border-radius: styles.$border-radius;
+}
+
+hr {
+  margin-bottom: styles.$space-base;
+}
+
+.footer-label {
+  color: styles.$color-gray-mid;
+  font-size: styles.$font-size-small;
+}

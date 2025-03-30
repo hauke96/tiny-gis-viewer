@@ -3,10 +3,11 @@ import {RouterOutlet} from '@angular/router';
 import {MapComponent} from './map/map.component';
 import {LayerService} from './layer/layer.service';
 import {CommandModule} from '@angular/cli/src/command-builder/command-module';
+import {SidebarComponent} from './sidebar/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [MapComponent],
+  imports: [MapComponent, SidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
