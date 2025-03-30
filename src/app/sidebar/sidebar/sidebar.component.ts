@@ -2,11 +2,13 @@ import {Component} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import packageInfo from '../../../../package.json';
 import {LayerListComponent} from '../layer-list/layer-list.component';
+import {LanguageSelectionComponent} from '../language-selection/language-selection.component';
 
 @Component({
   selector: 'app-sidebar',
   imports: [
-    LayerListComponent
+    LayerListComponent,
+    LanguageSelectionComponent
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'

@@ -1,6 +1,9 @@
 <app-layer-list></app-layer-list>
 <hr/>
-<span class="footer-label">
-	{{ "TinyGisViewer v" + version }}
-  <a [href]="sourceRepoUrl" target="_blank">GitHub</a>
-</span>
+<div class="footer">
+  <span class="footer-label">
+    {{ "TinyGisViewer v" + version }}
+    <a [href]="sourceRepoUrl" target="_blank">GitHub</a>
+  </span>
+  <app-language-selection></app-language-selection>
+</div>

@@ -1,0 +1,15 @@
+@use "../../../styles";
+
+.lang-label {
+  font-size: styles.$font-size-small;
+  padding: styles.$space-tiny;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.current-lang {
+  color: styles.$color-very-dark;
+  text-decoration-line: underline;
+}
