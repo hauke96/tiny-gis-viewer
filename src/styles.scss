@@ -3,8 +3,9 @@
 // Use material design colors: https://material.io/design/color/the-color-system.html#tools-for-picking-colors (at the bottom of the page under "2014 Material Design color palettes")
 
 // Colors:
-$color-very-light: #e3f2fd; // #100 Blue
-$color-light: #90caf9; // #200 Blue
+$color-very-very-light: #e3f2fd; // #100 Blue
+$color-very-light: #c9e6fa; // a bit darker than #100 Blue
+$color-light: #acd8fa; // a bit lighter than #200 Blue
 $color-mid: #42a5f5; // #400 Blue
 $color-dark: #1976d2; // #700 Blue
 $color-very-dark: #0d47a1; // #900 Blue
@@ -51,7 +52,7 @@ select {
 }
 
 h1, h2, h3 {
-  margin-top: $space-small;
+  margin-top: 0;
   margin-bottom: $space-small;
 }
 
@@ -59,6 +60,34 @@ hr {
   width: 100%;
   border: none;
   border-top: 1px solid $color-gray-light;
+}
+
+button.flat {
+  border: none;
+  background-color: $color-very-light;
+  border-radius: $border-radius;
+
+  &:hover {
+    background-color: $color-light;
+  }
+}
+
+lucide-angular {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $space-large;
+  height: $space-large;
 }
 
 .shadow {

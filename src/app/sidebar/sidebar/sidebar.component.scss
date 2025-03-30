@@ -5,9 +5,23 @@
 
   display: flex;
   flex-direction: column;
+  position:relative;
 
   background-color: styles.$color-background;
   border-radius: styles.$border-radius;
+
+}
+
+.extra-margin {
+  margin-right: styles.$space-base;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: styles.$space-small;
+  margin-right: -(styles.$space-base);
 }
 
 hr {

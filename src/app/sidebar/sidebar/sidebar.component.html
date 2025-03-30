@@ -1,9 +1,15 @@
-<app-layer-list></app-layer-list>
-<hr/>
-<div class="footer">
-  <span class="footer-label">
-    {{ "TinyGisViewer v" + version }}
-    <a [href]="sourceRepoUrl" target="_blank">GitHub</a>
-  </span>
-  <app-language-selection></app-language-selection>
+<button class="flat icon-button close-button" (click)="expanded = !expanded">
+  <lucide-angular name="chevron-left" *ngIf="expanded"></lucide-angular>
+  <lucide-angular name="chevron-right" *ngIf="!expanded"></lucide-angular>
+</button>
+<app-layer-list [expanded]="expanded" [class.extra-margin]="!expanded"></app-layer-list>
+<div [hidden]="!expanded">
+  <hr/>
+  <div class="footer">
+    <span class="footer-label">
+      {{ "TinyGisViewer v" + version }}
+      <a [href]="sourceRepoUrl" target="_blank">GitHub</a>
+    </span>
+    <app-language-selection></app-language-selection>
+  </div>
 </div>

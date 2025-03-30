@@ -1,5 +1,7 @@
-.title-heading {
-  margin-top: 0;
+@use "../../../styles";
+
+.no-bottom-margin {
+  margin-bottom: 0;
 }
 
 .layer-list {
