@@ -1,0 +1,3 @@
+<select [(ngModel)]="selectedFeature" (ngModelChange)="onFeatureSelected()">
+  <option *ngFor="let feature of features" [ngValue]="feature">{{ getNameForFeature(feature) }}</option>
+</select>

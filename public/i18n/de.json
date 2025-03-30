@@ -1,5 +1,6 @@
 {
   "title": "TinyGisViewer - Winziger Web-Viewer für Geodaten",
   "layers": "Ebenen",
+  "selected-features": "Ausgewählte Features",
   "wms-layer-tooltip": "WMS Ebene '{{name}}'"
 }
