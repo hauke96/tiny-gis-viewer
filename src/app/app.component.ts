@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {MapComponent} from './map/map.component';
 import {LayerService} from './layer/layer.service';
-import {SidebarComponent} from './sidebar/sidebar/sidebar.component';
+import {LayerSidebarComponent} from './layer-sidebar/layer-sidebar/layer-sidebar.component';
 import {TranslateService} from '@ngx-translate/core';
 import {Title} from '@angular/platform-browser';
 import {ConfigService} from './config/config.service';
+import {SelectionSidebarComponent} from './selection-sidebar/selection-sidebar/selection-sidebar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [MapComponent, SidebarComponent],
+  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

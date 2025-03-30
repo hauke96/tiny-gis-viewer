@@ -1,6 +1,6 @@
 @use "../styles";
 
-.sidebar-wrapper {
+.layer-sidebar-wrapper {
   position: absolute;
   left: 0;
   top: 0;
@@ -9,8 +9,16 @@
   max-height: 100%;
 }
 
-app-sidebar {
+.sidebar {
   margin: styles.$space-base;
   padding: styles.$space-base;
-  width: 100%;
+}
+
+.selection-sidebar-wrapper {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  max-width: 500px;
+  max-height: 100%;
 }

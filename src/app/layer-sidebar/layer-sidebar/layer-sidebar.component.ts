@@ -7,17 +7,17 @@ import {LucideAngularModule} from 'lucide-angular';
 import {NgIf} from '@angular/common';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-layer-sidebar',
   imports: [
     LayerListComponent,
     LanguageSelectionComponent,
     LucideAngularModule,
     NgIf
   ],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  templateUrl: './layer-sidebar.component.html',
+  styleUrl: './layer-sidebar.component.scss'
 })
-export class SidebarComponent {
+export class LayerSidebarComponent {
   public version = packageInfo.version;
   public sourceRepoUrl = environment.sourceRepoUrl;
   public expanded = true;

@@ -9,11 +9,6 @@
 
   background-color: styles.$color-background;
   border-radius: styles.$border-radius;
-
-}
-
-.extra-margin {
-  margin-right: styles.$space-base;
 }
 
 .close-button {
@@ -21,19 +16,11 @@
   top: 0;
   right: 0;
   margin-top: styles.$space-small;
-  margin-right: -(styles.$space-base);
+  margin-right: styles.$space-small;
 }
 
-hr {
-  margin-bottom: styles.$space-base;
-}
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.footer-label {
-  color: styles.$color-gray-mid;
-  font-size: styles.$font-size-small;
+.dummy {
+  display: block;
+  width: 300px;
+  height: 300px;
 }
