@@ -1,12 +1,10 @@
 import {Component, Input} from '@angular/core';
 import {Layer} from '../../layer/layer';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-layer-list-item',
-  imports: [
-    TranslatePipe
-  ],
+  imports: [],
   templateUrl: './layer-list-item.component.html',
   styleUrl: './layer-list-item.component.scss'
 })
@@ -16,8 +14,8 @@ export class LayerListItemComponent {
   constructor(private translate: TranslateService) {
   }
 
-  public onCheckboxClicked(event: Event) {
-    this.layer.setVisible((event.target as HTMLInputElement).checked);
+  public onClick(layerVisible: boolean) {
+    this.layer.setVisible(layerVisible);
   }
 
   public get tooltipText(): string {

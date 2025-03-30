@@ -1,2 +1,4 @@
-<input type="checkbox" [name]="layer.name" [checked]="layer.isVisible()" (change)="onCheckboxClicked($event)">
-<label [title]="tooltipText">{{ layer.name }}</label>
+<div class="input-wrapper" (click)="onClick(!layer.isVisible())">
+  <input type="checkbox" [name]="layer.name" [checked]="layer.isVisible()">
+</div>
+<label [title]="tooltipText" [class.deselected]="!layer.isVisible()">{{ layer.name }}</label>

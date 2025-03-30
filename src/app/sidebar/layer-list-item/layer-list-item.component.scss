@@ -1,5 +1,24 @@
 @use "../../../styles";
 
-input {
-  margin: styles.$space-small;
+:host {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+:host:hover {
+  background-color: styles.$color-very-light;
+}
+
+input:hover,
+.input-wrapper:hover {
+  cursor: pointer;
+}
+
+.input-wrapper {
+  padding: styles.$space-tiny;
+}
+
+.deselected {
+  color: styles.$color-gray-mid;
 }
