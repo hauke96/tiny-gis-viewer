@@ -3,14 +3,16 @@ import {Attribution, ScaleLine} from 'ol/control';
 import TileLayer from 'ol/layer/Tile';
 import {ImageWMS, OSM} from 'ol/source';
 import {Layer as OlLayer} from 'ol/layer';
-import {Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
+import {Feature, Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
 import {LayerService} from '../layer/layer.service';
 import {Unsubscriber} from '../common/unsubscriber';
 import {Layer} from '../layer/layer';
-import {Subscription} from 'rxjs';
+import {forkJoin, map, of, Subscription} from 'rxjs';
 import ImageLayer from 'ol/layer/Image';
 import {ConfigService} from '../config/config.service';
 import {ViewOptions} from 'ol/View';
+import {HttpClient} from '@angular/common/http';
+import {GeoJSON} from 'ol/format';
 
 @Component({
   selector: 'app-map',
@@ -26,6 +28,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
 
   public constructor(
     private layerService: LayerService,
+    private httpClient: HttpClient,
     configService: ConfigService,
   ) {
     super();
@@ -66,8 +69,47 @@ export class MapComponent extends Unsubscriber implements OnInit {
   ngOnInit(): void {
     this.map.setTarget('map')
 
-    // TODO React to clicks, i.e. request feature information?
-    this.map.on('click', (event: MapBrowserEvent<UIEvent>) => console.log('click on coordinate ' + event.coordinate));
+    this.map.on('click', (event: MapBrowserEvent<UIEvent>) => {
+      let coordinate = event.coordinate;
+      console.log('click on coordinate ' + coordinate);
+
+      let geoJSON = new GeoJSON();
+
+      let requestObservables = this.map.getAllLayers()
+        .filter(layer => {
+          let source = layer.getSource();
+          return source && source instanceof ImageWMS;
+        })
+        .map(layer => {
+          let source = layer.getSource() as ImageWMS;
+
+          let featureInfoUrl = source.getFeatureInfoUrl(coordinate, this.map.getView().getResolution()!, this.map.getView().getProjection(), {'INFO_FORMAT': 'application/json'});
+          if (!featureInfoUrl) {
+            return of("").pipe(map(response => [layer, response]));
+          }
+
+          return this.httpClient.get<string>(featureInfoUrl).pipe(map(response => [layer, response]));
+        });
+      forkJoin(requestObservables)
+        .subscribe(responseTuples => {
+          let layerToFeaturesMap = new Map<Layer, Feature[]>();
+          responseTuples
+            .map(tuple => {
+              const olLayer = tuple[0] as OlLayer;
+              const response = tuple[1];
+
+              let features = geoJSON.readFeatures(response);
+
+              let layerName = olLayer.getProperties()["name"] as string;
+              let layer = Array.from(this.layerMapping.keys()).filter(l => l.name === layerName)[0];
+
+              return [layer, features] as [Layer, Feature[]];
+            })
+            .filter(tuple => tuple[1] && tuple[1].length > 0)
+            .forEach(tuple => layerToFeaturesMap.set(tuple[0], tuple[1]));
+          this.layerService.selectFeatureTuples(layerToFeaturesMap);
+        });
+    });
     this.map.on('moveend', (e: MapEvent) => {
       localStorage.setItem('map_center', JSON.stringify(e.map.getView().getCenter()));
       localStorage.setItem('map_zoom', '' + e.map.getView().getZoom());
@@ -94,8 +136,9 @@ export class MapComponent extends Unsubscriber implements OnInit {
         let wmsLayer = new ImageLayer({
           source: new ImageWMS({
             url: layer.wmsBaseUrl,
-            params: {'LAYERS': layer.wmsLayerName},
+            params: {'LAYERS': layer.wmsLayerName}
           }),
+          properties: {'name': layer.name}
         });
 
         let subscription = layer.visible.subscribe((visible) => wmsLayer.setVisible(visible));
