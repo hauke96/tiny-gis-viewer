@@ -13,8 +13,16 @@ import {FormsModule} from '@angular/forms';
   styleUrl: './feature-selection-menu.component.scss'
 })
 export class FeatureSelectionMenuComponent {
+  public _features: Feature[] = [];
   @Input()
-  public features: Feature[] = [];
+  public set features(features: Feature[]) {
+    this._features = features;
+    this.selectedFeature = features[0];
+    this.onFeatureSelected();
+  }
+  public get features(): Feature[] {
+    return this._features;
+  }
 
   @Output()
   public featureSelected = new EventEmitter<Feature>();

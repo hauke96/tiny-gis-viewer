@@ -21,7 +21,6 @@ export class FeatureLayerComponent implements OnInit, OnDestroy {
     if (this.vectorSource && this.vectorLayer) {
       this.vectorSource.clear();
       this.vectorSource.addFeatures(this._features);
-      console.log(this._features.map(f => f.getGeometry()));
     }
   }
 

@@ -1,0 +1,31 @@
+@use "../../../styles";
+
+:host {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  tr {
+    th {
+      text-align: start;
+    }
+
+    td,
+    th {
+      border: 1px solid styles.$color-gray-very-light;
+      padding: styles.$space-small;
+      vertical-align: baseline;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:hover {
+      background-color: styles.$color-gray-near-white;
+    }
+  }
+}
