@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {MapComponent} from './map/map.component';
 import {LayerService} from './layer/layer.service';
+import {CommandModule} from '@angular/cli/src/command-builder/command-module';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.layerService.loadLayers();
+    this.layerService.loadLayersFromCapabilities('https://deneb.hauke-stieler.de/geo/data/wms?SERVICE=WMS&request=GetCapabilities');
   }
 }

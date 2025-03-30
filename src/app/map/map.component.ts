@@ -49,6 +49,8 @@ export class MapComponent extends Unsubscriber implements OnInit {
     this.map.on('click', (event: MapBrowserEvent<UIEvent>) => console.log('click on coordinate ' + event.coordinate));
 
     this.unsubscribeLater(this.layerService.layers.subscribe(layers => {
+      console.log(`Updating layers. Got ${layers.length} new layers.`);
+
       let olLayers: OlLayer[] = [
         new TileLayer({
           source: new OSM()
@@ -58,6 +60,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
       // TODO maybe unsubscribe from visible observable if needed
       this.layerMapping.clear();
       layers.forEach(layer => {
+        // TODO subscribe to layer visibility
         let wmsLayer = new TileLayer({
           source: new TileWMS({
             url: layer.wmsBaseUrl,
