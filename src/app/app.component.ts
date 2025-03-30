@@ -45,8 +45,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.configService.loadConfig().subscribe(config => {
-      this.layerService.loadFromConfig(config);
-    });
+    this.layerService.loadFromConfig(this.configService.config!);
   }
 }

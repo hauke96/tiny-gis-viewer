@@ -3,12 +3,14 @@ import {Attribution, ScaleLine} from 'ol/control';
 import TileLayer from 'ol/layer/Tile';
 import {ImageWMS, OSM} from 'ol/source';
 import {Layer as OlLayer} from 'ol/layer';
-import {Map as OlMap, MapBrowserEvent, View} from 'ol';
+import {Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
 import {LayerService} from '../layer/layer.service';
 import {Unsubscriber} from '../common/unsubscriber';
 import {Layer} from '../layer/layer';
 import {Subscription} from 'rxjs';
 import ImageLayer from 'ol/layer/Image';
+import {ConfigService} from '../config/config.service';
+import {ViewOptions} from 'ol/View';
 
 @Component({
   selector: 'app-map',
@@ -22,8 +24,26 @@ export class MapComponent extends Unsubscriber implements OnInit {
   private layerSubscriptions: Subscription[] = [];
   private layerMapping: Map<Layer, OlLayer> = new Map<Layer, OlLayer>();
 
-  public constructor(private layerService: LayerService) {
+  public constructor(
+    private layerService: LayerService,
+    configService: ConfigService,
+  ) {
     super();
+
+    let defaultViewOptions: ViewOptions = {
+      center: [1110161, 7085688], // Hamburg, Germany
+      projection: 'EPSG:3857',
+      zoom: 14,
+      minZoom: 0,
+      maxZoom: 22,
+    };
+
+    let storedMapCenter = localStorage.getItem('map_center');
+    let storedMapZoom = localStorage.getItem('map_zoom');
+    let storedViewOptions: ViewOptions = {
+      center: storedMapCenter ? JSON.parse(storedMapCenter) : defaultViewOptions.center,
+      zoom: storedMapZoom ? JSON.parse(storedMapZoom) : defaultViewOptions.zoom,
+    }
 
     this.map = new OlMap({
       controls: [
@@ -36,11 +56,9 @@ export class MapComponent extends Unsubscriber implements OnInit {
         }),
       ],
       view: new View({
-        center: [1110161, 7085688],
-        projection: 'EPSG:3857',
-        zoom: 14,
-        minZoom: 0,
-        maxZoom: 19
+        ...defaultViewOptions,
+        ...configService.config?.mapView,
+        ...storedViewOptions
       })
     });
   }
@@ -50,6 +68,10 @@ export class MapComponent extends Unsubscriber implements OnInit {
 
     // TODO React to clicks, i.e. request feature information?
     this.map.on('click', (event: MapBrowserEvent<UIEvent>) => console.log('click on coordinate ' + event.coordinate));
+    this.map.on('moveend', (e: MapEvent) => {
+      localStorage.setItem('map_center', JSON.stringify(e.map.getView().getCenter()));
+      localStorage.setItem('map_zoom', '' + e.map.getView().getZoom());
+    });
 
     this.unsubscribeLater(this.layerService.layers.subscribe(layers => {
       console.log(`Updating layers. Got ${layers.length} layers.`);

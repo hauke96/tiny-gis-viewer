@@ -1,4 +1,14 @@
 {
+  "mapView": {
+    "center": [
+      1110161,
+      7085688
+    ],
+    "projection": "EPSG:3857",
+    "zoom": 14,
+    "minZoom": 0,
+    "maxZoom": 22
+  },
   "layers": [
     {
       "capabilitiesUrl": "https://deneb.hauke-stieler.de/geo/data/wms?SERVICE=WMS&request=GetCapabilities"

@@ -1,15 +1,19 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {Config} from './config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
-  constructor(private httpClient: HttpClient) { }
+  public config: Config | undefined = undefined;
 
-  public loadConfig():Observable<Config> {
-    return this.httpClient.get<Config>("./config.json");
+  constructor(private httpClient: HttpClient) {
+  }
+
+  public loadAndStoreConfig(): Observable<Config> {
+    return this.httpClient.get<Config>("./config.json")
+      .pipe(tap(c => this.config = c))
   }
 }
