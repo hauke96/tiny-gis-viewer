@@ -1,0 +1,7 @@
+{
+  "layers": [
+    {
+      "capabilitiesUrl": "https://deneb.hauke-stieler.de/geo/data/wms?SERVICE=WMS&request=GetCapabilities"
+    }
+  ]
+}

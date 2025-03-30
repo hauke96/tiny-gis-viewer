@@ -4,6 +4,7 @@ import {LayerService} from './layer/layer.service';
 import {SidebarComponent} from './sidebar/sidebar/sidebar.component';
 import {TranslateService} from '@ngx-translate/core';
 import {Title} from '@angular/platform-browser';
+import {ConfigService} from './config/config.service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
   constructor(
     private layerService: LayerService,
     private translate: TranslateService,
+    private configService: ConfigService,
     title: Title
   ) {
     this.translate.addLangs(this.supportedLanguages);
@@ -43,6 +45,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.layerService.loadLayersFromCapabilities('https://deneb.hauke-stieler.de/geo/data/wms?SERVICE=WMS&request=GetCapabilities');
+    this.configService.loadConfig().subscribe(config => {
+      this.layerService.loadFromConfig(config);
+    });
   }
 }

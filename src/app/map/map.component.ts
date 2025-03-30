@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
 import TileLayer from 'ol/layer/Tile';
-import {OSM, TileWMS} from 'ol/source';
+import {ImageWMS, OSM} from 'ol/source';
 import {Layer as OlLayer} from 'ol/layer';
 import {Map as OlMap, MapBrowserEvent, View} from 'ol';
 import {LayerService} from '../layer/layer.service';
 import {Unsubscriber} from '../common/unsubscriber';
 import {Layer} from '../layer/layer';
 import {Subscription} from 'rxjs';
+import ImageLayer from 'ol/layer/Image';
 
 @Component({
   selector: 'app-map',
@@ -51,9 +52,10 @@ export class MapComponent extends Unsubscriber implements OnInit {
     this.map.on('click', (event: MapBrowserEvent<UIEvent>) => console.log('click on coordinate ' + event.coordinate));
 
     this.unsubscribeLater(this.layerService.layers.subscribe(layers => {
-      console.log(`Updating layers. Got ${layers.length} new layers.`);
+      console.log(`Updating layers. Got ${layers.length} layers.`);
 
       // Reverse layers so that the first layer is on top
+      layers = layers.slice();
       layers.reverse();
 
       let olLayers: OlLayer[] = [
@@ -67,11 +69,10 @@ export class MapComponent extends Unsubscriber implements OnInit {
       this.layerSubscriptions = [];
 
       layers.forEach(layer => {
-
-        let wmsLayer = new TileLayer({
-          source: new TileWMS({
+        let wmsLayer = new ImageLayer({
+          source: new ImageWMS({
             url: layer.wmsBaseUrl,
-            params: {'LAYERS': layer.wmsLayerName, 'TILED': true},
+            params: {'LAYERS': layer.wmsLayerName},
           }),
         });
 

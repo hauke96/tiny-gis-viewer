@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Layer} from './layer';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, forkJoin, map, mergeMap, Observable} from 'rxjs';
 import {WMSCapabilities} from 'ol/format';
 import {HttpClient} from '@angular/common/http';
 import {GetCapabilitiesDto} from './get-capabilities-dto';
+import {Config} from '../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -18,44 +19,40 @@ export class LayerService {
     return this.layers$.asObservable()
   }
 
-  public addLayer(layer: Layer): void {
-    let layers = this.layers$.value;
-    layers.push(layer);
+  public setLayers(layers: Layer[]): void {
     this.layers$.next(layers);
   }
 
-  public loadLayers(): void {
-    const layers = [
-      new Layer("OSM Hamburg example", "https://deneb.hauke-stieler.de/geo/data/wms", "osm-hh-example")
-    ];
-    this.layers$.next(layers);
+  public loadFromConfig(config: Config) {
+    const layerObservables = config.layers.map(layer => this.loadLayersFromCapabilities(layer.capabilitiesUrl));
+    forkJoin(layerObservables)
+      .subscribe(layers => {
+        this.setLayers(layers.flatMap(l=>l));
+      });
   }
 
-  public loadLayersFromCapabilities(capabilitiesUrlString: string): void {
-    const layers: Layer[] = [];
+  public loadLayersFromCapabilities(capabilitiesUrlString: string): Observable<Layer[]> {
 
     const capabilitiesUrl = new URL(capabilitiesUrlString);
     const wmsBaseUrl = capabilitiesUrl.origin + capabilitiesUrl.pathname;
 
-    this.httpClient.get(capabilitiesUrlString, {responseType: 'text'})
-      .subscribe({
-        next: response => {
+    console.log(`Load layers from ${capabilitiesUrl}`);
+
+    return this.httpClient.get(capabilitiesUrlString, {responseType: 'text'})
+      .pipe(
+        map(response => {
           const parser = new WMSCapabilities();
           const result = parser.read(response) as GetCapabilitiesDto;
 
           if (!result.Capability || !result.Capability.Layer || !result.Capability.Layer.Layer || result.Capability.Layer.Layer.length === 0) {
             console.log("Result of GetCapabilities request has no layers")
-            return
+            return [];
           }
 
-          result.Capability.Layer.Layer.forEach(layerDto => {
-            const layer = new Layer(layerDto.Title, wmsBaseUrl, layerDto.Name)
-            layers.push(layer);
-          })
-
-          this.layers$.next(layers);
-        },
-        error: (e: Error) => console.error(e)
-      });
+          return result.Capability.Layer.Layer.map(layerDto => {
+            return new Layer(layerDto.Title, wmsBaseUrl, layerDto.Name)
+          });
+        })
+      )
   }
 }
