@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MapComponent} from './map/map.component';
+import {MapComponent} from './map/map/map.component';
 import {LayerService} from './layer/layer.service';
 import {LayerSidebarComponent} from './layer-sidebar/layer-sidebar/layer-sidebar.component';
 import {TranslateService} from '@ngx-translate/core';
@@ -8,10 +8,11 @@ import {ConfigService} from './config/config.service';
 import {SelectionSidebarComponent} from './selection-sidebar/selection-sidebar/selection-sidebar.component';
 import {NgIf} from '@angular/common';
 import {FeatureSelectionService} from './feature/feature-selection.service';
+import {FeatureLayerComponent} from './map/feature-layer/feature-layer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent, NgIf],
+  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent, NgIf, FeatureLayerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

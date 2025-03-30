@@ -1,27 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, forwardRef, OnInit} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
 import TileLayer from 'ol/layer/Tile';
 import {ImageWMS, OSM} from 'ol/source';
 import {Layer as OlLayer} from 'ol/layer';
 import {Feature, Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
-import {LayerService} from '../layer/layer.service';
-import {Unsubscriber} from '../common/unsubscriber';
-import {Layer} from '../layer/layer';
+import {LayerService} from '../../layer/layer.service';
+import {Unsubscriber} from '../../common/unsubscriber';
+import {Layer} from '../../layer/layer';
 import {forkJoin, map, of, Subscription} from 'rxjs';
 import ImageLayer from 'ol/layer/Image';
-import {ConfigService} from '../config/config.service';
+import {ConfigService} from '../../config/config.service';
 import {ViewOptions} from 'ol/View';
 import {HttpClient} from '@angular/common/http';
 import {GeoJSON} from 'ol/format';
-import {FeatureSelectionService} from '../feature/feature-selection.service';
+import {FeatureSelectionService} from '../../feature/feature-selection.service';
+import {MapService} from '../map.service';
+import BaseLayer from 'ol/layer/Base';
 
 @Component({
   selector: 'app-map',
   imports: [],
   templateUrl: './map.component.html',
-  styleUrl: './map.component.scss'
+  styleUrl: './map.component.scss',
+  providers: [{provide: MapService, useExisting: forwardRef(() => MapComponent)}],
 })
-export class MapComponent extends Unsubscriber implements OnInit {
+export class MapComponent extends Unsubscriber implements OnInit, MapService {
   public map: OlMap;
 
   private layerSubscriptions: Subscription[] = [];
@@ -85,7 +88,15 @@ export class MapComponent extends Unsubscriber implements OnInit {
         .map(layer => {
           let source = layer.getSource() as ImageWMS;
 
-          let featureInfoUrl = source.getFeatureInfoUrl(coordinate, this.map.getView().getResolution()!, this.map.getView().getProjection(), {'INFO_FORMAT': 'application/json'});
+          let featureInfoUrl = source.getFeatureInfoUrl(
+            coordinate,
+            this.map.getView().getResolution()!,
+            this.map.getView().getProjection(),
+            {
+              "INFO_FORMAT": "application/geo+json",
+              "WITH_GEOMETRY": "TRUE"
+            }
+          );
           if (!featureInfoUrl) {
             return of("").pipe(map(response => [layer, response]));
           }
@@ -124,11 +135,8 @@ export class MapComponent extends Unsubscriber implements OnInit {
       layers = layers.slice();
       layers.reverse();
 
-      let olLayers: OlLayer[] = [
-        new TileLayer({
-          source: new OSM()
-        })
-      ];
+      const oldLayers = Array.from(this.layerMapping.keys()).map(key => this.layerMapping.get(key)!);
+      const newLayers: OlLayer[] = [];
 
       this.layerMapping.clear();
       this.layerSubscriptions.forEach(subscription => subscription.unsubscribe());
@@ -147,11 +155,19 @@ export class MapComponent extends Unsubscriber implements OnInit {
         this.layerSubscriptions.push(subscription);
 
         this.layerMapping.set(layer, wmsLayer);
-        olLayers.push(wmsLayer);
+        newLayers.push(wmsLayer);
       });
 
-      this.map.getAllLayers().forEach(layer => this.map.removeLayer(layer));
-      olLayers.forEach(layer => this.map.addLayer(layer));
+      oldLayers.forEach(l => this.map.removeLayer(l));
+      newLayers.forEach(layer => this.map.addLayer(layer));
     }))
+  }
+
+  public addLayer(layer: BaseLayer): void {
+    this.map.addLayer(layer);
+  }
+
+  public removeLayer(layer: BaseLayer): void {
+    this.map.removeLayer(layer);
   }
 }

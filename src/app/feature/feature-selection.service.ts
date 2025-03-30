@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Layer} from '../layer/layer';
 import {Feature} from 'ol';
@@ -9,7 +9,8 @@ import {Feature} from 'ol';
 export class FeatureSelectionService {
   private selectionOnMap$: BehaviorSubject<Map<Layer, Feature[]>> = new BehaviorSubject<Map<Layer, Feature[]>>(new Map<Layer, Feature[]>());
 
-  constructor() { }
+  constructor() {
+  }
 
   public get selectionOnMap(): Observable<Map<Layer, Feature[]>> {
     return this.selectionOnMap$.asObservable();
@@ -17,6 +18,10 @@ export class FeatureSelectionService {
 
   public setSelectedFeaturesOnMap(layerToFeaturesMap: Map<Layer, Feature[]>): void {
     this.selectionOnMap$.next(layerToFeaturesMap);
+  }
+
+  public get selectedFeaturesOnMap(): Map<Layer, Feature[]> {
+    return this.selectionOnMap$.value;
   }
 
   deselectAllFeaturesOnMap() {
