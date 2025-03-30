@@ -7,7 +7,7 @@ export interface GetCapabilitiesDto {
   Capability: GetCapabilitiesCapabilityDto
 }
 
-export interface GetCapabilitiesServiceDto{
+export interface GetCapabilitiesServiceDto {
   Title: string
 }
 

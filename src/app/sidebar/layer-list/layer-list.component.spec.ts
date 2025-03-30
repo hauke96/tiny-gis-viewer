@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LayerListComponent } from './layer-list.component';
+import {LayerListComponent} from './layer-list.component';
 
 describe('LayerListComponent', () => {
   let component: LayerListComponent;
@@ -10,7 +10,7 @@ describe('LayerListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LayerListComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LayerListComponent);
     component = fixture.componentInstance;

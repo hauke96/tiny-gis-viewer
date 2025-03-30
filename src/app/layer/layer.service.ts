@@ -43,7 +43,7 @@ export class LayerService {
           const parser = new WMSCapabilities();
           const result = parser.read(response) as GetCapabilitiesDto;
 
-          if(!result.Capability || !result.Capability.Layer || !result.Capability.Layer.Layer || result.Capability.Layer.Layer.length === 0) {
+          if (!result.Capability || !result.Capability.Layer || !result.Capability.Layer.Layer || result.Capability.Layer.Layer.length === 0) {
             console.log("Result of GetCapabilities request has no layers")
             return
           }
