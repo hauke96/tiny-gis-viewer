@@ -90,6 +90,16 @@ button.icon-button {
   height: $space-large;
 }
 
+select {
+  height: $space-large;
+  background-color: white;
+  border: 1px solid $color-light;
+
+  &:hover {
+    background-color: $color-very-very-light;
+  }
+}
+
 .shadow {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 }
