@@ -115,7 +115,7 @@ export class MapComponent extends Unsubscriber implements OnInit, MapService {
               let features = geoJSON.readFeatures(response);
 
               let layerName = olLayer.getProperties()["name"] as string;
-              let layer = Array.from(this.layerMapping.keys()).filter(l => l.name === layerName)[0];
+              let layer = Array.from(this.layerMapping.keys()).filter(l => l.title === layerName)[0];
 
               return [layer, features] as [Layer, Feature[]];
             })
@@ -147,9 +147,9 @@ export class MapComponent extends Unsubscriber implements OnInit, MapService {
         let wmsLayer = new ImageLayer({
           source: new ImageWMS({
             url: layer.wmsBaseUrl,
-            params: {'LAYERS': layer.wmsLayerName}
+            params: {'LAYERS': layer.name}
           }),
-          properties: {'name': layer.name}
+          properties: {'name': layer.title}
         });
 
         let subscription = layer.visible.subscribe((visible) => wmsLayer.setVisible(visible));

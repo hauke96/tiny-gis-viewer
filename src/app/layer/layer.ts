@@ -4,9 +4,9 @@ export class Layer {
   private visible$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   constructor(
-    public name: string,
+    public title: string,
     public wmsBaseUrl: string,
-    public wmsLayerName: string
+    public name: string
   ) {
     this.setVisible(true);
   }

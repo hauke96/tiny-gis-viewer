@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Layer} from './layer';
-import {BehaviorSubject, forkJoin, map, Observable} from 'rxjs';
+import {BehaviorSubject, forkJoin, map, Observable, of} from 'rxjs';
 import {WMSCapabilities} from 'ol/format';
 import {HttpClient} from '@angular/common/http';
 import {GetCapabilitiesDto} from './get-capabilities-dto';
@@ -24,7 +24,17 @@ export class LayerService {
   }
 
   public loadFromConfig(config: Config) {
-    const layerObservables = config.layers.map(layer => this.loadLayersFromCapabilities(layer.capabilitiesUrl));
+    const layerObservables = config.layers.map(layer => {
+      switch (layer.type) {
+        case "wms":
+          return this.loadLayersFromWmsUrl(layer.title, layer.url, layer.name);
+        case "wms-capabilities":
+          return this.loadLayersFromCapabilities(layer.url);
+        default:
+          console.error(`Unknown layer type '${layer.type}'`);
+          return of([]);
+      }
+    });
     forkJoin(layerObservables)
       .subscribe(layers => {
         this.setLayers(layers.flatMap(l => l));
@@ -54,5 +64,9 @@ export class LayerService {
           });
         })
       )
+  }
+
+  private loadLayersFromWmsUrl(title: string, wmsBaseUrl: string, name: string): Observable<Layer[]> {
+    return of([new Layer(title, wmsBaseUrl, name)]);
   }
 }
