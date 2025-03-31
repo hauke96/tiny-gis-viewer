@@ -2,5 +2,9 @@
   "title": "TinyGisViewer - Tiny web-viewer for geodata",
   "layers": "Layers",
   "selected-features": "Selected features",
-  "wms-layer-tooltip": "WMS layer '{{name}}'"
+  "wms-layer-tooltip": "WMS layer '{{name}}'",
+  "feature-details": {
+    "key": "Key",
+    "value": "Value"
+  }
 }
