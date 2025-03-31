@@ -5,6 +5,10 @@
   "wms-layer-tooltip": "WMS layer '{{name}}'",
   "feature-details": {
     "key": "Key",
-    "value": "Value"
+    "value": "Value",
+    "area-size": "Area",
+    "line-length": "Length",
+    "geometry-type": "Type",
+    "number-of-geometries": "Geometries"
   }
 }

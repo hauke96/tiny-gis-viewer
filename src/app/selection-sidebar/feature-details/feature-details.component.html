@@ -1,4 +1,23 @@
-<table>
+<table class="statistic-table">
+  <tr *ngIf="areaSizeInM2 != null">
+    <td>{{ "feature-details.area-size" | translate }}</td>
+    <td>{{ areaSizeInM2 | number: '1.0-2' }} m²</td>
+  </tr>
+  <tr *ngIf="lineLengthInM != null">
+    <td>{{ "feature-details.line-length" | translate }}</td>
+    <td>{{ lineLengthInM | number: '1.0-2' }} m</td>
+  </tr>
+  <tr *ngIf="geometryType != null">
+    <td>{{ "feature-details.geometry-type" | translate }}</td>
+    <td>{{ geometryType }}</td>
+  </tr>
+  <tr *ngIf="numberOfGeometries != null">
+    <td>{{ "feature-details.number-of-geometries" | translate }}</td>
+    <td>{{ numberOfGeometries }}</td>
+  </tr>
+</table>
+
+<table class="data-table">
   <tr>
     <th>{{ "feature-details.key" | translate }}</th>
     <th>{{ "feature-details.value" | translate }}</th>

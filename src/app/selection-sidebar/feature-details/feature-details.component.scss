@@ -5,27 +5,8 @@
   overflow-x: hidden;
 }
 
-table {
+.statistic-table {
   width: 100%;
-  border-collapse: collapse;
   table-layout: fixed;
-
-  tr {
-    th {
-      text-align: start;
-    }
-
-    td,
-    th {
-      border: 1px solid styles.$color-gray-very-light;
-      padding: styles.$space-small;
-      vertical-align: baseline;
-      overflow-x: hidden;
-      text-overflow: ellipsis;
-    }
-
-    &:hover {
-      background-color: styles.$color-gray-near-white;
-    }
-  }
+  margin-bottom: styles.$space-base;
 }
