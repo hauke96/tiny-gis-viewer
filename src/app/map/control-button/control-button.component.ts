@@ -12,11 +12,14 @@ import {LucideAngularModule} from "lucide-angular";
 export class ControlButtonComponent {
   @Input()
   public iconName: string = "";
+  @Input()
+  public active: boolean = false;
 
   @Output()
   public click: EventEmitter<void> = new EventEmitter();
 
-  onClick() {
+  onClick($event: MouseEvent) {
     this.click.emit();
+    $event.stopPropagation();
   }
 }

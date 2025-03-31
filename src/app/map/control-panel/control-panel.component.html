@@ -1,2 +1,10 @@
-<app-control-button iconName="plus" (click)="onZoomInClicked()"></app-control-button>
-<app-control-button iconName="minus" (click)="onZoomOutClicked()"></app-control-button>
+<app-control-button iconName="ruler"
+                    [title]="'control-panel.measure-length' | translate"
+                    [active]="isInLengthMeasureMode"
+                    (click)="onMeasureLengthClicked()"></app-control-button>
+<app-control-button iconName="plus"
+                    [title]="'control-panel.zoom-in' | translate"
+                    (click)="onZoomInClicked()"></app-control-button>
+<app-control-button iconName="minus"
+                    [title]="'control-panel.zoom-out' | translate"
+                    (click)="onZoomOutClicked()"></app-control-button>

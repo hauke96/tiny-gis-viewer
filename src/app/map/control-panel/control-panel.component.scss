@@ -3,8 +3,14 @@
 :host {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+
+  pointer-events: none !important;
+  > * {
+    pointer-events: auto;
+  }
 }
 
 app-control-button:not(:last-child) {
-  margin-bottom: styles.$space-small;
+  margin-bottom: styles.$space-base * 0.75;
 }

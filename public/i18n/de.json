@@ -10,5 +10,10 @@
     "line-length": "Länge",
     "geometry-type": "Typ",
     "number-of-geometries": "Geometrien"
+  },
+  "control-panel": {
+    "measure-length": "Längen messen",
+    "zoom-in": "Vergrößern",
+    "zoom-out": "Verkleinen"
   }
 }

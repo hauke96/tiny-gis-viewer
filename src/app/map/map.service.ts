@@ -26,6 +26,26 @@ export class MapService {
     return this.layerRemoved$.asObservable()
   }
 
+  private lengthMeasurementStarted$: Subject<void> = new Subject<void>();
+
+  public startLengthMeasurement(): void {
+    this.lengthMeasurementStarted$.next();
+  }
+
+  public get lengthMeasurementStarted(): Observable<void> {
+    return this.lengthMeasurementStarted$.asObservable()
+  }
+
+  private lengthMeasurementEnded$: Subject<void> = new Subject<void>();
+
+  public endLengthMeasurement(): void {
+    this.lengthMeasurementEnded$.next();
+  }
+
+  public get lengthMeasurementEnded(): Observable<void> {
+    return this.lengthMeasurementEnded$.asObservable()
+  }
+
   private zoomedIn$: Subject<void> = new Subject<void>();
 
   public zoomIn(): void {

@@ -1,0 +1,8 @@
+@use "../../../styles";
+
+button {
+  &.selected {
+    background-color: styles.$color-light;
+    //border: 1px solid styles.$color-dark;
+  }
+}
