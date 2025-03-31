@@ -7,6 +7,14 @@ export class Config {
     public queryFeatureCount: number,
   ) {
   }
+
+  public validate(): void {
+    if (this.queryFeatureCount<=0) {
+      throw new Error(`queryFeatureCount must be at least 1 but way ${this.queryFeatureCount}`);
+    }
+
+    this.layers.forEach(l => l.validate());
+  }
 }
 
 export type LayerType = "wms" | "wms-capabilities";
@@ -18,6 +26,32 @@ export class LayerConfig {
     public title: string,
     public name: string,
   ) {
-    // TODO directly validate input parameters
+  }
+
+  public validate(): void {
+    switch (this.type) {
+      case "wms":
+        if (!this.name || this.name.trim() === "") {
+          throw new Error("name must be set");
+        }
+        if (!this.title || this.title.trim() === "") {
+          throw new Error(`title must be set on layer with name '${this.name}'`);
+        }
+        break;
+      case "wms-capabilities":
+        if (this.name && this.name.trim() !== "") {
+          throw new Error(`name must be unset for '${this.type}' layer`);
+        }
+        if (this.title && this.title.trim() !== "") {
+          throw new Error(`title must be unset for '${this.type}' layer`);
+        }
+        break;
+      default:
+        throw new Error(`Unknown type '${this.type}'`);
+    }
+
+    if (!this.url || this.url.trim() === "") {
+      throw new Error("url must be set");
+    }
   }
 }
