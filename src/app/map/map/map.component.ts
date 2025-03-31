@@ -1,4 +1,4 @@
-import {Component, forwardRef, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
 import TileLayer from 'ol/layer/Tile';
 import {ImageWMS, OSM} from 'ol/source';
@@ -22,15 +22,15 @@ import BaseLayer from 'ol/layer/Base';
   imports: [],
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
-  providers: [{provide: MapService, useExisting: forwardRef(() => MapComponent)}],
 })
-export class MapComponent extends Unsubscriber implements OnInit, MapService {
+export class MapComponent extends Unsubscriber implements OnInit {
   public map: OlMap;
 
   private layerSubscriptions: Subscription[] = [];
   private layerMapping: Map<Layer, OlLayer> = new Map<Layer, OlLayer>();
 
   public constructor(
+    private mapService: MapService,
     private layerService: LayerService,
     private featureSelectionService: FeatureSelectionService,
     private httpClient: HttpClient,
@@ -161,7 +161,14 @@ export class MapComponent extends Unsubscriber implements OnInit, MapService {
 
       oldLayers.forEach(l => this.map.removeLayer(l));
       newLayers.forEach(layer => this.map.addLayer(layer));
-    }))
+    }));
+
+    this.unsubscribeLater(
+      this.mapService.layerAdded.subscribe(layer => this.addLayer(layer)),
+      this.mapService.layerRemoved.subscribe(layer => this.removeLayer(layer)),
+      this.mapService.zoomedIn.subscribe(() => this.zoomIn()),
+      this.mapService.zoomedOut.subscribe(() => this.zoomOut()),
+    )
   }
 
   public addLayer(layer: BaseLayer): void {
@@ -170,5 +177,19 @@ export class MapComponent extends Unsubscriber implements OnInit, MapService {
 
   public removeLayer(layer: BaseLayer): void {
     this.map.removeLayer(layer);
+  }
+
+  public zoomIn(): void {
+    const zoom = this.map?.getView()?.getZoom();
+    if (zoom) {
+      this.map?.getView().animate({zoom: zoom + 0.5, duration: 250});
+    }
+  }
+
+  public zoomOut(): void {
+    const zoom = this.map?.getView()?.getZoom();
+    if (zoom) {
+      this.map?.getView().animate({zoom: zoom - 0.5, duration: 250});
+    }
   }
 }

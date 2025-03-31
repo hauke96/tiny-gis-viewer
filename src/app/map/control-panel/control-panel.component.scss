@@ -1,0 +1,10 @@
+@use "../../../styles";
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+app-control-button:not(:last-child) {
+  margin-bottom: styles.$space-small;
+}
