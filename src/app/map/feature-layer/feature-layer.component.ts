@@ -16,13 +16,11 @@ import {Unsubscriber} from '../../common/unsubscriber';
   styleUrl: './feature-layer.component.scss',
 })
 export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDestroy {
-  public _features: Feature[] = [];
   @Input()
   set features(features: Map<Layer, Feature[]>) {
-    this._features = Array.from(features.keys()).flatMap(key => features.get(key) ?? []);
     if (this.vectorSource && this.vectorLayer) {
       this.vectorSource.clear();
-      this.vectorSource.addFeatures(this._features);
+      this.vectorSource.addFeatures(Array.from(features.keys()).flatMap(key => features.get(key) ?? []));
     }
   }
 
@@ -32,7 +30,13 @@ export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDes
   constructor(private mapService: MapService, private featureSelectionService: FeatureSelectionService) {
     super();
 
-    this.unsubscribeLater(featureSelectionService.focussedFeature.subscribe(() => this.vectorLayer?.changed()))
+    this.unsubscribeLater(featureSelectionService.focussedFeature.subscribe(feature => {
+      if (feature && !this.vectorSource?.getFeatures().includes(feature)) {
+        return;
+      }
+
+      this.vectorLayer?.changed();
+    }))
   }
 
   ngOnInit() {
@@ -74,6 +78,7 @@ export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDes
     }
 
     return new Style({
+      zIndex: isSelected ? 10 : 1,
       stroke: stroke,
     });
   }
@@ -99,6 +104,7 @@ export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDes
     }
 
     return new Style({
+      zIndex: isSelected ? 20 : 2,
       stroke: stroke,
       fill: new Fill({
         color: fillColor
