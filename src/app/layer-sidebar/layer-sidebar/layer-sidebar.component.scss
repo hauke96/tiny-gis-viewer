@@ -1,11 +1,12 @@
 @use "../../../styles";
+@use "sass:math";
 
 :host {
   @extend .shadow;
 
   display: flex;
   flex-direction: column;
-  position:relative;
+  position: relative;
 
   background-color: styles.$color-background;
   border-radius: styles.$border-radius;
@@ -19,8 +20,8 @@
   position: absolute;
   top: 0;
   right: 0;
-  margin-top: styles.$space-small;
-  margin-right: -(styles.$space-base);
+  margin-top: math.div(styles.$space-base, 1.5);
+  margin-right: -(styles.$space-base * 1.25);
 }
 
 .footer {

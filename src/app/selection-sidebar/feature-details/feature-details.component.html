@@ -17,16 +17,18 @@
   </tr>
 </table>
 
-<table class="data-table">
-  <tr>
-    <th>{{ "feature-details.key" | translate }}</th>
-    <th>{{ "feature-details.value" | translate }}</th>
-  </tr>
-  <tr *ngFor="let t of relevantTags">
-    <td [title]="t[0]" class="no-overflow">{{ t[0] }}</td>
-    <td [title]="t[1]" *ngIf="!isUrl(t[1])">{{ t[1] }}</td>
-    <td [title]="t[1]" *ngIf="isUrl(t[1])">
-      <a [href]="t[1]" target="_blank">{{ t[1] }}</a>
-    </td>
-  </tr>
-</table>
+<div class="attribute-table-wrapper">
+  <table class="data-table">
+    <tr>
+      <th>{{ "feature-details.key" | translate }}</th>
+      <th>{{ "feature-details.value" | translate }}</th>
+    </tr>
+    <tr *ngFor="let t of relevantTags">
+      <td [title]="t[0]" class="no-overflow">{{ t[0] }}</td>
+      <td [title]="t[1]" *ngIf="!isUrl(t[1])">{{ t[1] }}</td>
+      <td [title]="t[1]" *ngIf="isUrl(t[1])">
+        <a [href]="t[1]" target="_blank">{{ t[1] }}</a>
+      </td>
+    </tr>
+  </table>
+</div>

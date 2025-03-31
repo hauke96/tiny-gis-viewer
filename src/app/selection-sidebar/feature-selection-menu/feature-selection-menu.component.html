@@ -3,10 +3,12 @@
     <lucide-angular name="layers-2"></lucide-angular>
     <span>{{ layer.name }}</span>
   </div>
-  <table class="data-table">
-    <tr *ngFor="let feature of features.get(layer)" class="selectable" [class.selected]="selectedFeature === feature"
-        (click)="onFeatureSelected(feature)">
-      <td>{{ getNameForFeature(feature) }}</td>
-    </tr>
-  </table>
+  <div class="feature-table-wrapper">
+    <table class="data-table">
+      <tr *ngFor="let feature of features.get(layer)" class="selectable" [class.selected]="selectedFeature === feature"
+          (click)="onFeatureSelected(feature)">
+        <td>{{ getNameForFeature(feature) }}</td>
+      </tr>
+    </table>
+  </div>
 </div>

@@ -23,7 +23,7 @@
 }
 
 .layer-list-wrapper:not(:last-child) {
-  margin-bottom: styles.$space-small;
+  margin-bottom: styles.$space-base;
 }
 
 .selectable:hover {
@@ -40,9 +40,9 @@
   }
 }
 
-.feature-list {
-  //margin-left: styles.$space-base;
-  margin-bottom: styles.$space-base;
+.feature-table-wrapper {
+  margin-left: styles.$space-large;
+  display: flex;
 }
 
 .feature-list-item {
