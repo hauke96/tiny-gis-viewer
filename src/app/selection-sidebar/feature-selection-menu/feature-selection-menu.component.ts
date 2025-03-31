@@ -2,31 +2,38 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Feature} from 'ol';
 import {NgForOf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {Layer} from '../../layer/layer';
+import {LucideAngularModule} from 'lucide-angular';
 
 @Component({
   selector: 'app-feature-selection-menu',
   imports: [
     NgForOf,
-    FormsModule
+    FormsModule,
+    LucideAngularModule
   ],
   templateUrl: './feature-selection-menu.component.html',
   styleUrl: './feature-selection-menu.component.scss'
 })
 export class FeatureSelectionMenuComponent {
-  public _features: Feature[] = [];
+  protected _features: Map<Layer, Feature[]> = new Map<Layer, Feature[]>();
   @Input()
-  public set features(features: Feature[]) {
+  public set features(features: Map<Layer, Feature[]>) {
     this._features = features;
-    this.selectedFeature = features[0];
-    this.onFeatureSelected();
+    this.layers = Array.from(features.keys());
+    if (this.layers.length > 0 && this._features.get(this.layers[0])) {
+      this.onFeatureSelected(this._features.get(this.layers[0])![0]);
+    }
   }
-  public get features(): Feature[] {
+
+  public get features(): Map<Layer, Feature[]> {
     return this._features;
   }
 
   @Output()
   public featureSelected = new EventEmitter<Feature>();
 
+  protected layers: Layer[] = [];
   protected selectedFeature: Feature | undefined = undefined;
 
   getNameForFeature(feature: Feature): string {
@@ -42,7 +49,8 @@ export class FeatureSelectionMenuComponent {
     return "<unknown>";
   }
 
-  onFeatureSelected() {
+  public onFeatureSelected(feature: Feature): void {
+    this.selectedFeature = feature;
     this.featureSelected.emit(this.selectedFeature);
   }
 }

@@ -1,0 +1,51 @@
+@use "../../../styles";
+
+:host {
+  flex-shrink: 0;
+  max-height: 30%;
+  overflow-y: scroll;
+}
+
+.layer-name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: styles.$space-small;
+
+  lucide-angular {
+    margin-right: styles.$space-tiny;
+  }
+
+  span {
+    font-weight: bold;
+  }
+}
+
+.layer-list-wrapper:not(:last-child) {
+  margin-bottom: styles.$space-small;
+}
+
+.selectable:hover {
+  background-color: styles.$color-very-very-light !important;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: styles.$color-very-very-light;
+
+  &:hover {
+    cursor: pointer;
+    background-color: styles.$color-very-light !important;
+  }
+}
+
+.feature-list {
+  //margin-left: styles.$space-base;
+  margin-bottom: styles.$space-base;
+}
+
+.feature-list-item {
+  padding: styles.$space-small;
+  background-color: styles.$color-very-very-light;
+}

@@ -1,3 +1,12 @@
-<select [(ngModel)]="selectedFeature" (ngModelChange)="onFeatureSelected()">
-  <option *ngFor="let feature of features" [ngValue]="feature">{{ getNameForFeature(feature) }}</option>
-</select>
+<div *ngFor="let layer of layers" class="layer-list-wrapper">
+  <div class="layer-name">
+    <lucide-angular name="layers-2"></lucide-angular>
+    <span>{{ layer.name }}</span>
+  </div>
+  <table class="data-table">
+    <tr *ngFor="let feature of features.get(layer)" class="selectable" [class.selected]="selectedFeature === feature"
+        (click)="onFeatureSelected(feature)">
+      <td>{{ getNameForFeature(feature) }}</td>
+    </tr>
+  </table>
+</div>
