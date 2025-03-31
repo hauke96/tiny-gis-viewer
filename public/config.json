@@ -13,5 +13,6 @@
     {
       "capabilitiesUrl": "https://deneb.hauke-stieler.de/geo/data/wms?SERVICE=WMS&request=GetCapabilities"
     }
-  ]
+  ],
+  "queryFeatureCount": 5
 }

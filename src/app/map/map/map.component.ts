@@ -34,7 +34,7 @@ export class MapComponent extends Unsubscriber implements OnInit, MapService {
     private layerService: LayerService,
     private featureSelectionService: FeatureSelectionService,
     private httpClient: HttpClient,
-    configService: ConfigService,
+    private configService: ConfigService,
   ) {
     super();
 
@@ -94,6 +94,7 @@ export class MapComponent extends Unsubscriber implements OnInit, MapService {
             this.map.getView().getProjection(),
             {
               "INFO_FORMAT": "application/geo+json",
+              "FEATURE_COUNT": this.configService.config?.queryFeatureCount ?? 3,
               "WITH_GEOMETRY": "TRUE"
             }
           );
