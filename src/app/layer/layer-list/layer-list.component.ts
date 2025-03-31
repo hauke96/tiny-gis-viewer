@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {LayerService} from '../../layer/layer.service';
+import {LayerService} from '../layer.service';
 import {LayerListItemComponent} from '../layer-list-item/layer-list-item.component';
 import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
