@@ -6,5 +6,6 @@ import {Injectable} from '@angular/core';
 })
 export abstract class MapService {
   abstract addLayer(layer: BaseLayer): void;
+
   abstract removeLayer(layer: BaseLayer): void;
 }

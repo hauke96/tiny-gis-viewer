@@ -20,7 +20,6 @@ import {getArea, getLength} from 'ol/sphere';
 export class FeatureDetailsComponent {
   private readonly irrelevantKeys = ['@id', '@type', '@timestamp', 'geometry'];
 
-  protected _selectedFeature: Feature | undefined;
   protected relevantTags: [string, string][] = [];
   protected areaSizeInM2: number | undefined = undefined;
   protected lineLengthInM: number | undefined = undefined;
@@ -29,8 +28,6 @@ export class FeatureDetailsComponent {
 
   @Input()
   public set selectedFeature(feature: Feature | undefined) {
-    this._selectedFeature = feature;
-
     this.relevantTags = this.getRelevantTags(feature);
     this.areaSizeInM2 = this.getAreaInM2(feature?.getGeometry());
     this.lineLengthInM = this.getLengthInM(feature?.getGeometry());

@@ -22,7 +22,6 @@ import {FeatureDetailsComponent} from '../feature-details/feature-details.compon
 export class SelectionSidebarComponent extends Unsubscriber {
   protected layerToFeaturesMap: Map<Layer, Feature[]> = new Map<Layer, Feature[]>();
   protected selectedFeaturesFromMap: Feature[] = [];
-  protected selectedFeatureFromMenu: Feature | undefined;
 
   constructor(private featureSelectionService: FeatureSelectionService) {
     super();
@@ -41,6 +40,10 @@ export class SelectionSidebarComponent extends Unsubscriber {
   }
 
   protected onFeatureFromMenuSelected(feature: Feature): void {
-    this.selectedFeatureFromMenu = feature;
+    this.featureSelectionService.focusFeature(feature);
+  }
+
+  protected get focussedFeature(): Feature | undefined {
+    return this.featureSelectionService.currentlyFocussedFeature;
   }
 }

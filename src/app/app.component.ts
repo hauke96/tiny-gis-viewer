@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MapComponent} from './map/map/map.component';
 import {LayerService} from './layer/layer.service';
-import {LayerSidebarComponent} from './layer-sidebar/layer-sidebar/layer-sidebar.component';
+import {LayerSidebarComponent} from './layer/layer-sidebar/layer-sidebar.component';
 import {TranslateService} from '@ngx-translate/core';
 import {Title} from '@angular/platform-browser';
 import {ConfigService} from './config/config.service';

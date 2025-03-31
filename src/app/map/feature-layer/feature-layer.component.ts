@@ -6,6 +6,8 @@ import VectorLayer from 'ol/layer/Vector';
 import {Fill, Stroke, Style} from 'ol/style';
 import {Layer} from '../../layer/layer';
 import {FeatureLike} from 'ol/Feature';
+import {FeatureSelectionService} from '../../feature/feature-selection.service';
+import {Unsubscriber} from '../../common/unsubscriber';
 
 @Component({
   selector: 'app-feature-layer',
@@ -13,7 +15,7 @@ import {FeatureLike} from 'ol/Feature';
   templateUrl: './feature-layer.component.html',
   styleUrl: './feature-layer.component.scss',
 })
-export class FeatureLayerComponent implements OnInit, OnDestroy {
+export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDestroy {
   public _features: Feature[] = [];
   @Input()
   set features(features: Map<Layer, Feature[]>) {
@@ -27,7 +29,10 @@ export class FeatureLayerComponent implements OnInit, OnDestroy {
   private vectorSource: VectorSource | undefined = undefined;
   private vectorLayer: VectorLayer | undefined = undefined;
 
-  constructor(private mapService: MapService) {
+  constructor(private mapService: MapService, private featureSelectionService: FeatureSelectionService) {
+    super();
+
+    this.unsubscribeLater(featureSelectionService.focussedFeature.subscribe(() => this.vectorLayer?.changed()))
   }
 
   ngOnInit() {
@@ -42,25 +47,37 @@ export class FeatureLayerComponent implements OnInit, OnDestroy {
     this.mapService.addLayer(this.vectorLayer);
   }
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.mapService.removeLayer(this.vectorLayer!);
   }
 
   private getStyle(feature: FeatureLike, resolution: number): Style {
+    let isSelected = this.featureSelectionService.isSelected(feature);
+
+    let strokerColor = '#42a5f5';
+    let fillColor = '#e3f2fdc0';
+
+    if (isSelected) {
+      strokerColor = '#0d47a1';
+      fillColor = '#c9e6fac0';
+    }
+
     let stroke = new Stroke({
-      color: '#42a5f5',
-      width: 2,
+      color: strokerColor,
     });
 
     let geometryType = feature.getGeometry()!.getType();
     if (geometryType === 'LineString' || geometryType === 'MultiLineString') {
-      stroke.setWidth(5);
+      stroke.setWidth(isSelected ? 8 : 4);
+    } else {
+      stroke.setWidth(isSelected ? 4 : 2);
     }
 
     return new Style({
       stroke: stroke,
       fill: new Fill({
-        color: '#e3f2fdc0'
+        color: fillColor
       })
     });
   }
