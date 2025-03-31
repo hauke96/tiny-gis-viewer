@@ -52,26 +52,50 @@ export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDes
     this.mapService.removeLayer(this.vectorLayer!);
   }
 
-  private getStyle(feature: FeatureLike, resolution: number): Style {
+  private getStyle(feature: FeatureLike, resolution: number): Style[] {
     let isSelected = this.featureSelectionService.isSelected(feature);
 
-    let strokerColor = '#42a5f5';
-    let fillColor = '#e3f2fdc0';
+    let backStyle = this.getBackStyle(feature, isSelected);
+    let frontStyle = this.getFrontStyle(feature, isSelected);
 
-    if (isSelected) {
-      strokerColor = '#0d47a1';
-      fillColor = '#c9e6fac0';
-    }
+    return [backStyle, frontStyle];
+  }
 
+  private getBackStyle(feature: any, isSelected: boolean) {
     let stroke = new Stroke({
-      color: strokerColor,
+      color: "#ffffffa0",
     });
 
     let geometryType = feature.getGeometry()!.getType();
     if (geometryType === 'LineString' || geometryType === 'MultiLineString') {
-      stroke.setWidth(isSelected ? 8 : 4);
+      stroke.setWidth(isSelected ? 9 : 6);
     } else {
-      stroke.setWidth(isSelected ? 4 : 2);
+      stroke.setWidth(isSelected ? 6 : 5);
+    }
+
+    return new Style({
+      stroke: stroke,
+    });
+  }
+
+  private getFrontStyle(feature: any, isSelected: boolean) {
+    let strokeColor = '#42a5f5';
+    let fillColor = '#e3f2fdc0';
+
+    if (isSelected) {
+      strokeColor = '#0d47a1';
+      fillColor = '#c9e6fac0';
+    }
+
+    let stroke = new Stroke({
+      color: strokeColor,
+    });
+
+    let geometryType = feature.getGeometry()!.getType();
+    if (geometryType === 'LineString' || geometryType === 'MultiLineString') {
+      stroke.setWidth(isSelected ? 5 : 3);
+    } else {
+      stroke.setWidth(isSelected ? 3 : 2);
     }
 
     return new Style({
