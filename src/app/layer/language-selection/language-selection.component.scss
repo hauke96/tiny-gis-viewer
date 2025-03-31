@@ -2,7 +2,8 @@
 
 .lang-label {
   font-size: styles.$font-size-small;
-  padding: styles.$space-tiny;
+  padding-left: styles.$space-tiny;
+  padding-right: styles.$space-tiny;
 
   &:hover {
     cursor: pointer;

@@ -29,6 +29,8 @@
 .footer {
   display: flex;
   justify-content: space-between;
+  flex-direction: row;
+  align-items: baseline;
 }
 
 .footer-label {
