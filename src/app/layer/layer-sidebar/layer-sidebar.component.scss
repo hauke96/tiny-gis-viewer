@@ -10,6 +10,8 @@
 
   background-color: styles.$color-background;
   border-radius: styles.$border-radius;
+
+  min-height: styles.$space-base * 1.5;
 }
 
 .extra-margin {
@@ -20,7 +22,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  margin-top: math.div(styles.$space-base, 1.5);
+  margin-top: styles.$space-small;
   margin-right: -(styles.$space-base * 1.25);
 }
 
