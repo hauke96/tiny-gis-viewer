@@ -62,7 +62,7 @@ export class LayerService {
           }
 
           return result.Capability.Layer.Layer.map(layerDto => {
-            return new WmsLayer(layerDto.Title, wmsBaseUrl, layerDto.Name, layerDto.queryable === 1, layerDto.attribution)
+            return new WmsLayer(layerDto.Title, wmsBaseUrl, layerDto.Name, layerDto.queryable, layerDto.Attribution?.Title ?? "")
           });
         })
       )

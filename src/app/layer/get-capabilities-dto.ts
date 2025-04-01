@@ -19,6 +19,10 @@ export interface GetCapabilitiesLayerDto {
   Name: string,
   Title: string,
   Layer: GetCapabilitiesLayerDto[],
-  queryable: number,
-  attribution: string,
+  queryable: boolean,
+  Attribution: GetCapabilitiesLayerAttributionDto,
+}
+
+export interface GetCapabilitiesLayerAttributionDto {
+  Title: string
 }
