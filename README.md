@@ -1,14 +1,23 @@
 # TinyGisViewer
 
 A tiny web-application to view geospatial data.
-The core idea is to have no dedicated server other than a simple HTTP webspace.
-Configuration takes place in a JSON file on your webspace and the data comes from external OGC services.
+The core idea is to just need a simple HTTP webspace and load the layers from existing servers.
+Configuration takes place in a simple JSON file on your webspace.
+
+If you host your own GIS server (GeoServer, MapServer, QGIS-Server, whatever), then you can use TinyGisViewer as a simple frontend for your layers.
 
 <img align="center" style="width: 100%; max-width: 1200px;" src="https://raw.githubusercontent.com/hauke96/tiny-gis-viewer/master/screenshot.webp">
 
 ## Demo
 
 You can find a hosted version here: https://deneb.hauke-stieler.de/geo/viewer/
+
+## Features
+
+* Show WMS and XYZ layers
+  * Load WMS layers automatically based on `GetCapabilities`-URL
+* Select features and show their attributes
+* Measure distance and area 
 
 ## Deployment
 
@@ -31,14 +40,14 @@ With docker-compose, you can easily deploy TGV on a server:
 ```yaml
 services:
   tiny-gis-viewer:
-    image: hauke96/tiny-gis-viewer:0.1.0
+    image: hauke96/tiny-gis-viewer:0.2.0
 ```
 
 That's it.
 
 ## Configuration
 
-See the [public/config.json](./public/config.json) as an example.
+Take a look at [public/config.json](./public/config.json) for an example or [config.ts](src/app/config/config.ts) for the corresponding TypeScript file.
 The `mapView` property can contain exactly the properties of an OpenLayers `ViewOptions` object.
 
 ## Development
@@ -52,6 +61,20 @@ The artifact is in the `dist/tiny-gis-viewer/browser/` folder.
 
 Things that I'll add in upcoming releases:
 
-* Selecting and viewing features.
-* Specifying not only whole `GetCapabilities`-URLs but also single layer of a service.
-* Typical map tools (at least measuring) that are easy to implement.
+* Adding support for WFS services
+* Export of data (in case the WMS service has a corresponding WFS service)
+* Organize Layers in Groups
+
+Things I might add and thing I would accept via a PR:
+
+* Support for more layer types
+* Additional map tools (printing, fullscreen, rotation)
+* Responsive design
+* Additional translations
+* Other useful features that do not add unnecessary complexity to this simple tool
+
+Things that will not be implemented:
+
+* Editing or creating data
+* User-management, admin-interface or any kind of configuration within the browser
+* Anything that would require a proper backend server

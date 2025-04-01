@@ -12,6 +12,7 @@
     "number-of-geometries": "Geometries"
   },
   "control-panel": {
+    "measure-area": "Measure area",
     "measure-length": "Measure length",
     "zoom-in": "Zoom in",
     "zoom-out": "Zoom out"

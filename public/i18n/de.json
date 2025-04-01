@@ -12,6 +12,7 @@
     "number-of-geometries": "Geometrien"
   },
   "control-panel": {
+    "measure-area": "Fläche messen",
     "measure-length": "Längen messen",
     "zoom-in": "Vergrößern",
     "zoom-out": "Verkleinen"
