@@ -4,7 +4,7 @@ import {BehaviorSubject, forkJoin, map, Observable, of} from 'rxjs';
 import {WMSCapabilities} from 'ol/format';
 import {HttpClient} from '@angular/common/http';
 import {GetCapabilitiesDto} from './get-capabilities-dto';
-import {Config} from '../../config/config';
+import {Config} from '../config/config';
 
 @Injectable({
   providedIn: 'root'

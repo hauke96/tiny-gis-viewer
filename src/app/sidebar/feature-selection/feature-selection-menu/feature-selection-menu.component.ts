@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Feature} from 'ol';
 import {NgForOf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {Layer} from '../../layer/layer';
+import {Layer} from '../../../layer/layer';
 import {LucideAngularModule} from 'lucide-angular';
 
 @Component({

@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Layer} from '../layer';
+import {Layer} from '../../../layer/layer';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
