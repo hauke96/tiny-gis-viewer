@@ -17,10 +17,10 @@ import {Unsubscriber} from '../../common/unsubscriber';
 })
 export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDestroy {
   @Input()
-  set features(features: Map<Layer, Feature[]>) {
+  set features(featureMap: Map<Layer, Feature[]>) {
     if (this.vectorSource && this.vectorLayer) {
       this.vectorSource.clear();
-      this.vectorSource.addFeatures(Array.from(features.keys()).flatMap(key => features.get(key) ?? []));
+      this.vectorSource.addFeatures(Array.from(featureMap.keys()).flatMap(key => featureMap.get(key) ?? []));
     }
   }
 
@@ -31,10 +31,6 @@ export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDes
     super();
 
     this.unsubscribeLater(featureSelectionService.focussedFeature.subscribe(feature => {
-      if (feature && !this.vectorSource?.getFeatures().includes(feature)) {
-        return;
-      }
-
       this.vectorLayer?.changed();
     }))
   }
