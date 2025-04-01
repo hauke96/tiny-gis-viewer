@@ -145,7 +145,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
       layers.forEach(layer => {
         let wmsLayer = new ImageLayer({
           source: new ImageWMS({
-            url: layer.wmsBaseUrl,
+            url: layer.url,
             params: {'LAYERS': layer.name}
           }),
           properties: {'name': layer.title}
