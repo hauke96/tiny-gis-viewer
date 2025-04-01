@@ -22,3 +22,7 @@ input:hover,
 .deselected {
   color: styles.$color-gray-mid;
 }
+
+label {
+  padding-right: styles.$space-small;
+}
