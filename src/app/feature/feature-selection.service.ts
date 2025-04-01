@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Layer} from '../layer/layer';
+import {Layer} from '../sidebar/layer/layer';
 import {Feature} from 'ol';
 import {FeatureLike} from 'ol/Feature';
 

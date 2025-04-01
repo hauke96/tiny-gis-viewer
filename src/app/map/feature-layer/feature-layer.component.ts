@@ -4,7 +4,7 @@ import {MapService} from '../map.service';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import {Fill, Stroke, Style} from 'ol/style';
-import {Layer} from '../../layer/layer';
+import {Layer} from '../../sidebar/layer/layer';
 import {FeatureLike} from 'ol/Feature';
 import {FeatureSelectionService} from '../../feature/feature-selection.service';
 import {Unsubscriber} from '../../common/unsubscriber';

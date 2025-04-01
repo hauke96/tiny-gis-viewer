@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {LucideAngularModule} from 'lucide-angular';
-import {Unsubscriber} from '../../common/unsubscriber';
+import {Unsubscriber} from '../../../common/unsubscriber';
 import {Layer} from '../../layer/layer';
 import {Feature} from 'ol';
 import {FeatureSelectionMenuComponent} from '../feature-selection-menu/feature-selection-menu.component';
 import {TranslatePipe} from '@ngx-translate/core';
-import {FeatureSelectionService} from '../../feature/feature-selection.service';
+import {FeatureSelectionService} from '../../../feature/feature-selection.service';
 import {FeatureDetailsComponent} from '../feature-details/feature-details.component';
 
 @Component({

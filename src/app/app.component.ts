@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {MapComponent} from './map/map/map.component';
-import {LayerService} from './layer/layer.service';
-import {LayerSidebarComponent} from './layer/layer-sidebar/layer-sidebar.component';
+import {LayerService} from './sidebar/layer/layer.service';
+import {LayerSidebarComponent} from './sidebar/layer/layer-sidebar/layer-sidebar.component';
 import {TranslateService} from '@ngx-translate/core';
 import {Title} from '@angular/platform-browser';
 import {ConfigService} from './config/config.service';
-import {SelectionSidebarComponent} from './selection-sidebar/selection-sidebar/selection-sidebar.component';
+import {SelectionSidebarComponent} from './sidebar/feature-selection/selection-sidebar/selection-sidebar.component';
 import {NgIf} from '@angular/common';
 import {FeatureSelectionService} from './feature/feature-selection.service';
 import {FeatureLayerComponent} from './map/feature-layer/feature-layer.component';
