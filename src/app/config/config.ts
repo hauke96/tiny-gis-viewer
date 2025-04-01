@@ -17,7 +17,7 @@ export class Config {
   }
 }
 
-export type LayerType = "wms" | "wms-capabilities";
+export type LayerType = "wms" | "wms-capabilities" | "xyz";
 
 export class LayerConfig {
   constructor(
@@ -48,12 +48,23 @@ export class LayerConfig {
           throw new Error(`title must be unset for '${this.type}' layer`);
         }
         break;
+      case "xyz":
+        if (this.name && this.name.trim() !== "") {
+          throw new Error("name must not be set for xyz layers");
+        }
+        if (this.queryable) {
+          throw new Error("xyz layers cannot be queryable");
+        }
+        if (!this.title || this.title.trim() === "") {
+          throw new Error("title must be set on xyz layer");
+        }
+        break;
       default:
         throw new Error(`Unknown type '${this.type}'`);
     }
 
     if (!this.url || this.url.trim() === "") {
-      throw new Error("url must be set");
+      throw new Error(`url must be set on layer with name '${this.name}`);
     }
   }
 }

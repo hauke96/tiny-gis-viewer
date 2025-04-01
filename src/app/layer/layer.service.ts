@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Layer} from './layer';
+import {Layer, WmsLayer, XyzLayer} from './layer';
 import {BehaviorSubject, forkJoin, map, Observable, of} from 'rxjs';
 import {WMSCapabilities} from 'ol/format';
 import {HttpClient} from '@angular/common/http';
@@ -27,9 +27,11 @@ export class LayerService {
     const layerObservables = config.layers.map(layer => {
       switch (layer.type) {
         case "wms":
-          return this.loadLayersFromWmsUrl(layer.title, layer.url, layer.name, layer.queryable, layer.attribution);
+          return this.loadWmsLayer(layer.title, layer.url, layer.name, layer.queryable, layer.attribution);
         case "wms-capabilities":
           return this.loadLayersFromCapabilities(layer.url);
+        case "xyz":
+          return this.loadXyzLayer(layer.title, layer.url, layer.attribution);
         default:
           console.error(`Unknown layer type '${layer.type}'`);
           return of([]);
@@ -60,13 +62,17 @@ export class LayerService {
           }
 
           return result.Capability.Layer.Layer.map(layerDto => {
-            return new Layer(layerDto.Title, wmsBaseUrl, layerDto.Name, layerDto.queryable === 1, layerDto.attribution)
+            return new WmsLayer(layerDto.Title, wmsBaseUrl, layerDto.Name, layerDto.queryable === 1, layerDto.attribution)
           });
         })
       )
   }
 
-  private loadLayersFromWmsUrl(title: string, wmsBaseUrl: string, name: string, queryable: boolean, attribution: string): Observable<Layer[]> {
-    return of([new Layer(title, wmsBaseUrl, name, queryable, attribution)]);
+  private loadWmsLayer(title: string, url: string, name: string, queryable: boolean, attribution: string): Observable<Layer[]> {
+    return of([new WmsLayer(title, url, name, queryable, attribution)]);
+  }
+
+  private loadXyzLayer(title: string, url: string, attribution: string): Observable<Layer[]> {
+    return of([new XyzLayer(title, url, attribution)]);
   }
 }

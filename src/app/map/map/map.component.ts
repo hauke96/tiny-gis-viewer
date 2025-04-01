@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
 import TileLayer from 'ol/layer/Tile';
-import {ImageWMS, OSM} from 'ol/source';
+import {ImageWMS, XYZ} from 'ol/source';
 import {Layer as OlLayer} from 'ol/layer';
 import {Feature, Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
 import {LayerService} from '../../layer/layer.service';
 import {Unsubscriber} from '../../common/unsubscriber';
-import {Layer} from '../../layer/layer';
+import {Layer, WmsLayer, XyzLayer} from '../../layer/layer';
 import {forkJoin, map, of, Subscription} from 'rxjs';
 import ImageLayer from 'ol/layer/Image';
 import {ConfigService} from '../../config/config.service';
@@ -57,11 +57,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
         new ScaleLine(),
         new Attribution()
       ],
-      layers: [
-        new TileLayer({
-          source: new OSM()
-        }),
-      ],
+      layers: [],
       view: new View({
         ...defaultViewOptions,
         ...configService.config?.mapView,
@@ -113,8 +109,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
 
               let features = geoJSON.readFeatures(response);
 
-              let layerName = olLayer.getProperties()["name"] as string;
-              let layer = Array.from(this.layerMapping.keys()).filter(l => l.title === layerName)[0];
+              let layer = olLayer.getProperties()["__TGV_LAYER__"] as Layer;
 
               return [layer, features] as [Layer, Feature[]];
             })
@@ -143,13 +138,26 @@ export class MapComponent extends Unsubscriber implements OnInit {
       this.layerSubscriptions = [];
 
       layers.forEach(layer => {
-        let wmsLayer = new ImageLayer({
-          source: new ImageWMS({
-            url: layer.url,
-            params: {'LAYERS': layer.name}
-          }),
-          properties: {'name': layer.title}
-        });
+        let wmsLayer: OlLayer;
+
+        if (layer instanceof WmsLayer) {
+          wmsLayer = new ImageLayer({
+            source: new ImageWMS({
+              url: layer.url,
+              params: {'LAYERS': layer.name}
+            }),
+            properties: {"__TGV_LAYER__": layer}
+          });
+        } else if (layer instanceof XyzLayer) {
+          wmsLayer = new TileLayer({
+            source: new XYZ({
+              url: layer.url,
+            }),
+            properties: {"__TGV_LAYER__": layer}
+          });
+        } else {
+          return;
+        }
 
         let subscription = layer.visible.subscribe((visible) => wmsLayer.setVisible(visible));
         this.layerSubscriptions.push(subscription);

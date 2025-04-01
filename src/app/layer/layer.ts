@@ -1,18 +1,16 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 
-export class Layer {
+export abstract class Layer {
   private visible$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   /**
    * @param title Human-readable title of the layer.
    * @param url Base URL for this layer.
-   * @param name Technical name/ID of this layer.
+   * @param attribution The attribution to show on the map.
    */
-  constructor(
+  protected constructor(
     public title: string,
     public url: string,
-    public name: string,
-    public queryable: boolean,
     public attribution: string,
   ) {
     this.setVisible(true);
@@ -28,5 +26,41 @@ export class Layer {
 
   public get visible(): Observable<boolean> {
     return this.visible$.asObservable()
+  }
+}
+
+export class WmsLayer extends Layer {
+  /**
+   * @param title Human-readable title of the layer.
+   * @param url Base URL for this layer.
+   * @param name Technical name/ID of this layer.
+   * @param queryable Whether the layer can be queried for features or not.
+   * @param attribution The attribution to show on the map.
+   */
+  constructor(
+    title: string,
+    url: string,
+    public name: string,
+    public queryable: boolean,
+    attribution: string,
+  ) {
+    super(title, url, attribution);
+    this.setVisible(true);
+  }
+}
+
+export class XyzLayer extends Layer {
+  /**
+   * @param title Human-readable title of the layer.
+   * @param url Base URL for this layer.
+   * @param attribution The attribution to show on the map.
+   */
+  constructor(
+    title: string,
+    url: string,
+    attribution: string,
+  ) {
+    super(title, url, attribution);
+    this.setVisible(true);
   }
 }

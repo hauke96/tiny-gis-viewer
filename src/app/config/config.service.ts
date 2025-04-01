@@ -22,7 +22,8 @@ export class ConfigService {
           newConfig.validate();
           return this.config = newConfig;
         }),
-        catchError(() => {
+        catchError(e => {
+          console.error(e);
           console.error("Error reading config or the config was invalid. I use an empty config now.")
           return of(new Config([], {}, 0));
         })
