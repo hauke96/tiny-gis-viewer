@@ -7,6 +7,10 @@ import {Interaction} from 'ol/interaction';
   providedIn: 'root',
 })
 export class MapService {
+  //
+  // Layer add/remove
+  //
+
   private layerAdded$: Subject<BaseLayer> = new Subject<BaseLayer>();
 
   public addLayer(layer: BaseLayer): void {
@@ -26,6 +30,10 @@ export class MapService {
   public get layerRemoved(): Observable<BaseLayer> {
     return this.layerRemoved$.asObservable()
   }
+
+  //
+  // Interaction add/remove
+  //
 
   private interactionAdded$: Subject<Interaction> = new Subject<Interaction>();
 
@@ -47,6 +55,10 @@ export class MapService {
     return this.interactionRemoved$.asObservable()
   }
 
+  //
+  // Length measurement start/end
+  //
+
   private lengthMeasurementStarted$: Subject<void> = new Subject<void>();
 
   public startLengthMeasurement(): void {
@@ -66,6 +78,34 @@ export class MapService {
   public get lengthMeasurementEnded(): Observable<void> {
     return this.lengthMeasurementEnded$.asObservable()
   }
+
+  //
+  // Area measurement start/end
+  //
+
+  private areaMeasurementStarted$: Subject<void> = new Subject<void>();
+
+  public startareaMeasurement(): void {
+    this.areaMeasurementStarted$.next();
+  }
+
+  public get areaMeasurementStarted(): Observable<void> {
+    return this.areaMeasurementStarted$.asObservable()
+  }
+
+  private areaMeasurementEnded$: Subject<void> = new Subject<void>();
+
+  public endareaMeasurement(): void {
+    this.areaMeasurementEnded$.next();
+  }
+
+  public get areaMeasurementEnded(): Observable<void> {
+    return this.areaMeasurementEnded$.asObservable()
+  }
+
+  //
+  // Zoom in/out
+  //
 
   private zoomedIn$: Subject<void> = new Subject<void>();
 
