@@ -1,6 +1,7 @@
 import BaseLayer from 'ol/layer/Base';
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
+import {Interaction} from 'ol/interaction';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,26 @@ export class MapService {
 
   public get layerRemoved(): Observable<BaseLayer> {
     return this.layerRemoved$.asObservable()
+  }
+
+  private interactionAdded$: Subject<Interaction> = new Subject<Interaction>();
+
+  public addInteraction(interaction: Interaction): void {
+    this.interactionAdded$.next(interaction);
+  }
+
+  public get interactionAdded(): Observable<Interaction> {
+    return this.interactionAdded$.asObservable()
+  }
+
+  private interactionRemoved$: Subject<Interaction> = new Subject<Interaction>();
+
+  public removeInteraction(interaction: Interaction): void {
+    this.interactionRemoved$.next(interaction);
+  }
+
+  public get interactionRemoved(): Observable<Interaction> {
+    return this.interactionRemoved$.asObservable()
   }
 
   private lengthMeasurementStarted$: Subject<void> = new Subject<void>();
