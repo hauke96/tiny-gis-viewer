@@ -11,7 +11,9 @@ export class Layer {
   constructor(
     public title: string,
     public url: string,
-    public name: string
+    public name: string,
+    public queryable: boolean,
+    public attribution: string,
   ) {
     this.setVisible(true);
   }

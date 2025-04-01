@@ -27,7 +27,7 @@ export class LayerService {
     const layerObservables = config.layers.map(layer => {
       switch (layer.type) {
         case "wms":
-          return this.loadLayersFromWmsUrl(layer.title, layer.url, layer.name);
+          return this.loadLayersFromWmsUrl(layer.title, layer.url, layer.name, layer.queryable, layer.attribution);
         case "wms-capabilities":
           return this.loadLayersFromCapabilities(layer.url);
         default:
@@ -60,13 +60,13 @@ export class LayerService {
           }
 
           return result.Capability.Layer.Layer.map(layerDto => {
-            return new Layer(layerDto.Title, wmsBaseUrl, layerDto.Name)
+            return new Layer(layerDto.Title, wmsBaseUrl, layerDto.Name, layerDto.queryable === 1, layerDto.attribution)
           });
         })
       )
   }
 
-  private loadLayersFromWmsUrl(title: string, wmsBaseUrl: string, name: string): Observable<Layer[]> {
-    return of([new Layer(title, wmsBaseUrl, name)]);
+  private loadLayersFromWmsUrl(title: string, wmsBaseUrl: string, name: string, queryable: boolean, attribution: string): Observable<Layer[]> {
+    return of([new Layer(title, wmsBaseUrl, name, queryable, attribution)]);
   }
 }

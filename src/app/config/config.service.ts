@@ -16,7 +16,7 @@ export class ConfigService {
     return this.httpClient.get<Config>("./config.json")
       .pipe(
         tap(c => {
-          c.layers = c.layers.map(l => Object.assign(new LayerConfig("" as LayerType, "", "", ""), l));
+          c.layers = c.layers.map(l => Object.assign(new LayerConfig("" as LayerType, "", "", "", false, ""), l));
 
           const newConfig = Object.assign(new Config([], {}, 0), c);
           newConfig.validate();

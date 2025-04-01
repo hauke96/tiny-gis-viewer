@@ -9,7 +9,7 @@ export class Config {
   }
 
   public validate(): void {
-    if (this.queryFeatureCount<=0) {
+    if (this.queryFeatureCount <= 0) {
       throw new Error(`queryFeatureCount must be at least 1 but way ${this.queryFeatureCount}`);
     }
 
@@ -25,6 +25,8 @@ export class LayerConfig {
     public url: string,
     public title: string,
     public name: string,
+    public queryable: boolean,
+    public attribution: string,
   ) {
   }
 
