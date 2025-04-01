@@ -13,14 +13,20 @@ import {Circle, Fill, RegularShape, Stroke, Style, Text} from 'ol/style';
 })
 export abstract class AbstractMeasureComponent extends Unsubscriber implements OnInit, OnDestroy {
 
+  protected readonly darkSlightlyTransparentGrey = 'rgba(60, 60, 60, 0.7)';
+  protected readonly darkTransparentGrey = 'rgba(60, 60, 60, 0.5)';
+  protected readonly darkVeryTransparentGrey = 'rgba(60, 60, 60, 0.2)';
+  protected readonly midSlightlyTransparentGrey = 'rgba(120, 120, 120, 0.7)';
+  protected readonly white = 'rgba(255, 255, 255, 1)';
+
   protected readonly modifyStyle: Style = new Style({
     image: new Circle({
       radius: 5,
       stroke: new Stroke({
-        color: 'rgba(0, 0, 0, 0.7)',
+        color: this.darkSlightlyTransparentGrey,
       }),
       fill: new Fill({
-        color: 'rgba(0, 0, 0, 0.4)',
+        color: this.darkTransparentGrey,
       }),
     })
   });
@@ -29,55 +35,36 @@ export abstract class AbstractMeasureComponent extends Unsubscriber implements O
     image: new Circle({
       radius: 5,
       stroke: new Stroke({
-        color: 'rgba(0, 0, 0, 0.7)',
+        color: this.darkSlightlyTransparentGrey,
       }),
       fill: new Fill({
-        color: 'rgba(255, 255, 255, 0.2)',
+        color: this.darkVeryTransparentGrey,
       }),
     }),
   });
 
   protected readonly style: Style = new Style({
     fill: new Fill({
-      color: 'rgba(255, 255, 255, 0.2)',
+      color: this.darkTransparentGrey,
     }),
     stroke: new Stroke({
-      color: 'rgba(0, 0, 0, 0.5)',
+      color: this.darkSlightlyTransparentGrey,
       lineDash: [5, 7],
       width: 2,
-    }),
-    image: new Circle({
-      radius: 5,
-      stroke: new Stroke({
-        color: 'rgba(0, 0, 0, 0.7)',
-      }),
-      fill: new Fill({
-        color: 'rgba(255, 255, 255, 0.2)',
-      }),
-    }),
+    })
   });
 
   protected readonly labelStyle: Style = new Style({
     text: new Text({
-      font: '14px Calibri,sans-serif',
+      font: '1rem DejaVu Sans, sans-serif',
       fill: new Fill({
-        color: 'rgba(255, 255, 255, 1)',
+        color: this.white,
       }),
       backgroundFill: new Fill({
-        color: 'rgba(0, 0, 0, 0.7)',
+        color: this.darkSlightlyTransparentGrey,
       }),
       padding: [3, 3, 3, 3],
       textBaseline: 'bottom',
-      offsetY: -15,
-    }),
-    image: new RegularShape({
-      radius: 8,
-      points: 3,
-      angle: Math.PI,
-      displacement: [0, 10],
-      fill: new Fill({
-        color: 'rgba(0, 0, 0, 0.7)',
-      }),
     }),
   });
 

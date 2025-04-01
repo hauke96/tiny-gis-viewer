@@ -16,25 +16,15 @@ export class MeasureLengthLayerComponent extends AbstractMeasureComponent {
 
   private readonly segmentStyle: Style = new Style({
     text: new Text({
-      font: '12px Calibri,sans-serif',
+      font: '0.8rem DejaVu Sans, sans-serif',
       fill: new Fill({
-        color: 'rgba(255, 255, 255, 1)',
+        color: this.white,
       }),
       backgroundFill: new Fill({
-        color: 'rgba(0, 0, 0, 0.4)',
+        color: this.midSlightlyTransparentGrey,
       }),
       padding: [2, 2, 2, 2],
       textBaseline: 'bottom',
-      offsetY: -12,
-    }),
-    image: new RegularShape({
-      radius: 6,
-      points: 3,
-      angle: Math.PI,
-      displacement: [0, 8],
-      fill: new Fill({
-        color: 'rgba(0, 0, 0, 0.4)',
-      }),
     }),
   });
 
