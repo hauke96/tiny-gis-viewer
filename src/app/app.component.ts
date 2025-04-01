@@ -10,8 +10,8 @@ import {NgIf} from '@angular/common';
 import {FeatureSelectionService} from './feature/feature-selection.service';
 import {FeatureLayerComponent} from './map/feature-layer/feature-layer.component';
 import {ControlPanelComponent} from './map/control-panel/control-panel.component';
-import {MeasureLengthLayerComponent} from './map/measure-length-layer/measure-length-layer.component';
-import {MeasureAreaLayerComponent} from './map/measure-area-layer/measure-area-layer.component';
+import {MeasureLengthLayerComponent} from './map/measure/measure-length-layer.component';
+import {MeasureAreaLayerComponent} from './map/measure/measure-area-layer.component';
 
 @Component({
   selector: 'app-root',
