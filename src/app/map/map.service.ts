@@ -85,7 +85,7 @@ export class MapService {
 
   private areaMeasurementStarted$: Subject<void> = new Subject<void>();
 
-  public startareaMeasurement(): void {
+  public startAreaMeasurement(): void {
     this.areaMeasurementStarted$.next();
   }
 
@@ -95,7 +95,7 @@ export class MapService {
 
   private areaMeasurementEnded$: Subject<void> = new Subject<void>();
 
-  public endareaMeasurement(): void {
+  public endAreaMeasurement(): void {
     this.areaMeasurementEnded$.next();
   }
 

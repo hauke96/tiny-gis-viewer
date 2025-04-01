@@ -10,11 +10,12 @@ import {NgIf} from '@angular/common';
 import {FeatureSelectionService} from './feature/feature-selection.service';
 import {FeatureLayerComponent} from './map/feature-layer/feature-layer.component';
 import {ControlPanelComponent} from './map/control-panel/control-panel.component';
-import {MeasurementLayerComponent} from './map/measurement-layer/measurement-layer.component';
+import {MeasureLengthLayerComponent} from './map/measure-length-layer/measure-length-layer.component';
+import {MeasureAreaLayerComponent} from './map/measure-area-layer/measure-area-layer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent, NgIf, FeatureLayerComponent, ControlPanelComponent, MeasurementLayerComponent],
+  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent, NgIf, FeatureLayerComponent, ControlPanelComponent, MeasureLengthLayerComponent, MeasureAreaLayerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

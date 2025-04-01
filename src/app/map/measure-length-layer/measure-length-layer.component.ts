@@ -4,17 +4,17 @@ import VectorLayer from 'ol/layer/Vector';
 import {Circle, Fill, RegularShape, Stroke, Style, Text} from 'ol/style';
 import {Draw, Modify} from 'ol/interaction';
 import {FeatureLike} from 'ol/Feature';
-import {LineString, Point, Polygon} from 'ol/geom';
-import {getArea, getLength} from 'ol/sphere';
+import {LineString, Point} from 'ol/geom';
+import {getLength} from 'ol/sphere';
 import {MapService} from '../map.service';
 import {Unsubscriber} from '../../common/unsubscriber';
 
 @Component({
-  selector: 'app-measurement-layer',
+  selector: 'app-measure-length-layer',
   imports: [],
   template: '',
 })
-export class MeasurementLayerComponent extends Unsubscriber implements OnInit, OnDestroy {
+export class MeasureLengthLayerComponent extends Unsubscriber implements OnInit, OnDestroy {
 
   private measureLengthSource!: VectorSource;
   private measureLengthLayer!: VectorLayer;
@@ -116,7 +116,7 @@ export class MeasurementLayerComponent extends Unsubscriber implements OnInit, O
   constructor(private mapService: MapService) {
     super();
 
-    this.initLengthMeasurement();
+    this.initMeasurement();
   }
 
   public ngOnInit(): void {
@@ -129,8 +129,8 @@ export class MeasurementLayerComponent extends Unsubscriber implements OnInit, O
     this.mapService.addLayer(this.measureLengthLayer);
 
     this.unsubscribeLater(
-      this.mapService.lengthMeasurementStarted.subscribe(() => this.startLengthMeasurement()),
-      this.mapService.lengthMeasurementEnded.subscribe(() => this.endLengthMeasurement()),
+      this.mapService.lengthMeasurementStarted.subscribe(() => this.startMeasurement()),
+      this.mapService.lengthMeasurementEnded.subscribe(() => this.endMeasurement()),
     );
   }
 
@@ -142,16 +142,16 @@ export class MeasurementLayerComponent extends Unsubscriber implements OnInit, O
     this.mapService.removeLayer(this.measureLengthLayer);
   }
 
-  public startLengthMeasurement(): void {
+  public startMeasurement(): void {
     this.measureLengthDrawInteraction.setActive(true);
   }
 
-  public endLengthMeasurement(): void {
+  public endMeasurement(): void {
     this.measureLengthDrawInteraction.setActive(false);
     this.measureLengthSource.clear();
   }
 
-  private initLengthMeasurement() {
+  private initMeasurement() {
     this.measureLengthSource = new VectorSource();
     this.measureLengthLayer = new VectorLayer({
       source: this.measureLengthSource,
@@ -186,12 +186,6 @@ export class MeasurementLayerComponent extends Unsubscriber implements OnInit, O
   }
 
   private getLineStyle(feature: FeatureLike): Style[] {
-    // For polygons:
-    // let polygonGeom = geometry as Polygon;
-    // point = polygonGeom.getInteriorPoint();
-    // label = this.formatArea(polygonGeom);
-    // line = new LineString(polygonGeom.getCoordinates()[0]);
-
     const lineString = feature.getGeometry() as LineString;
     if (!lineString || lineString.getCoordinates().length === 0) {
       return [];
@@ -229,17 +223,6 @@ export class MeasurementLayerComponent extends Unsubscriber implements OnInit, O
       output = Math.round((length / 1000) * 100) / 100 + ' km';
     } else {
       output = Math.round(length * 100) / 100 + ' m';
-    }
-    return output;
-  };
-
-  private formatArea(polygon: Polygon): string {
-    const area = getArea(polygon);
-    let output;
-    if (area > 10000) {
-      output = Math.round((area / 1000000) * 100) / 100 + ' km\xB2';
-    } else {
-      output = Math.round(area * 100) / 100 + ' m\xB2';
     }
     return output;
   };

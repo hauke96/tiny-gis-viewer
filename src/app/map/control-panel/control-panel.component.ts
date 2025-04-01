@@ -14,20 +14,36 @@ import {Unsubscriber} from '../../common/unsubscriber';
   styleUrl: './control-panel.component.scss'
 })
 export class ControlPanelComponent extends Unsubscriber {
-  protected isInLengthMeasureMode: boolean = false;
+  protected activeMeasurementMode: 'area' | 'length' | undefined = undefined;
 
   constructor(private mapService: MapService) {
     super();
 
     this.unsubscribeLater(
-      mapService.lengthMeasurementStarted.subscribe(() => this.isInLengthMeasureMode = true),
-      mapService.lengthMeasurementEnded.subscribe(() => this.isInLengthMeasureMode = false)
+      mapService.areaMeasurementStarted.subscribe(() => this.activeMeasurementMode = 'area'),
+      mapService.areaMeasurementEnded.subscribe(() => this.activeMeasurementMode = undefined),
+      mapService.lengthMeasurementStarted.subscribe(() => this.activeMeasurementMode = 'length'),
+      mapService.lengthMeasurementEnded.subscribe(() => this.activeMeasurementMode = undefined),
     );
   }
 
-  public onMeasureLengthClicked(): void {
-    if (this.isInLengthMeasureMode) {
+  public onMeasureAreaClicked(): void {
+    if (this.activeMeasurementMode === 'length') {
       this.mapService.endLengthMeasurement();
+      this.mapService.startAreaMeasurement();
+    } else if (this.activeMeasurementMode === 'area') {
+      this.mapService.endAreaMeasurement();
+    } else {
+      this.mapService.startAreaMeasurement();
+    }
+  }
+
+  public onMeasureLengthClicked(): void {
+    if (this.activeMeasurementMode === 'length') {
+      this.mapService.endLengthMeasurement();
+    } else if (this.activeMeasurementMode === 'area') {
+      this.mapService.endAreaMeasurement();
+      this.mapService.startLengthMeasurement();
     } else {
       this.mapService.startLengthMeasurement();
     }

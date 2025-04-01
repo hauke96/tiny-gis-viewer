@@ -1,6 +1,10 @@
+<app-control-button iconName="pentagon"
+                    [title]="'control-panel.measure-area' | translate"
+                    [active]="activeMeasurementMode === 'area'"
+                    (click)="onMeasureAreaClicked()"></app-control-button>
 <app-control-button iconName="ruler"
                     [title]="'control-panel.measure-length' | translate"
-                    [active]="isInLengthMeasureMode"
+                    [active]="activeMeasurementMode === 'length'"
                     (click)="onMeasureLengthClicked()"></app-control-button>
 <app-control-button iconName="plus"
                     [title]="'control-panel.zoom-in' | translate"
