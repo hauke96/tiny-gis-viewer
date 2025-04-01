@@ -18,12 +18,14 @@
       "type": "wms",
       "url": "https://deneb.hauke-stieler.de/geo/data/wms",
       "name": "osm-hh-example-buildings",
-      "title": "Buildings"
+      "title": "Buildings",
+      "attribution": "Foobar"
     },
     {
       "type": "xyz",
       "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      "title": "OSM"
+      "title": "OSM",
+      "attribution": "&#169; <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors"
     }
   ],
   "queryFeatureCount": 5

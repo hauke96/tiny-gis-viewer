@@ -55,7 +55,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
     this.map = new OlMap({
       controls: [
         new ScaleLine(),
-        new Attribution()
+        new Attribution({collapsible: true, collapsed: false})
       ],
       layers: [],
       view: new View({
@@ -138,10 +138,10 @@ export class MapComponent extends Unsubscriber implements OnInit {
       this.layerSubscriptions = [];
 
       layers.forEach(layer => {
-        let wmsLayer: OlLayer;
+        let newOlLayer: OlLayer;
 
         if (layer instanceof WmsLayer) {
-          wmsLayer = new ImageLayer({
+          newOlLayer = new ImageLayer({
             source: new ImageWMS({
               url: layer.url,
               params: {'LAYERS': layer.name}
@@ -149,7 +149,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
             properties: {"__TGV_LAYER__": layer}
           });
         } else if (layer instanceof XyzLayer) {
-          wmsLayer = new TileLayer({
+          newOlLayer = new TileLayer({
             source: new XYZ({
               url: layer.url,
             }),
@@ -159,11 +159,15 @@ export class MapComponent extends Unsubscriber implements OnInit {
           return;
         }
 
-        let subscription = layer.visible.subscribe((visible) => wmsLayer.setVisible(visible));
+        if (layer.attribution && layer.attribution.trim() !== "") {
+          newOlLayer.getSource()?.setAttributions([layer.attribution]);
+        }
+
+        let subscription = layer.visible.subscribe((visible) => newOlLayer.setVisible(visible));
         this.layerSubscriptions.push(subscription);
 
-        this.layerMapping.set(layer, wmsLayer);
-        newLayers.push(wmsLayer);
+        this.layerMapping.set(layer, newOlLayer);
+        newLayers.push(newOlLayer);
       });
 
       oldLayers.forEach(l => this.map.removeLayer(l));
