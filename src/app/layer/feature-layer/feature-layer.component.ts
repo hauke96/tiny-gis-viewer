@@ -84,12 +84,12 @@ export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDes
   }
 
   private getFrontStyle(feature: any, isSelected: boolean) {
-    let strokeColor = '#42a5f5';
-    let fillColor = '#e3f2fdc0';
+    let strokeColor = '#478acc';
+    let fillColor = '#e1eaf2c0';
 
     if (isSelected) {
-      strokeColor = '#0d47a1';
-      fillColor = '#c9e6fac0';
+      strokeColor = '#246bb3';
+      fillColor = '#cee0f2c0';
     }
 
     let stroke = new Stroke({

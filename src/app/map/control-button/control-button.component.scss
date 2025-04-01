@@ -2,7 +2,11 @@
 
 button {
   &.selected {
+    margin-left: styles.$space-base;
     background-color: styles.$color-light;
-    //border: 1px solid styles.$color-dark;
+
+    &:hover {
+      background-color: styles.$color-mid;
+    }
   }
 }
