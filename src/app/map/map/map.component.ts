@@ -11,6 +11,7 @@ import {MapLayerComponent} from '../../layer/map-layer/map-layer.component';
 import {NgForOf} from '@angular/common';
 import {MapClickEvent} from '../../common/map-click-event';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Coordinate} from 'ol/coordinate';
 
 @Component({
   selector: 'app-map',
@@ -43,13 +44,6 @@ export class MapComponent extends Unsubscriber implements OnInit {
       maxZoom: 22,
     };
 
-    let storedMapCenter = localStorage.getItem("map_center");
-    let storedMapZoom = localStorage.getItem("map_zoom");
-    let storedViewOptions: ViewOptions = {
-      center: storedMapCenter ? JSON.parse(storedMapCenter) : defaultViewOptions.center,
-      zoom: storedMapZoom ? JSON.parse(storedMapZoom) : defaultViewOptions.zoom,
-    }
-
     this.map = new OlMap({
       controls: [
         new ScaleLine(),
@@ -59,9 +53,20 @@ export class MapComponent extends Unsubscriber implements OnInit {
       view: new View({
         ...defaultViewOptions,
         ...configService.config?.mapView,
-        ...storedViewOptions
       })
     });
+
+    this.route.queryParamMap.subscribe(paramMap => {
+      if (paramMap.has("center")) {
+        let coordinate = JSON.parse(paramMap.get("center")!) as Coordinate;
+        this.map.getView().setCenter(coordinate);
+      }
+      if (paramMap.has("resolution")) {
+        let resolution = +paramMap.get("resolution")!;
+        this.map.getView().setResolution(resolution);
+        this.mapService.changeResolution(this.map.getView().getResolution());
+      }
+    })
 
     this.mapService.changeProjection(this.map.getView().getProjection());
     this.mapService.changeResolution(this.map.getView().getResolution());
@@ -76,9 +81,6 @@ export class MapComponent extends Unsubscriber implements OnInit {
       this.handleCoordinateClick(event.coordinate);
     });
     this.map.on("moveend", (e: MapEvent) => {
-      localStorage.setItem("map_center", JSON.stringify(e.map.getView().getCenter()));
-      localStorage.setItem("map_zoom", "" + e.map.getView().getZoom());
-
       this.onResolutionChanged();
     });
 
@@ -103,7 +105,10 @@ export class MapComponent extends Unsubscriber implements OnInit {
   }
 
   private onResolutionChanged() {
-    let queryParams = {resolution: this.map.getView().getResolution()};
+    let queryParams = {
+      center: JSON.stringify(this.map.getView().getCenter()),
+      resolution: this.map.getView().getResolution()
+    };
     this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
   }
 
