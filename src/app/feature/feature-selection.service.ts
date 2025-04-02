@@ -9,6 +9,8 @@ import {Coordinate} from 'ol/coordinate';
   providedIn: 'root'
 })
 export class FeatureSelectionService {
+  // Contains all selected features for the given coordinate. When the user click to a new coordinate, this mapping
+  // will be empty unless a layer pushes new features into it.
   private selectionOnMap$: BehaviorSubject<[Coordinate, Map<Layer, Feature[]>]> = new BehaviorSubject<[Coordinate, Map<Layer, Feature[]>]>([[], new Map<Layer, Feature[]>()]);
   private focussedFeature$: BehaviorSubject<Feature | undefined> = new BehaviorSubject<Feature | undefined>(undefined);
 
@@ -22,12 +24,15 @@ export class FeatureSelectionService {
   public setSelectedFeaturesOnMap(layerToFeaturesMap: [Coordinate, Layer, Feature[]]): void {
     const newMap = new Map<Layer, Feature[]>();
 
-    if (this.selectionOnMap$.value[0] === layerToFeaturesMap[0]) {
+    // Selected features for same coordinate -> Add them to the current map of layer-to-features. Leave the map empty
+    // otherwise and thus start a new selection.
+    if (this.selectionOnMap$.value[0][0] === layerToFeaturesMap[0][0] &&
+      this.selectionOnMap$.value[0][1] === layerToFeaturesMap[0][1]) {
       const oldMap = this.selectionOnMap$.value[1];
       Array.from(oldMap.keys()).forEach(k => newMap.set(k, oldMap.get(k)!));
     }
 
-    if (layerToFeaturesMap[0].length !== 0) {
+    if (layerToFeaturesMap[2].length !== 0) {
       newMap.set(layerToFeaturesMap[1], layerToFeaturesMap[2]);
     }
 

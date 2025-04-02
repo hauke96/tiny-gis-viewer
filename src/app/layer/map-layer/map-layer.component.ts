@@ -12,6 +12,7 @@ import {ProjectionLike} from 'ol/proj';
 import {HttpClient} from '@angular/common/http';
 import {GeoJSON} from 'ol/format';
 import {FeatureSelectionService} from '../../feature/feature-selection.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-map-layer',
@@ -25,7 +26,13 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
   private geoJSON: GeoJSON;
   private olLayer: OlLayer | undefined;
 
-  constructor(private mapService: MapService, private configService: ConfigService, private httpClient: HttpClient, private featureSelectionService: FeatureSelectionService) {
+  constructor(
+    private mapService: MapService,
+    private configService: ConfigService,
+    private httpClient: HttpClient,
+    private featureSelectionService: FeatureSelectionService,
+    private route: ActivatedRoute
+  ) {
     super();
 
     this.geoJSON = new GeoJSON();
@@ -65,8 +72,14 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
       this.unsubscribeLater(
         this.mapService.clicked.subscribe(event => {
           this.selectFeaturesAtCoordinate(event.coordinate, event.resolution, event.projection);
+        }),
+        this.route.queryParams.subscribe(queryParams => {
+          if (!!queryParams["coordinate"]) {
+            let coordinate = JSON.parse(queryParams["coordinate"]) as Coordinate;
+            this.selectFeaturesAtCoordinate(coordinate, this.mapService.currentResolution, this.mapService.currentProjection);
+          }
         })
-      );
+      )
     }
   }
 
@@ -78,8 +91,8 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
     }
   }
 
-  private selectFeaturesAtCoordinate(coordinate: Coordinate, resolution: number, projection: ProjectionLike) {
-    if (!this.olLayer) {
+  private selectFeaturesAtCoordinate(coordinate: Coordinate, resolution: number | undefined, projection: ProjectionLike | undefined) {
+    if (!this.olLayer || !resolution || !projection) {
       return;
     }
 
@@ -101,10 +114,7 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
 
     this.httpClient.get<string>(featureInfoUrl).subscribe(response => {
       let features = this.geoJSON.readFeatures(response);
-
-      if (features && features.length > 0) {
-        this.featureSelectionService.setSelectedFeaturesOnMap([coordinate, this.layer, features]);
-      }
+      this.featureSelectionService.setSelectedFeaturesOnMap([coordinate, this.layer, features]);
     })
   }
 }

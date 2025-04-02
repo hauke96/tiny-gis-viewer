@@ -3,15 +3,14 @@ import {Attribution, ScaleLine} from 'ol/control';
 import {Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
 import {LayerService} from '../../layer/layer.service';
 import {Unsubscriber} from '../../common/unsubscriber';
-import {Layer, WmsLayer, XyzLayer} from '../../layer/layer';
+import {Layer} from '../../layer/layer';
 import {ConfigService} from '../../config/config.service';
 import {ViewOptions} from 'ol/View';
-import {HttpClient} from '@angular/common/http';
-import {FeatureSelectionService} from '../../feature/feature-selection.service';
 import {MapService} from '../map.service';
 import {MapLayerComponent} from '../../layer/map-layer/map-layer.component';
 import {NgForOf} from '@angular/common';
 import {MapClickEvent} from '../../common/map-click-event';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -30,6 +29,8 @@ export class MapComponent extends Unsubscriber implements OnInit {
   public constructor(
     private mapService: MapService,
     private layerService: LayerService,
+    private route: ActivatedRoute,
+    private router: Router,
     configService: ConfigService,
   ) {
     super();
@@ -61,23 +62,24 @@ export class MapComponent extends Unsubscriber implements OnInit {
         ...storedViewOptions
       })
     });
+
+    this.mapService.changeProjection(this.map.getView().getProjection());
+    this.mapService.changeResolution(this.map.getView().getResolution());
   }
 
   ngOnInit(): void {
     this.map.setTarget("map")
 
     this.map.on("click", (event: MapBrowserEvent<UIEvent>) => {
-      let coordinate = event.coordinate;
-      console.log("Click on coordinate " + coordinate);
-
-      let resolution = this.map.getView().getResolution();
-      if (resolution) {
-        this.mapService.click(new MapClickEvent(coordinate, resolution, this.map.getView().getProjection()));
-      }
+      let queryParams = {coordinate: JSON.stringify(event.coordinate)};
+      this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
+      this.handleCoordinateClick(event.coordinate);
     });
     this.map.on("moveend", (e: MapEvent) => {
       localStorage.setItem("map_center", JSON.stringify(e.map.getView().getCenter()));
       localStorage.setItem("map_zoom", "" + e.map.getView().getZoom());
+
+      this.onResolutionChanged();
     });
 
     this.unsubscribeLater(this.layerService.layers.subscribe(layers => {
@@ -98,6 +100,20 @@ export class MapComponent extends Unsubscriber implements OnInit {
       this.mapService.zoomedIn.subscribe(() => this.zoomIn()),
       this.mapService.zoomedOut.subscribe(() => this.zoomOut()),
     )
+  }
+
+  private onResolutionChanged() {
+    let queryParams = {resolution: this.map.getView().getResolution()};
+    this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
+  }
+
+  private handleCoordinateClick(coordinate: Array<number>) {
+    console.log("Click on coordinate " + coordinate);
+
+    let resolution = this.map.getView().getResolution();
+    if (resolution) {
+      this.mapService.click(new MapClickEvent(coordinate, resolution, this.map.getView().getProjection()));
+    }
   }
 
   public zoomIn(): void {

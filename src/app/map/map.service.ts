@@ -1,8 +1,9 @@
 import BaseLayer from 'ol/layer/Base';
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {Interaction} from 'ol/interaction';
 import {MapClickEvent} from '../common/map-click-event';
+import {ProjectionLike} from 'ol/proj';
 
 @Injectable({
   providedIn: 'root',
@@ -64,6 +65,26 @@ export class MapService {
 
   public get clicked(): Observable<MapClickEvent> {
     return this.clicked$.asObservable()
+  }
+
+  private resolutionChanged$: BehaviorSubject<number | undefined> = new BehaviorSubject<number | undefined>(undefined);
+
+  public changeResolution(resolution: number | undefined): void {
+    this.resolutionChanged$.next(resolution);
+  }
+
+  public get currentResolution(): number | undefined {
+    return this.resolutionChanged$.value;
+  }
+
+  private projectionChanged$: BehaviorSubject<ProjectionLike | undefined> = new BehaviorSubject<ProjectionLike | undefined>(undefined);
+
+  public changeProjection(projection: ProjectionLike | undefined): void {
+    this.projectionChanged$.next(projection);
+  }
+
+  public get currentProjection(): ProjectionLike | undefined {
+    return this.projectionChanged$.value;
   }
 
   //
