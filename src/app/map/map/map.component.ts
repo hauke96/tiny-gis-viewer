@@ -1,32 +1,34 @@
 import {Component, OnInit} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
-import TileLayer from 'ol/layer/Tile';
-import {ImageWMS, XYZ} from 'ol/source';
+import {ImageWMS} from 'ol/source';
 import {Layer as OlLayer} from 'ol/layer';
 import {Feature, Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
 import {LayerService} from '../../layer/layer.service';
 import {Unsubscriber} from '../../common/unsubscriber';
-import {Layer, WmsLayer, XyzLayer} from '../../layer/layer';
-import {forkJoin, map, of, Subscription} from 'rxjs';
-import ImageLayer from 'ol/layer/Image';
+import {Layer} from '../../layer/layer';
+import {forkJoin, map, of} from 'rxjs';
 import {ConfigService} from '../../config/config.service';
 import {ViewOptions} from 'ol/View';
 import {HttpClient} from '@angular/common/http';
 import {GeoJSON} from 'ol/format';
 import {FeatureSelectionService} from '../../feature/feature-selection.service';
 import {MapService} from '../map.service';
+import {WmsLayerComponent} from '../../layer/wms-layer/wms-layer.component';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-map',
-  imports: [],
+  imports: [
+    WmsLayerComponent,
+    NgForOf
+  ],
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
 })
 export class MapComponent extends Unsubscriber implements OnInit {
   public map: OlMap;
 
-  private layerSubscriptions: Subscription[] = [];
-  private layerMapping: Map<Layer, OlLayer> = new Map<Layer, OlLayer>();
+  protected layers: Layer[] = [];
 
   public constructor(
     private mapService: MapService,
@@ -130,48 +132,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
       layers = layers.slice();
       layers.reverse();
 
-      const oldLayers = Array.from(this.layerMapping.keys()).map(key => this.layerMapping.get(key)!);
-      const newLayers: OlLayer[] = [];
-
-      this.layerMapping.clear();
-      this.layerSubscriptions.forEach(subscription => subscription.unsubscribe());
-      this.layerSubscriptions = [];
-
-      layers.forEach(layer => {
-        let newOlLayer: OlLayer;
-
-        if (layer instanceof WmsLayer) {
-          newOlLayer = new ImageLayer({
-            source: new ImageWMS({
-              url: layer.url,
-              params: {'LAYERS': layer.name}
-            }),
-            properties: {"__TGV_LAYER__": layer}
-          });
-        } else if (layer instanceof XyzLayer) {
-          newOlLayer = new TileLayer({
-            source: new XYZ({
-              url: layer.url,
-            }),
-            properties: {"__TGV_LAYER__": layer}
-          });
-        } else {
-          return;
-        }
-
-        if (layer.attribution && layer.attribution.trim() !== "") {
-          newOlLayer.getSource()?.setAttributions([layer.attribution]);
-        }
-
-        let subscription = layer.visible.subscribe((visible) => newOlLayer.setVisible(visible));
-        this.layerSubscriptions.push(subscription);
-
-        this.layerMapping.set(layer, newOlLayer);
-        newLayers.push(newOlLayer);
-      });
-
-      oldLayers.forEach(l => this.map.removeLayer(l));
-      newLayers.forEach(layer => this.map.addLayer(layer));
+      this.layers = layers;
     }));
 
     this.unsubscribeLater(
