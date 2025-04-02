@@ -1,20 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
-import {ImageWMS} from 'ol/source';
-import {Layer as OlLayer} from 'ol/layer';
-import {Feature, Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
+import {Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
 import {LayerService} from '../../layer/layer.service';
 import {Unsubscriber} from '../../common/unsubscriber';
-import {Layer} from '../../layer/layer';
-import {forkJoin, map, of} from 'rxjs';
+import {Layer, WmsLayer} from '../../layer/layer';
 import {ConfigService} from '../../config/config.service';
 import {ViewOptions} from 'ol/View';
 import {HttpClient} from '@angular/common/http';
-import {GeoJSON} from 'ol/format';
 import {FeatureSelectionService} from '../../feature/feature-selection.service';
 import {MapService} from '../map.service';
 import {WmsLayerComponent} from '../../layer/wms-layer/wms-layer.component';
 import {NgForOf} from '@angular/common';
+import {MapClickEvent} from '../../common/map-click-event';
 
 @Component({
   selector: 'app-map',
@@ -28,7 +25,7 @@ import {NgForOf} from '@angular/common';
 export class MapComponent extends Unsubscriber implements OnInit {
   public map: OlMap;
 
-  protected layers: Layer[] = [];
+  protected wmsLayers: Layer[] = [];
 
   public constructor(
     private mapService: MapService,
@@ -47,8 +44,8 @@ export class MapComponent extends Unsubscriber implements OnInit {
       maxZoom: 22,
     };
 
-    let storedMapCenter = localStorage.getItem('map_center');
-    let storedMapZoom = localStorage.getItem('map_zoom');
+    let storedMapCenter = localStorage.getItem("map_center");
+    let storedMapZoom = localStorage.getItem("map_zoom");
     let storedViewOptions: ViewOptions = {
       center: storedMapCenter ? JSON.parse(storedMapCenter) : defaultViewOptions.center,
       zoom: storedMapZoom ? JSON.parse(storedMapZoom) : defaultViewOptions.zoom,
@@ -69,60 +66,20 @@ export class MapComponent extends Unsubscriber implements OnInit {
   }
 
   ngOnInit(): void {
-    this.map.setTarget('map')
+    this.map.setTarget("map")
 
-    this.map.on('click', (event: MapBrowserEvent<UIEvent>) => {
+    this.map.on("click", (event: MapBrowserEvent<UIEvent>) => {
       let coordinate = event.coordinate;
-      console.log('click on coordinate ' + coordinate);
+      console.log("Click on coordinate " + coordinate);
 
-      let geoJSON = new GeoJSON();
-
-      let requestObservables = this.map.getAllLayers()
-        .filter(layer => {
-          let source = layer.getSource();
-          return source && source instanceof ImageWMS;
-        })
-        .map(layer => {
-          let source = layer.getSource() as ImageWMS;
-
-          let featureInfoUrl = source.getFeatureInfoUrl(
-            coordinate,
-            this.map.getView().getResolution()!,
-            this.map.getView().getProjection(),
-            {
-              "INFO_FORMAT": "application/geo+json",
-              "FEATURE_COUNT": this.configService.config?.queryFeatureCount ?? 3,
-              "WITH_GEOMETRY": "TRUE"
-            }
-          );
-          if (!featureInfoUrl) {
-            return of("").pipe(map(response => [layer, response]));
-          }
-
-          return this.httpClient.get<string>(featureInfoUrl).pipe(map(response => [layer, response]));
-        });
-      forkJoin(requestObservables)
-        .subscribe(responseTuples => {
-          let layerToFeaturesMap = new Map<Layer, Feature[]>();
-          responseTuples
-            .map(tuple => {
-              const olLayer = tuple[0] as OlLayer;
-              const response = tuple[1];
-
-              let features = geoJSON.readFeatures(response);
-
-              let layer = olLayer.getProperties()["__TGV_LAYER__"] as Layer;
-
-              return [layer, features] as [Layer, Feature[]];
-            })
-            .filter(tuple => tuple[1] && tuple[1].length > 0)
-            .forEach(tuple => layerToFeaturesMap.set(tuple[0], tuple[1]));
-          this.featureSelectionService.setSelectedFeaturesOnMap(layerToFeaturesMap);
-        });
+      let resolution = this.map.getView().getResolution();
+      if (resolution) {
+        this.mapService.click(new MapClickEvent(coordinate, resolution, this.map.getView().getProjection()));
+      }
     });
-    this.map.on('moveend', (e: MapEvent) => {
-      localStorage.setItem('map_center', JSON.stringify(e.map.getView().getCenter()));
-      localStorage.setItem('map_zoom', '' + e.map.getView().getZoom());
+    this.map.on("moveend", (e: MapEvent) => {
+      localStorage.setItem("map_center", JSON.stringify(e.map.getView().getCenter()));
+      localStorage.setItem("map_zoom", "" + e.map.getView().getZoom());
     });
 
     this.unsubscribeLater(this.layerService.layers.subscribe(layers => {
@@ -132,7 +89,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
       layers = layers.slice();
       layers.reverse();
 
-      this.layers = layers;
+      this.wmsLayers = layers.filter(l => l instanceof WmsLayer);
     }));
 
     this.unsubscribeLater(

@@ -29,7 +29,7 @@ export class SelectionSidebarComponent extends Unsubscriber {
     this.unsubscribeLater(
       featureSelectionService.selectionOnMap
         .subscribe(layerToFeaturesMap => {
-          this.layerToFeaturesMap = layerToFeaturesMap;
+          this.layerToFeaturesMap = layerToFeaturesMap[1];
           this.selectedFeaturesFromMap = Array.from(this.layerToFeaturesMap.keys()).flatMap(key => this.layerToFeaturesMap.get(key) ?? []);
         })
     );

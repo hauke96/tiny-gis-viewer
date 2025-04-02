@@ -3,35 +3,47 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Layer} from '../layer/layer';
 import {Feature} from 'ol';
 import {FeatureLike} from 'ol/Feature';
+import {Coordinate} from 'ol/coordinate';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeatureSelectionService {
-  private selectionOnMap$: BehaviorSubject<Map<Layer, Feature[]>> = new BehaviorSubject<Map<Layer, Feature[]>>(new Map<Layer, Feature[]>());
+  private selectionOnMap$: BehaviorSubject<[Coordinate, Map<Layer, Feature[]>]> = new BehaviorSubject<[Coordinate, Map<Layer, Feature[]>]>([[], new Map<Layer, Feature[]>()]);
   private focussedFeature$: BehaviorSubject<Feature | undefined> = new BehaviorSubject<Feature | undefined>(undefined);
 
   constructor() {
   }
 
-  public get selectionOnMap(): Observable<Map<Layer, Feature[]>> {
+  public get selectionOnMap(): Observable<[Coordinate, Map<Layer, Feature[]>]> {
     return this.selectionOnMap$.asObservable();
   }
 
-  public setSelectedFeaturesOnMap(layerToFeaturesMap: Map<Layer, Feature[]>): void {
-    this.selectionOnMap$.next(layerToFeaturesMap);
+  public setSelectedFeaturesOnMap(layerToFeaturesMap: [Coordinate, Layer, Feature[]]): void {
+    const newMap = new Map<Layer, Feature[]>();
+
+    if (this.selectionOnMap$.value[0] === layerToFeaturesMap[0]) {
+      const oldMap = this.selectionOnMap$.value[1];
+      Array.from(oldMap.keys()).forEach(k => newMap.set(k, oldMap.get(k)!));
+    }
+
+    if (layerToFeaturesMap[0].length !== 0) {
+      newMap.set(layerToFeaturesMap[1], layerToFeaturesMap[2]);
+    }
+
+    this.selectionOnMap$.next([layerToFeaturesMap[0], newMap]);
   }
 
-  public get selectedFeaturesOnMap(): Map<Layer, Feature[]> {
+  public get selectedFeaturesOnMap(): [Coordinate, Map<Layer, Feature[]>] {
     return this.selectionOnMap$.value;
   }
 
   deselectAllFeaturesOnMap() {
-    this.setSelectedFeaturesOnMap(new Map<Layer, Feature[]>());
+    this.setSelectedFeaturesOnMap([[], undefined!, []]);
   }
 
   public get hasSelectionOnMap(): boolean {
-    return this.selectionOnMap$.value.size > 0;
+    return this.selectionOnMap$.value[1].size > 0;
   }
 
   public focusFeature(feature: Feature | undefined): void {

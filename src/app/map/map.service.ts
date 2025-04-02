@@ -2,6 +2,7 @@ import BaseLayer from 'ol/layer/Base';
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {Interaction} from 'ol/interaction';
+import {MapClickEvent} from '../common/map-click-event';
 
 @Injectable({
   providedIn: 'root',
@@ -53,6 +54,16 @@ export class MapService {
 
   public get interactionRemoved(): Observable<Interaction> {
     return this.interactionRemoved$.asObservable()
+  }
+
+  private clicked$: Subject<MapClickEvent> = new Subject<MapClickEvent>();
+
+  public click(event: MapClickEvent): void {
+    this.clicked$.next(event);
+  }
+
+  public get clicked(): Observable<MapClickEvent> {
+    return this.clicked$.asObservable()
   }
 
   //

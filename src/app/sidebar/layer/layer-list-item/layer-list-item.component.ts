@@ -19,6 +19,6 @@ export class LayerListItemComponent {
   }
 
   protected get tooltipText(): string {
-    return this.translate.instant('wms-layer-tooltip', {name: this.layer.title});
+    return this.translate.instant("wms-layer-tooltip", {name: this.layer.title});
   }
 }

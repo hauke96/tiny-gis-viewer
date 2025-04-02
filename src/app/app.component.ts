@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
 
     translate.onLangChange.subscribe(event => {
       localStorage.setItem("lang", event.lang);
-      translate.get('title').subscribe((res: string) => {
+      translate.get("title").subscribe((res: string) => {
         title.setTitle(res);
       });
     });

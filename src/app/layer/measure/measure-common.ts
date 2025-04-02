@@ -122,7 +122,7 @@ export abstract class AbstractMeasureComponent extends Unsubscriber implements O
       },
       stopClick: true,
     });
-    this.measureDrawInteraction.on('drawstart', () => {
+    this.measureDrawInteraction.on("drawstart", () => {
       this.measureSource.clear();
       this.measureModifyInteraction.setActive(false);
     });
