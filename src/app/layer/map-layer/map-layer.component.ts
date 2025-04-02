@@ -14,11 +14,11 @@ import {GeoJSON} from 'ol/format';
 import {FeatureSelectionService} from '../../feature/feature-selection.service';
 
 @Component({
-  selector: 'app-wms-layer',
+  selector: 'app-map-layer',
   imports: [],
   template: '',
 })
-export class WmsLayerComponent extends Unsubscriber implements OnInit, OnDestroy {
+export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy {
   @Input()
   public layer!: Layer;
 
@@ -46,7 +46,7 @@ export class WmsLayerComponent extends Unsubscriber implements OnInit, OnDestroy
         })
       });
     } else {
-      return;
+      throw new Error(`Unsupported map type ${this.layer.constructor.name}`);
     }
 
     this.olLayer.setProperties({"__TGV_LAYER__": this.layer});
@@ -59,10 +59,15 @@ export class WmsLayerComponent extends Unsubscriber implements OnInit, OnDestroy
 
     this.unsubscribeLater(
       this.layer.visible.subscribe((visible) => this.olLayer?.setVisible(visible)),
-      this.mapService.clicked.subscribe(event => {
-        this.selectFeaturesAtCoordinate(event.coordinate, event.resolution, event.projection);
-      })
     );
+
+    if (this.layer.queryable) {
+      this.unsubscribeLater(
+        this.mapService.clicked.subscribe(event => {
+          this.selectFeaturesAtCoordinate(event.coordinate, event.resolution, event.projection);
+        })
+      );
+    }
   }
 
   override ngOnDestroy() {

@@ -12,6 +12,7 @@ export abstract class Layer {
     public title: string,
     public url: string,
     public attribution: string,
+    public queryable: boolean,
   ) {
     this.setVisible(true);
   }
@@ -41,10 +42,10 @@ export class WmsLayer extends Layer {
     title: string,
     url: string,
     public name: string,
-    public queryable: boolean,
+    queryable: boolean,
     attribution: string,
   ) {
-    super(title, url, attribution);
+    super(title, url, attribution, queryable);
     this.setVisible(true);
   }
 }
@@ -60,7 +61,7 @@ export class XyzLayer extends Layer {
     url: string,
     attribution: string,
   ) {
-    super(title, url, attribution);
+    super(title, url, attribution, false);
     this.setVisible(true);
   }
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WmsLayerComponent } from './wms-layer.component';
+import { MapLayerComponent } from './map-layer.component';
 
 describe('WmsLayerComponent', () => {
-  let component: WmsLayerComponent;
-  let fixture: ComponentFixture<WmsLayerComponent>;
+  let component: MapLayerComponent;
+  let fixture: ComponentFixture<MapLayerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WmsLayerComponent]
+      imports: [MapLayerComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(WmsLayerComponent);
+    fixture = TestBed.createComponent(MapLayerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

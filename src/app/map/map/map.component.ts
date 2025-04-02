@@ -3,20 +3,20 @@ import {Attribution, ScaleLine} from 'ol/control';
 import {Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
 import {LayerService} from '../../layer/layer.service';
 import {Unsubscriber} from '../../common/unsubscriber';
-import {Layer, WmsLayer} from '../../layer/layer';
+import {Layer, WmsLayer, XyzLayer} from '../../layer/layer';
 import {ConfigService} from '../../config/config.service';
 import {ViewOptions} from 'ol/View';
 import {HttpClient} from '@angular/common/http';
 import {FeatureSelectionService} from '../../feature/feature-selection.service';
 import {MapService} from '../map.service';
-import {WmsLayerComponent} from '../../layer/wms-layer/wms-layer.component';
+import {MapLayerComponent} from '../../layer/map-layer/map-layer.component';
 import {NgForOf} from '@angular/common';
 import {MapClickEvent} from '../../common/map-click-event';
 
 @Component({
   selector: 'app-map',
   imports: [
-    WmsLayerComponent,
+    MapLayerComponent,
     NgForOf
   ],
   templateUrl: './map.component.html',
@@ -25,14 +25,12 @@ import {MapClickEvent} from '../../common/map-click-event';
 export class MapComponent extends Unsubscriber implements OnInit {
   public map: OlMap;
 
-  protected wmsLayers: Layer[] = [];
+  protected layers: Layer[] = [];
 
   public constructor(
     private mapService: MapService,
     private layerService: LayerService,
-    private featureSelectionService: FeatureSelectionService,
-    private httpClient: HttpClient,
-    private configService: ConfigService,
+    configService: ConfigService,
   ) {
     super();
 
@@ -89,7 +87,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
       layers = layers.slice();
       layers.reverse();
 
-      this.wmsLayers = layers.filter(l => l instanceof WmsLayer);
+      this.layers = layers;
     }));
 
     this.unsubscribeLater(
