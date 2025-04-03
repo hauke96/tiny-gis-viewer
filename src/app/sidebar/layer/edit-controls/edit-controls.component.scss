@@ -1,0 +1,11 @@
+@use "styles";
+
+:host {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-button {
+  width: 100%;
+  height: styles.$space-base * 2;
+}

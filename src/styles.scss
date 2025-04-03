@@ -64,7 +64,7 @@ hr {
   border-top: 1px solid $color-gray-light;
 }
 
-button.flat {
+.flat {
   border: none;
   background-color: $color-very-very-light;
   border-radius: $border-radius;
@@ -78,7 +78,7 @@ button:hover {
   cursor: pointer;
 }
 
-button.icon-button {
+.icon-button {
   display: flex;
   align-items: center;
   justify-content: center;

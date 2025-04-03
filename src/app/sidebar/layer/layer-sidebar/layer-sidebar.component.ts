@@ -5,6 +5,7 @@ import {LayerListComponent} from '../layer-list/layer-list.component';
 import {LanguageSelectionComponent} from '../language-selection/language-selection.component';
 import {LucideAngularModule} from 'lucide-angular';
 import {NgIf} from '@angular/common';
+import {EditControlsComponent} from '../edit-controls/edit-controls.component';
 
 @Component({
   selector: 'app-layer-sidebar',
@@ -12,7 +13,8 @@ import {NgIf} from '@angular/common';
     LayerListComponent,
     LanguageSelectionComponent,
     LucideAngularModule,
-    NgIf
+    NgIf,
+    EditControlsComponent
   ],
   templateUrl: './layer-sidebar.component.html',
   styleUrl: './layer-sidebar.component.scss'

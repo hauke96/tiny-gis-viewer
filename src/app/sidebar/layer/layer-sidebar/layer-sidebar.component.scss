@@ -26,6 +26,12 @@
   margin-right: -(styles.$space-base * 1.25);
 }
 
+app-edit-controls {
+  margin-top: styles.$space-small;
+  margin-left: styles.$space-small;
+  margin-right: styles.$space-small;
+}
+
 .footer {
   display: flex;
   justify-content: space-between;

@@ -4,6 +4,7 @@
 </button>
 <app-layer-list [expanded]="expanded" [class.extra-margin]="!expanded"></app-layer-list>
 <div [hidden]="!expanded">
+  <app-edit-controls></app-edit-controls>
   <hr/>
   <div class="footer">
     <span class="footer-label">
