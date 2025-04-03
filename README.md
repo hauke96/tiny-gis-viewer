@@ -1,3 +1,5 @@
+<img align="right" width="64px" src="https://raw.githubusercontent.com/hauke96/tiny-gis-viewer/main/icon.png">
+
 # TinyGisViewer
 
 A tiny web-application to view geospatial data.
