@@ -1,3 +1,5 @@
 <button class="flat icon-button add-button" (click)="onAddLayerClicked()">
   <lucide-angular name="plus"></lucide-angular>
 </button>
+<app-dialog *ngIf="showDialog"  [title]="'Add layer'" (close)="onDialogClose()">
+</app-dialog>

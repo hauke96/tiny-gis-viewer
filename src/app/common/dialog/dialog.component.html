@@ -1,0 +1,11 @@
+<div class="background" (click)="onCloseClicked()">
+</div>
+<div class="window shadow">
+  <button class="flat icon-button close-button" (click)="onCloseClicked()">
+    <lucide-angular name="x"></lucide-angular>
+  </button>
+
+  <h3>{{title}}</h3>
+
+  <ng-content select="content"></ng-content>
+</div>
