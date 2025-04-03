@@ -13,6 +13,8 @@ import {HttpClient} from '@angular/common/http';
 import {GeoJSON} from 'ol/format';
 import {FeatureSelectionService} from '../../feature/feature-selection.service';
 import {ActivatedRoute} from '@angular/router';
+import {first} from 'rxjs';
+import {MapClickEvent} from '../../common/map-click-event';
 
 @Component({
   selector: 'app-map-layer',
@@ -73,10 +75,10 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
         this.mapService.clicked.subscribe(event => {
           this.selectFeaturesAtCoordinate(event.coordinate, event.resolution, event.projection);
         }),
-        this.route.queryParams.subscribe(queryParams => {
-          if (!!queryParams["coordinate"]) {
-            let coordinate = JSON.parse(queryParams["coordinate"]) as Coordinate;
-            this.selectFeaturesAtCoordinate(coordinate, this.mapService.currentResolution, this.mapService.currentProjection);
+        this.route.queryParams.pipe(first()).subscribe(queryParams => {
+          if (!!queryParams["click"]) {
+            let event = MapClickEvent.fromString(queryParams["click"]);
+            this.selectFeaturesAtCoordinate(event.coordinate, event.resolution, event.projection);
           }
         })
       )
