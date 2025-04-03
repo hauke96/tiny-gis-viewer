@@ -7,6 +7,7 @@ export abstract class Layer {
    * @param title Human-readable title of the layer.
    * @param url Base URL for this layer.
    * @param attribution The attribution to show on the map.
+   * @param queryable True says, that this layer can be used to obtain features.
    */
   protected constructor(
     public title: string,

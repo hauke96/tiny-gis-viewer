@@ -6,7 +6,7 @@
   <div class="feature-table-wrapper">
     <table class="data-table">
       <tr *ngFor="let feature of features.get(layer)" class="selectable" [class.selected]="selectedFeature === feature"
-          (click)="onFeatureSelected(feature)">
+          (click)="onFeatureSelected(layer, feature)">
         <td>{{ getNameForFeature(feature) }}</td>
       </tr>
     </table>

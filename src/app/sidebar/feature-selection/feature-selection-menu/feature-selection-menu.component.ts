@@ -2,8 +2,10 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Feature} from 'ol';
 import {NgForOf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {Layer} from '../../../layer/layer';
+import {Layer, WmsLayer} from '../../../layer/layer';
 import {LucideAngularModule} from 'lucide-angular';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Unsubscriber} from '../../../common/unsubscriber';
 
 @Component({
   selector: 'app-feature-selection-menu',
@@ -15,14 +17,29 @@ import {LucideAngularModule} from 'lucide-angular';
   templateUrl: './feature-selection-menu.component.html',
   styleUrl: './feature-selection-menu.component.scss'
 })
-export class FeatureSelectionMenuComponent {
+export class FeatureSelectionMenuComponent extends Unsubscriber {
   protected _features: Map<Layer, Feature[]> = new Map<Layer, Feature[]>();
   @Input()
-  public set features(features: Map<Layer, Feature[]>) {
-    this._features = features;
-    this.layers = Array.from(features.keys());
-    if (this.layers.length > 0 && this._features.get(this.layers[0])) {
-      this.onFeatureSelected(this._features.get(this.layers[0])![0]);
+  public set features(layerToFeaturesMap: Map<Layer, Feature[]>) {
+    this._features = layerToFeaturesMap;
+    this.layers = Array.from(layerToFeaturesMap.keys());
+
+    // Find feature from URL parameters in new data
+    if (this.layers.length > 0) {
+      const layerToSelectedFeaturesMap = this.layers
+        .filter(layer => layer instanceof WmsLayer)
+        .filter(layer => layer.name === this.urlSelectedFeatureLayerName)
+        .map(layer => {
+          return [
+            layer,
+            layerToFeaturesMap.get(layer)?.filter(feature => feature.getId() === this.urlSelectedFeatureId)
+          ] as [Layer, Feature[] | undefined];
+        })
+        .filter(layerToSelectedFeaturesMap => !!layerToSelectedFeaturesMap[1] && layerToSelectedFeaturesMap[1]?.length > 0);
+
+      if (layerToSelectedFeaturesMap && layerToSelectedFeaturesMap.length > 0) {
+        this.onFeatureSelected(layerToSelectedFeaturesMap[0][0], layerToSelectedFeaturesMap[0][1]![0]);
+      }
     }
   }
 
@@ -35,6 +52,29 @@ export class FeatureSelectionMenuComponent {
 
   protected layers: Layer[] = [];
   protected selectedFeature: Feature | undefined = undefined;
+
+  private urlSelectedFeatureId: string | undefined;
+  private urlSelectedFeatureLayerName: string | undefined;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
+    super();
+
+    this.unsubscribeLater(
+      this.route.queryParamMap.subscribe(paramMap => {
+        if (paramMap.has("feature") && paramMap.get("feature")?.trim() !== "") {
+          let [layerName, featureId] = JSON.parse(paramMap.get("feature")!) as [string, string];
+          this.urlSelectedFeatureLayerName = layerName;
+          this.urlSelectedFeatureId = featureId;
+        } else {
+          this.urlSelectedFeatureLayerName = undefined;
+          this.urlSelectedFeatureId = undefined;
+        }
+      })
+    )
+  }
 
   getNameForFeature(feature: Feature): string {
     let properties = feature.getProperties();
@@ -49,8 +89,13 @@ export class FeatureSelectionMenuComponent {
     return "<unknown>";
   }
 
-  public onFeatureSelected(feature: Feature): void {
+  public onFeatureSelected(layer: Layer, feature: Feature): void {
     this.selectedFeature = feature;
     this.featureSelected.emit(this.selectedFeature);
+
+    if (layer instanceof WmsLayer) {
+      let queryParams = {feature: JSON.stringify([layer.name, feature.getId()])};
+      this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
+    }
   }
 }
