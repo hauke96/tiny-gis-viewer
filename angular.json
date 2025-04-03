@@ -35,6 +35,11 @@
               "src/styles.scss",
               "node_modules/ol/ol.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
             "scripts": [],
             "allowedCommonJsDependencies": [
               "lerc",
