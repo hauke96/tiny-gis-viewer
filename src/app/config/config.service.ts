@@ -57,8 +57,7 @@ export class ConfigService {
 
 
     let layers = (this.currentConfig.layers ?? []).slice();
-    let indexOfLayerToMove = layers.findIndex(l => l.url === layer.url && l.title === layer.title && l.queryable === layer.queryable && l.attribution === layer.attribution);
-    console.log("move layer down", indexOfLayerToMove, layers, layer)
+    let indexOfLayerToMove = layers.indexOf(layer.layerConfig);
 
     if (indexOfLayerToMove === -1 || indexOfLayerToMove == layers.length - 1) {
       return;
@@ -70,7 +69,6 @@ export class ConfigService {
     layers[indexOfLayerToMove + 1] = layerConfig;
 
     const newConfig = new Config(layers, this.currentConfig.mapView, this.currentConfig.queryFeatureCount);
-
     this.config$.next(newConfig);
   }
 
@@ -80,7 +78,7 @@ export class ConfigService {
     }
 
     let layers = (this.currentConfig.layers ?? []).slice();
-    let indexOfLayerToDelete = layers.findIndex(l => l.url === layer.url && l.title === layer.title && l.queryable === layer.queryable && l.attribution === layer.attribution);
+    let indexOfLayerToDelete = layers.indexOf(layer.layerConfig);
 
     if (indexOfLayerToDelete === -1) {
       return;
@@ -90,7 +88,6 @@ export class ConfigService {
     layers.splice(indexOfLayerToDelete, 1);
 
     const newConfig = new Config(layers, this.currentConfig.mapView, this.currentConfig.queryFeatureCount);
-
     this.config$.next(newConfig);
   }
 }

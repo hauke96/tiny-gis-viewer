@@ -24,6 +24,11 @@ export class LayerService {
   }
 
   public loadFromConfig(config: Config) {
+    if (!config.layers || config.layers.length === 0) {
+      this.setLayers([]);
+      return;
+    }
+
     const layerObservables = config.layers.map(layer => {
       switch (layer.type) {
         case "wms":
