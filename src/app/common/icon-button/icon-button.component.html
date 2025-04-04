@@ -1,3 +1,8 @@
-<button class="icon-button" [class.round]="round" [class.shadow]="shadow" [class.active]="active" (click)="onClick($event)" [disabled]="!enabled">
+<button [class.round]="round"
+        [class.shadow]="shadow"
+        [class.active]="active"
+        [class.small]="size === 'small'"
+        (click)="onClick($event)"
+        [disabled]="!enabled">
   <lucide-angular [name]="iconName"></lucide-angular>
 </button>

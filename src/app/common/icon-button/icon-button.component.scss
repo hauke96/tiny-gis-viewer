@@ -1,5 +1,19 @@
 @use "styles";
 
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: styles.$space-base * 2.5;
+  height: styles.$space-base * 2.5;
+
+  &.round {
+    width: styles.$space-base * 3;
+    height: styles.$space-base * 3;
+    border-radius: styles.$space-base * 1.5;
+  }
+}
+
 .active {
   background-color: styles.$color-light;
 
@@ -7,3 +21,16 @@
     background-color: styles.$color-mid;
   }
 }
+
+button.small {
+  width: styles.$space-base*1.5;
+  height: styles.$space-base*1.5;
+  padding: 0;
+  background-color: styles.$color-ultra-light;
+
+  lucide-angular {
+    width: styles.$space-base*1;
+    height: styles.$space-base*1;
+  }
+}
+

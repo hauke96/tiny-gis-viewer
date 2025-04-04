@@ -96,21 +96,6 @@ button {
       }
     }
   }
-
-}
-
-.icon-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: $space-base * 2.5;
-  height: $space-base * 2.5;
-
-  &.round {
-    width: $space-base * 3;
-    height: $space-base * 3;
-    border-radius: $space-base * 1.5;
-  }
 }
 
 input[type="text"],

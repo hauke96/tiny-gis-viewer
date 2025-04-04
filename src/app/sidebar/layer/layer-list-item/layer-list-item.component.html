@@ -3,3 +3,7 @@
               [tooltipText]="getTooltipText(layer)"
               (checkedChange)="onLayerSelectionClicked(layer, $event)">
 </app-checkbox>
+<div class="button-wrapper">
+  <app-icon-button iconName="move-down" [size]="'small'" *ngIf="!isLast"></app-icon-button>
+  <app-icon-button iconName="trash-2" [size]="'small'"></app-icon-button>
+</div>

@@ -20,6 +20,8 @@ export class IconButtonComponent {
   public shadow: boolean = false;
   @Input()
   public active: boolean = false;
+  @Input()
+  public size: "normal"|"small" = "normal";
 
   @Output()
   public click: EventEmitter<void> = new EventEmitter();

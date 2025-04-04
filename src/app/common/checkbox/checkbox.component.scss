@@ -6,10 +6,6 @@
   align-items: center;
 }
 
-:host:hover {
-  background-color: styles.$color-very-very-light;
-}
-
 input:hover,
 .input-wrapper:hover {
   cursor: pointer;

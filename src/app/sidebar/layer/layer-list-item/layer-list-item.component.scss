@@ -1,0 +1,26 @@
+@use "styles";
+
+:host {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+:host:hover {
+  background-color: styles.$color-very-very-light;
+}
+
+app-checkbox {
+  flex-grow: 1;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-right: styles.$space-small;
+}
+
+app-icon-button {
+  margin-left: styles.$space-small;
+}
