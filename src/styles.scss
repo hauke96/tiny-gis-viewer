@@ -152,12 +152,17 @@ lucide-angular {
 }
 
 select {
-  height: $space-large;
+  min-height: $space-large;
+  padding: $space-small;
+  margin: 0;
+
+  border: 1px solid $color-mid;
+  border-radius: $border-radius;
+
   background-color: white;
-  border: 1px solid $color-light;
 
   &:hover {
-    background-color: $color-very-very-light;
+    background-color: $color-ultra-light;
   }
 }
 

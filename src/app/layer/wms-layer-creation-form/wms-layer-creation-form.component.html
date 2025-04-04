@@ -1,4 +1,5 @@
 <div>
+  <app-drop-down [values]="layerTypeValues" [title]="'Layer type'" [(value)]="layerType"></app-drop-down>
   <app-input-text [placeholder]="'Human readable title'" [title]="'Title'" [(text)]="layerTitle"></app-input-text>
   <app-input-text placeholder="https://..." [title]="'WMS URL'" [(text)]="layerUrl"></app-input-text>
   <app-input-text [placeholder]="'Technical ID'" [title]="'Name / ID'" [(text)]="layerName"></app-input-text>

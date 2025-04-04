@@ -2,14 +2,16 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {CheckboxComponent} from "../../common/checkbox/checkbox.component";
 import {IconTextButtonComponent} from "../../common/icon-text-button/icon-text-button.component";
 import {InputTextComponent} from "../../common/input-text/input-text.component";
-import {LayerConfig} from '../../config/config';
+import {LayerConfig, LayerType} from '../../config/config';
+import {DropDownComponent} from '../../common/drop-down/drop-down.component';
 
 @Component({
   selector: 'app-wms-layer-creation-form',
   imports: [
     CheckboxComponent,
     IconTextButtonComponent,
-    InputTextComponent
+    InputTextComponent,
+    DropDownComponent
   ],
   templateUrl: './wms-layer-creation-form.component.html',
   styleUrl: './wms-layer-creation-form.component.scss'
@@ -20,11 +22,22 @@ export class WmsLayerCreationFormComponent {
   @Output()
   public abort: EventEmitter<void> = new EventEmitter();
 
+  public layerTypeValues: [LayerType, string][];
+  public layerType: LayerType = 'wms';
   public layerTitle: string = "";
   public layerUrl: string = "";
   public layerName: string = "";
   public layerAttribution: string = "";
   public layerIsQueryable: boolean = false;
+
+  constructor() {
+    // TODO translate
+    this.layerTypeValues = [
+      ["wms", "WMS"],
+      ["wms-capabilities", "WMS GetCapabilities"],
+      ["xyz", "XYZ tiles"],
+    ];
+  }
 
   public onAbortClicked(): void {
     this.abort.emit();
@@ -32,7 +45,7 @@ export class WmsLayerCreationFormComponent {
 
   public onSaveClicked(): void {
     this.save.emit(new LayerConfig(
-      'wms',
+      this.layerType!,
       this.layerUrl,
       this.layerTitle,
       this.layerName,
@@ -42,7 +55,8 @@ export class WmsLayerCreationFormComponent {
   }
 
   public canSave(): boolean {
-    return !!this.layerTitle && this.layerTitle != "" &&
+    return !!this.layerType &&
+      !!this.layerTitle && this.layerTitle != "" &&
       !!this.layerUrl && this.layerUrl != "" &&
       !!this.layerName && this.layerName != "" &&
       !!this.layerAttribution && this.layerAttribution != "";
