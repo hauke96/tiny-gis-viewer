@@ -1,10 +1,9 @@
-import {ApplicationConfig, importProvidersFrom, provideAppInitializer, provideZoneChangeDetection} from '@angular/core';
+import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 import {HttpClient, provideHttpClient} from '@angular/common/http';
 import {provideTranslateService, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {configResolver} from './config/config.resolver';
 import {icons, LucideAngularModule} from 'lucide-angular';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
@@ -23,7 +22,6 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpClient],
       },
     }),
-    provideAppInitializer(configResolver),
     importProvidersFrom(LucideAngularModule.pick(icons))
   ]
 };

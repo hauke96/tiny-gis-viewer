@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, catchError, filter, Observable, of, tap} from 'rxjs';
 import {Config, LayerConfig, LayerType} from './config';
 import {Layer} from '../layer/layer';
+import {ActivatedRoute, Router} from '@angular/router';
+import {deflate, inflate} from 'pako';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,11 @@ import {Layer} from '../layer/layer';
 export class ConfigService {
   private config$: BehaviorSubject<Config | undefined> = new BehaviorSubject<Config | undefined>(undefined);
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
   }
 
   public get currentConfig(): Config | undefined {
@@ -23,6 +29,39 @@ export class ConfigService {
 
   public getConfigAsJson(): string {
     return JSON.stringify(this.currentConfig, null, 2);
+  }
+
+  public storeConfigInUrl(): void {
+    let configAsJson = this.getConfigAsJson();
+
+    let deflatedConfigBytes = deflate(configAsJson);
+
+    let compressedConfigString = "";
+    Array.from(deflatedConfigBytes)
+      .map(c => String.fromCharCode(c))
+      .forEach(c => compressedConfigString += c);
+
+    let compressedConfigBase64 = btoa(compressedConfigString);
+
+    let queryParams = {config: compressedConfigBase64};
+    this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
+  }
+
+  public loadConfigFromUrl(configStringFromUrl: string): Observable<Config> {
+    let base64Decoded = atob(configStringFromUrl);
+
+    let uint8Array = Uint8Array.from(Array.from(base64Decoded).map(letter => letter.charCodeAt(0)));
+
+    let inflatedConfigString = inflate(uint8Array, {to: 'string'});
+
+    let config = JSON.parse(inflatedConfigString);
+
+    return this.loadConfig(config);
+  }
+
+  public hasConfigInUrl(): boolean {
+    console.log(this.route.snapshot)
+    return !!this.route.snapshot.queryParams["config"];
   }
 
   public loadConfigFromJson(jsonString: string): void {
@@ -43,12 +82,14 @@ export class ConfigService {
       )
   }
 
-  public loadConfig(c: Config): void {
+  public loadConfig(c: Config): Observable<Config> {
     c.layers = c.layers.map(l => Object.assign(new LayerConfig("" as LayerType, "", "", "", false, ""), l));
 
     const newConfig = Object.assign(new Config([], {}, 0), c);
     newConfig.validate();
-    return this.config$.next(newConfig);
+    this.config$.next(newConfig);
+
+    return of(newConfig);
   }
 
   public addLayer(layer: LayerConfig): void {

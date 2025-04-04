@@ -4,7 +4,7 @@ import {DialogComponent} from '../../../common/dialog/dialog.component';
 import {NgIf} from '@angular/common';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 import {LayerCreationFormComponent} from '../../../layer/layer-creation-form/layer-creation-form.component';
-import {Config, LayerConfig} from '../../../config/config';
+import {LayerConfig} from '../../../config/config';
 import {ConfigService} from '../../../config/config.service';
 import {TranslatePipe} from '@ngx-translate/core';
 
@@ -73,14 +73,14 @@ export class EditControlsComponent {
     document.getElementById('config-input')?.click();
   }
 
-  onConfigUpload($event: Event) {
+  public onConfigUpload($event: Event) {
     this.uploadFile($event, (evt) => {
       if (!evt || !evt.target) {
         return;
       }
 
       // @ts-ignore
-      this.configService.loadConfig(JSON.parse(evt.target.result) as Config);
+      this.configService.loadConfigFromJson(evt.target.result);
     });
   }
 
@@ -94,5 +94,9 @@ export class EditControlsComponent {
     reader.onerror = (evt) => {
       console.error(evt);
     };
+  }
+
+  public onShareClicked(): void {
+    this.configService.storeConfigInUrl();
   }
 }

@@ -1,10 +1,20 @@
-<input id="config-input" type="file" content="Upload" accept=".json" (change)="onConfigUpload($event)" style="display:none;">
+<input id="config-input" type="file" content="Upload" accept=".json" (change)="onConfigUpload($event)"
+       style="display:none;">
 
-<app-icon-button iconName="plus" (click)="onAddLayerClicked()" [title]="'layer-controls.new' | translate"></app-icon-button>
-<app-icon-button iconName="file-down" (click)="onDownloadClicked()" [title]="'layer-controls.download' | translate"></app-icon-button>
-<app-icon-button iconName="file-up" (click)="onUploadClicked()" [title]="'layer-controls.upload' | translate"></app-icon-button>
+<app-icon-button iconName="plus"
+                 (click)="onAddLayerClicked()"
+                 [title]="'layer-controls.new' | translate"></app-icon-button>
+<app-icon-button iconName="file-down"
+                 (click)="onDownloadClicked()"
+                 [title]="'layer-controls.download' | translate"></app-icon-button>
+<app-icon-button iconName="file-up"
+                 (click)="onUploadClicked()"
+                 [title]="'layer-controls.upload' | translate"></app-icon-button>
+<app-icon-button iconName="share-2"
+                 (click)="onShareClicked()"
+                 [title]="'layer-controls.share' | translate"></app-icon-button>
 
 <app-dialog *ngIf="showDialog" [title]="'Add layer'" (close)="onDialogClose()">
   <app-layer-creation-form class="dialog-content" (save)="onWmsLayerSave($event)"
-                               (abort)="onWmsLayerAbort()"></app-layer-creation-form>
+                           (abort)="onWmsLayerAbort()"></app-layer-creation-form>
 </app-dialog>
