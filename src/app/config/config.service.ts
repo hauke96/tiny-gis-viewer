@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, catchError, filter, Observable, of, tap} from 'rxjs';
 import {Config, LayerConfig, LayerType} from './config';
+import {Layer} from '../layer/layer';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,46 @@ export class ConfigService {
 
     let newLayers = [layer, ...this.currentConfig.layers ?? []];
     const newConfig = new Config(newLayers, this.currentConfig.mapView, this.currentConfig.queryFeatureCount);
+
+    this.config$.next(newConfig);
+  }
+
+  public moveLayerDown(layer: Layer): void {
+    if (!this.currentConfig) {
+      throw new Error("There must be an existing config to add a layer");
+    }
+
+
+    let layers = (this.currentConfig.layers ?? []).slice();
+    let indexOfLayerToMove = layers.findIndex(l => l.url === layer.url && l.title === layer.title && l.queryable === layer.queryable && l.attribution === layer.attribution);
+    console.log("move layer down", indexOfLayerToMove, layers, layer)
+
+    if(indexOfLayerToMove === -1 || indexOfLayerToMove == layers.length-1) {
+      return;
+    }
+
+    // Swap elements
+    let layerConfig = layers[indexOfLayerToMove];
+    layers[indexOfLayerToMove] = layers[indexOfLayerToMove + 1];
+    layers[indexOfLayerToMove + 1] = layerConfig;
+
+    const newConfig = new Config(layers, this.currentConfig.mapView, this.currentConfig.queryFeatureCount);
+
+    this.config$.next(newConfig);
+  }
+
+  public deleteLayer(layer: Layer): void {
+    if (!this.currentConfig) {
+      throw new Error("There must be an existing config to add a layer");
+    }
+
+    let layers = (this.currentConfig.layers ?? []).slice();
+    let indexOfLayerToMove = layers.findIndex(l => l.url === layer.url && l.title === layer.title && l.queryable === layer.queryable && l.attribution === layer.attribution);
+
+    // Remove item at index
+    layers.splice(indexOfLayerToMove, 1);
+
+    const newConfig = new Config(layers, this.currentConfig.mapView, this.currentConfig.queryFeatureCount);
 
     this.config$.next(newConfig);
   }

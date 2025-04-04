@@ -5,6 +5,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {Layer} from '../../../layer/layer';
 import {Observable} from 'rxjs';
 import {LayerListItemComponent} from '../layer-list-item/layer-list-item.component';
+import {ConfigService} from '../../../config/config.service';
 
 @Component({
   selector: 'app-layer-list',
@@ -21,10 +22,18 @@ import {LayerListItemComponent} from '../layer-list-item/layer-list-item.compone
 export class LayerListComponent {
   @Input() expanded!: boolean;
 
-  constructor(protected layerService: LayerService) {
+  constructor(protected layerService: LayerService, protected configService: ConfigService) {
   }
 
   public get layers(): Observable<Layer[]> {
     return this.layerService.layers;
+  }
+
+  public onMoveLayerDown(layer: Layer): void {
+    this.configService.moveLayerDown(layer);
+  }
+
+  public onDeleteLayer(layer: Layer): void {
+    this.configService.deleteLayer(layer);
   }
 }

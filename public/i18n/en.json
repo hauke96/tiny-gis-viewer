@@ -2,7 +2,11 @@
   "title": "TinyGisViewer - Tiny web-viewer for geodata",
   "layers": "Layers",
   "selected-features": "Selected features",
-  "layer-tooltip": "Layer '{{name}}'",
+  "layer-list": {
+    "layer-tooltip": "Layer '{{name}}'",
+    "move-down": "Move layer down",
+    "delete": "Delete layer"
+  },
   "feature-details": {
     "key": "Key",
     "value": "Value",
@@ -22,7 +26,7 @@
     "wms-capabilities": "WMS Capabilities",
     "xyz": "XYZ tiles"
   },
-  "layer-form" : {
+  "layer-form": {
     "layer-type": "Layer type",
     "title": "Title",
     "title-placeholder": "Human readable title",

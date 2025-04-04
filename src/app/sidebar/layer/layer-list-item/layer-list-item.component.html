@@ -4,6 +4,15 @@
               (checkedChange)="onLayerSelectionClicked(layer, $event)">
 </app-checkbox>
 <div class="button-wrapper">
-  <app-icon-button iconName="move-down" [size]="'small'" *ngIf="!isLast"></app-icon-button>
-  <app-icon-button iconName="trash-2" [size]="'small'"></app-icon-button>
+  <app-icon-button iconName="move-down"
+                   [size]="'small'"
+                   [title]="'layer-list.move-down' | translate"
+                   (click)="onMoveDownClicked()"
+                   *ngIf="!isLast">
+  </app-icon-button>
+  <app-icon-button iconName="trash-2"
+                   [size]="'small'"
+                   [title]="'layer-list.delete' | translate"
+                   (click)="onDeleteClicked()">
+  </app-icon-button>
 </div>
