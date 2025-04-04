@@ -3,7 +3,7 @@ import {Feature} from 'ol';
 import {MapService} from '../../map/map.service';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
-import {Fill, Stroke, Style} from 'ol/style';
+import {Circle, Fill, Stroke, Style} from 'ol/style';
 import {Layer} from '../layer';
 import {FeatureLike} from 'ol/Feature';
 import {FeatureSelectionService} from '../../feature/feature-selection.service';
@@ -99,11 +99,18 @@ export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDes
       stroke.setWidth(isSelected ? 3 : 2);
     }
 
+    let fill = new Fill({
+      color: fillColor
+    });
+
     return new Style({
       zIndex: isSelected ? 20 : 2,
       stroke: stroke,
-      fill: new Fill({
-        color: fillColor
+      fill: fill,
+      image: new Circle({
+        fill: fill,
+        stroke: stroke,
+        radius: 5
       })
     });
   }
