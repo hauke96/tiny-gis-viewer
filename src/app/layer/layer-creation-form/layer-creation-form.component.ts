@@ -6,17 +6,17 @@ import {LayerConfig, LayerType} from '../../config/config';
 import {DropDownComponent} from '../../common/drop-down/drop-down.component';
 
 @Component({
-  selector: 'app-wms-layer-creation-form',
+  selector: 'app-layer-creation-form',
   imports: [
     CheckboxComponent,
     IconTextButtonComponent,
     InputTextComponent,
     DropDownComponent
   ],
-  templateUrl: './wms-layer-creation-form.component.html',
-  styleUrl: './wms-layer-creation-form.component.scss'
+  templateUrl: './layer-creation-form.component.html',
+  styleUrl: './layer-creation-form.component.scss'
 })
-export class WmsLayerCreationFormComponent {
+export class LayerCreationFormComponent {
   @Output()
   public save: EventEmitter<LayerConfig> = new EventEmitter();
   @Output()

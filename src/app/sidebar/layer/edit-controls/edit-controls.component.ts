@@ -3,7 +3,7 @@ import {LucideAngularModule} from 'lucide-angular';
 import {DialogComponent} from '../../../common/dialog/dialog.component';
 import {NgIf} from '@angular/common';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
-import {WmsLayerCreationFormComponent} from '../../../layer/wms-layer-creation-form/wms-layer-creation-form.component';
+import {LayerCreationFormComponent} from '../../../layer/layer-creation-form/layer-creation-form.component';
 import {LayerConfig} from '../../../config/config';
 import {ConfigService} from '../../../config/config.service';
 
@@ -14,7 +14,7 @@ import {ConfigService} from '../../../config/config.service';
     DialogComponent,
     NgIf,
     IconButtonComponent,
-    WmsLayerCreationFormComponent,
+    LayerCreationFormComponent,
   ],
   templateUrl: './edit-controls.component.html',
   styleUrl: './edit-controls.component.scss'
