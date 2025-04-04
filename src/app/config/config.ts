@@ -41,12 +41,6 @@ export class LayerConfig {
         }
         break;
       case "wms-capabilities":
-        if (this.name && this.name.trim() !== "") {
-          throw new Error(`name must be unset for '${this.type}' layer`);
-        }
-        if (this.title && this.title.trim() !== "") {
-          throw new Error(`title must be unset for '${this.type}' layer`);
-        }
         break;
       case "xyz":
         if (this.name && this.name.trim() !== "") {

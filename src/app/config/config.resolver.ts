@@ -5,5 +5,5 @@ import {Observable} from 'rxjs';
 
 export const configResolver: () => Observable<Config> = () => {
   const configService = inject(ConfigService);
-  return configService.loadAndStoreConfig();
+  return configService.loadDefaultConfig();
 }

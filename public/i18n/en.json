@@ -39,5 +39,10 @@
     "queryable": "Is queryable?",
     "abort": "Abort",
     "save": "Save"
+  },
+  "layer-controls": {
+    "new": "Add new layer",
+    "download": "Download current configuration",
+    "upload": "Upload configuration and replace existing one"
   }
 }

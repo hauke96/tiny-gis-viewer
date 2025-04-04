@@ -13,3 +13,7 @@
   min-width: 400px;
   min-height: 200px;
 }
+
+app-icon-button:not(:last-child) {
+  margin-right: styles.$space-base;
+}

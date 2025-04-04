@@ -21,15 +21,19 @@ export class ConfigService {
     return this.config$.asObservable().pipe(filter(c => !!c));
   }
 
-  public loadAndStoreConfig(): Observable<Config> {
+  public getConfigAsJson(): string {
+    return JSON.stringify(this.currentConfig, null, 2);
+  }
+
+  public loadConfigFromJson(jsonString: string): void {
+    this.loadConfig(JSON.parse(jsonString) as Config);
+  }
+
+  public loadDefaultConfig(): Observable<Config> {
     return this.httpClient.get<Config>("./config.json")
       .pipe(
         tap(c => {
-          c.layers = c.layers.map(l => Object.assign(new LayerConfig("" as LayerType, "", "", "", false, ""), l));
-
-          const newConfig = Object.assign(new Config([], {}, 0), c);
-          newConfig.validate();
-          return this.config$.next(newConfig);
+          return this.loadConfig(c);
         }),
         catchError(e => {
           console.error(e);
@@ -37,6 +41,14 @@ export class ConfigService {
           return of(new Config([], {}, 0));
         })
       )
+  }
+
+  public loadConfig(c: Config): void {
+    c.layers = c.layers.map(l => Object.assign(new LayerConfig("" as LayerType, "", "", "", false, ""), l));
+
+    const newConfig = Object.assign(new Config([], {}, 0), c);
+    newConfig.validate();
+    return this.config$.next(newConfig);
   }
 
   public addLayer(layer: LayerConfig): void {

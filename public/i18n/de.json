@@ -35,5 +35,10 @@
     "queryable": "Ist abfragbar?",
     "abort": "Abbrechen",
     "save": "Speichern"
+  },
+  "layer-controls": {
+    "new": "Neue Ebene hinzufügen",
+    "download": "Aktuelle Konfiguration herunterladen",
+    "upload": "Konfiguration hochladen und aktuelle damit ersetzen"
   }
 }
