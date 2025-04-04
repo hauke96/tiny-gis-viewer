@@ -2,7 +2,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {CheckboxComponent} from "../../common/checkbox/checkbox.component";
 import {IconTextButtonComponent} from "../../common/icon-text-button/icon-text-button.component";
 import {InputTextComponent} from "../../common/input-text/input-text.component";
-import {WmsLayer} from '../layer';
+import {LayerConfig} from '../../config/config';
 
 @Component({
   selector: 'app-wms-layer-creation-form',
@@ -16,7 +16,7 @@ import {WmsLayer} from '../layer';
 })
 export class WmsLayerCreationFormComponent {
   @Output()
-  public save: EventEmitter<WmsLayer> = new EventEmitter();
+  public save: EventEmitter<LayerConfig> = new EventEmitter();
   @Output()
   public abort: EventEmitter<void> = new EventEmitter();
 
@@ -31,9 +31,10 @@ export class WmsLayerCreationFormComponent {
   }
 
   public onSaveClicked(): void {
-    this.save.emit(new WmsLayer(
-      this.layerTitle,
+    this.save.emit(new LayerConfig(
+      'wms',
       this.layerUrl,
+      this.layerTitle,
       this.layerName,
       this.layerIsQueryable,
       this.layerAttribution

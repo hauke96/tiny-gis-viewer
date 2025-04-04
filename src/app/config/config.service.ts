@@ -37,4 +37,15 @@ export class ConfigService {
         })
       )
   }
+
+  public addLayer(layer: LayerConfig): void {
+    if (!this.currentConfig) {
+      throw new Error("There must be an existing config to add a layer");
+    }
+
+    let newLayers = [layer, ...this.currentConfig.layers ?? []];
+    const newConfig = new Config(newLayers, this.currentConfig.mapView, this.currentConfig.queryFeatureCount);
+
+    this.config$.next(newConfig);
+  }
 }
