@@ -15,4 +15,16 @@ button {
       background-color: styles.$color-mid;
     }
   }
+
+  &:disabled {
+    background: styles.$color-gray-very-light;
+    color: styles.$color-gray-mid;
+    pointer-events: none;
+
+    lucide-angular {
+      svg {
+        color: styles.$color-gray-mid !important;
+      }
+    }
+  }
 }

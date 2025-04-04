@@ -31,7 +31,8 @@ export class EditControlsComponent {
   }
 
   public onWmsLayerSave(layer: WmsLayer): void {
-    console.log(layer);
+    // TODO store layer
+    this.onDialogClose();
   }
 
   public onWmsLayerAbort(): void {

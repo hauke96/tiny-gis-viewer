@@ -39,4 +39,11 @@ export class WmsLayerCreationFormComponent {
       this.layerAttribution
     ));
   }
+
+  public canSave(): boolean {
+    return !!this.layerTitle && this.layerTitle != "" &&
+      !!this.layerUrl && this.layerUrl != "" &&
+      !!this.layerName && this.layerName != "" &&
+      !!this.layerAttribution && this.layerAttribution != "";
+  }
 }

@@ -70,23 +70,33 @@ hr {
 button {
   display: flex;
   align-items: center;
+
   height: $space-base * 2.5;
   padding-left: $space-small;
   padding-right: $space-small;
 
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.flat {
-  border: none;
   background-color: $color-very-very-light;
+
+  border: none;
   border-radius: $border-radius;
 
   &:hover {
+    cursor: pointer;
     background-color: $color-very-light;
   }
+
+  &:disabled {
+    background: $color-gray-very-light;
+    color: $color-gray-mid;
+    pointer-events: none;
+
+    lucide-angular {
+      svg {
+        stroke: $color-gray-mid;
+      }
+    }
+  }
+
 }
 
 .icon-button {

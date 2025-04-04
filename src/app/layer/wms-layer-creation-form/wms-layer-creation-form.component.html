@@ -2,10 +2,12 @@
   <app-input-text [placeholder]="'Human readable title'" [title]="'Title'" [(text)]="layerTitle"></app-input-text>
   <app-input-text placeholder="https://..." [title]="'WMS URL'" [(text)]="layerUrl"></app-input-text>
   <app-input-text [placeholder]="'Technical ID'" [title]="'Name / ID'" [(text)]="layerName"></app-input-text>
-  <app-input-text [placeholder]="'Attribution text to show on the map'" [title]="'Attribution'" [(text)]="layerAttribution"></app-input-text>
+  <app-input-text [placeholder]="'Attribution text to show on the map'" [title]="'Attribution'"
+                  [(text)]="layerAttribution"></app-input-text>
   <app-checkbox [title]="'Is queryable?'" [(checked)]="layerIsQueryable"></app-checkbox>
 </div>
 <div class="button-wrapper">
   <app-icon-text-button [text]="'Abort'" iconName="x" (click)="onAbortClicked()"></app-icon-text-button>
-  <app-icon-text-button [text]="'Save'" iconName="save" (click)="onSaveClicked()"></app-icon-text-button>
+  <app-icon-text-button [text]="'Save'" iconName="save" (click)="onSaveClicked()"
+                        [enabled]="canSave()"></app-icon-text-button>
 </div>
