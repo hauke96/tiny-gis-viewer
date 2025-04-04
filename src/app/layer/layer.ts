@@ -1,21 +1,36 @@
 import {BehaviorSubject, Observable} from 'rxjs';
+import {LayerConfig} from '../config/config';
 
 export abstract class Layer {
   private visible$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   /**
-   * @param title Human-readable title of the layer.
-   * @param url Base URL for this layer.
-   * @param attribution The attribution to show on the map.
-   * @param queryable True says, that this layer can be used to obtain features.
+   * @param layerConfig Configuration object for this layer
    */
   protected constructor(
-    public title: string,
-    public url: string,
-    public attribution: string,
-    public queryable: boolean,
+    public layerConfig: LayerConfig,
   ) {
     this.setVisible(true);
+  }
+
+  public get title(): string {
+    return this.layerConfig.title;
+  }
+
+  public get name(): string {
+    return this.layerConfig.name;
+  }
+
+  public get url(): string {
+    return this.layerConfig.url;
+  }
+
+  public get attribution(): string {
+    return this.layerConfig.attribution;
+  }
+
+  public get queryable(): boolean {
+    return this.layerConfig.queryable;
   }
 
   public setVisible(visible: boolean): void {
@@ -33,20 +48,14 @@ export abstract class Layer {
 
 export class WmsCapabilitiesLayer extends Layer {
   /**
-   * @param title Human-readable title of the layer.
-   * @param url Base URL for the GetCapabilities request.
-   * @param name Technical name/ID of this layer.
-   * @param queryable Whether the layer can be queried for features or not.
-   * @param attribution The attribution to show on the map.
+   * @param layerConfig Configuration object for this layer
    * @param wmsLayers Layers behind the given Capabilities-URL
    */
   constructor(
-    title: string,
-    url: string,
-    public name: string,
+    layerConfig: LayerConfig,
     public wmsLayers: WmsLayer[]
   ) {
-    super(title, url, "", false);
+    super(layerConfig);
     this.setVisible(true);
   }
 
@@ -58,36 +67,24 @@ export class WmsCapabilitiesLayer extends Layer {
 
 export class WmsLayer extends Layer {
   /**
-   * @param title Human-readable title of the layer.
-   * @param url Base URL for this layer.
-   * @param name Technical name/ID of this layer.
-   * @param queryable Whether the layer can be queried for features or not.
-   * @param attribution The attribution to show on the map.
+   * @param layerConfig Configuration object for this layer
    */
   constructor(
-    title: string,
-    url: string,
-    public name: string,
-    queryable: boolean,
-    attribution: string,
+    layerConfig: LayerConfig,
   ) {
-    super(title, url, attribution, queryable);
+    super(layerConfig);
     this.setVisible(true);
   }
 }
 
 export class XyzLayer extends Layer {
   /**
-   * @param title Human-readable title of the layer.
-   * @param url Base URL for this layer.
-   * @param attribution The attribution to show on the map.
+   * @param layerConfig Configuration object for this layer
    */
   constructor(
-    title: string,
-    url: string,
-    attribution: string,
+    layerConfig: LayerConfig,
   ) {
-    super(title, url, attribution, false);
+    super(layerConfig);
     this.setVisible(true);
   }
 }

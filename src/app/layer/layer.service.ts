@@ -4,7 +4,7 @@ import {BehaviorSubject, forkJoin, map, Observable, of} from 'rxjs';
 import {WMSCapabilities} from 'ol/format';
 import {HttpClient} from '@angular/common/http';
 import {GetCapabilitiesDto} from './get-capabilities-dto';
-import {Config} from '../config/config';
+import {Config, LayerConfig} from '../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -27,11 +27,11 @@ export class LayerService {
     const layerObservables = config.layers.map(layer => {
       switch (layer.type) {
         case "wms":
-          return this.loadWmsLayer(layer.title, layer.url, layer.name, layer.queryable, layer.attribution);
+          return this.loadWmsLayer(layer);
         case "wms-capabilities":
-          return this.loadLayersFromCapabilities(layer.url);
+          return this.loadLayersFromCapabilities(layer);
         case "xyz":
-          return this.loadXyzLayer(layer.title, layer.url, layer.attribution);
+          return this.loadXyzLayer(layer);
         default:
           console.error(`Unknown layer type '${layer.type}'`);
           return of([]);
@@ -43,14 +43,13 @@ export class LayerService {
       });
   }
 
-  public loadLayersFromCapabilities(capabilitiesUrlString: string): Observable<WmsCapabilitiesLayer[]> {
-
-    const capabilitiesUrl = new URL(capabilitiesUrlString);
+  public loadLayersFromCapabilities(layerConfig: LayerConfig): Observable<WmsCapabilitiesLayer[]> {
+    const capabilitiesUrl = new URL(layerConfig.url);
     const wmsBaseUrl = capabilitiesUrl.origin + capabilitiesUrl.pathname;
 
     console.log(`Load layers from ${capabilitiesUrl}`);
 
-    return this.httpClient.get(capabilitiesUrlString, {responseType: 'text'})
+    return this.httpClient.get(layerConfig.url, {responseType: 'text'})
       .pipe(
         map(response => {
           const parser = new WMSCapabilities();
@@ -62,19 +61,22 @@ export class LayerService {
           }
 
           let wmsLayers = result.Capability.Layer.Layer.map(layerDto => {
-            return new WmsLayer(layerDto.Title, wmsBaseUrl, layerDto.Name, layerDto.queryable, layerDto.Attribution?.Title ?? "")
+            let wmsLayerConfig = new LayerConfig('wms', wmsBaseUrl, layerDto.Title, layerDto.Name, layerDto.queryable, layerDto.Attribution?.Title ?? "");
+            return new WmsLayer(wmsLayerConfig)
           });
 
-          return [new WmsCapabilitiesLayer(result.Service.Name, capabilitiesUrlString, result.Service.Name, wmsLayers)];
+          layerConfig.name = result.Service.Name;
+          layerConfig.title = result.Service.Title;
+          return [new WmsCapabilitiesLayer(layerConfig, wmsLayers)];
         })
       )
   }
 
-  private loadWmsLayer(title: string, url: string, name: string, queryable: boolean, attribution: string): Observable<Layer[]> {
-    return of([new WmsLayer(title, url, name, queryable, attribution)]);
+  private loadWmsLayer(layerConfig: LayerConfig): Observable<Layer[]> {
+    return of([new WmsLayer(layerConfig)]);
   }
 
-  private loadXyzLayer(title: string, url: string, attribution: string): Observable<Layer[]> {
-    return of([new XyzLayer(title, url, attribution)]);
+  private loadXyzLayer(layerConfig: LayerConfig): Observable<Layer[]> {
+    return of([new XyzLayer(layerConfig)]);
   }
 }

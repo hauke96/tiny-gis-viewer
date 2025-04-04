@@ -60,7 +60,7 @@ export class ConfigService {
     let indexOfLayerToMove = layers.findIndex(l => l.url === layer.url && l.title === layer.title && l.queryable === layer.queryable && l.attribution === layer.attribution);
     console.log("move layer down", indexOfLayerToMove, layers, layer)
 
-    if(indexOfLayerToMove === -1 || indexOfLayerToMove == layers.length-1) {
+    if (indexOfLayerToMove === -1 || indexOfLayerToMove == layers.length - 1) {
       return;
     }
 
@@ -80,10 +80,14 @@ export class ConfigService {
     }
 
     let layers = (this.currentConfig.layers ?? []).slice();
-    let indexOfLayerToMove = layers.findIndex(l => l.url === layer.url && l.title === layer.title && l.queryable === layer.queryable && l.attribution === layer.attribution);
+    let indexOfLayerToDelete = layers.findIndex(l => l.url === layer.url && l.title === layer.title && l.queryable === layer.queryable && l.attribution === layer.attribution);
+
+    if (indexOfLayerToDelete === -1) {
+      return;
+    }
 
     // Remove item at index
-    layers.splice(indexOfLayerToMove, 1);
+    layers.splice(indexOfLayerToDelete, 1);
 
     const newConfig = new Config(layers, this.currentConfig.mapView, this.currentConfig.queryFeatureCount);
 
