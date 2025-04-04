@@ -22,7 +22,7 @@
     "wms-capabilities": "WMS Capabilities",
     "xyz": "XYZ Kacheln"
   },
-  "layer-form" : {
+  "layer-form": {
     "layer-type": "Layer-Typ",
     "title": "Titel",
     "title-placeholder": "Menschenlesbarer Titel",
@@ -39,6 +39,7 @@
   "layer-controls": {
     "new": "Neue Ebene hinzufügen",
     "download": "Aktuelle Konfiguration herunterladen",
-    "upload": "Konfiguration hochladen und aktuelle damit ersetzen"
+    "upload": "Konfiguration hochladen und aktuelle damit ersetzen",
+    "share": "Aktuelle Konfiguration in der Adresse/URL speichern und diese in die Zwischenablage kopieren"
   }
 }

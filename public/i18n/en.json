@@ -43,6 +43,7 @@
   "layer-controls": {
     "new": "Add new layer",
     "download": "Download current configuration",
-    "upload": "Upload configuration and replace existing one"
+    "upload": "Upload configuration and replace existing one",
+    "share": "Store current map configuration in the URL and copy the URL to the clipboard"
   }
 }

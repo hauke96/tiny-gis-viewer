@@ -98,5 +98,6 @@ export class EditControlsComponent {
 
   public onShareClicked(): void {
     this.configService.storeConfigInUrl();
+    navigator.clipboard.writeText(window.location.href);
   }
 }
