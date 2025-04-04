@@ -1,5 +1,7 @@
-<button class="flat icon-button add-button" (click)="onAddLayerClicked()">
+<button class="flat icon-button" (click)="onAddLayerClicked()">
   <lucide-angular name="plus"></lucide-angular>
 </button>
+
 <app-dialog *ngIf="showDialog"  [title]="'Add layer'" (close)="onDialogClose()">
+  <app-input-text placeholder="https://..." [title]="'WMS URL'"></app-input-text>
 </app-dialog>

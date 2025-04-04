@@ -1,0 +1,13 @@
+@use "styles";
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-title {
+  color: styles.$color-gray-mid;
+  font-size: styles.$font-size-small;
+  margin-bottom: styles.$space-small;
+  margin-left: styles.$space-small;
+}

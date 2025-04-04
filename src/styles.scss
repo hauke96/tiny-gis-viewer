@@ -31,8 +31,7 @@ $space-small: math.div($space-base, 2);
 $space-large: $space-base * 2;
 $space-huge: $space-base * 3.5;
 
-$border-radius-small: 0.25rem;
-$border-radius: 0.5rem;
+$border-radius: $space-small;
 
 $font-size-normal: 1rem;
 $font-size-small: 0.75 * $font-size-normal;
@@ -42,9 +41,11 @@ $font-size-small: 0.75 * $font-size-normal;
   color: $color-gray-very-dark;
 }
 
+html,
 body {
   height: 100vh;
   margin: 0;
+  font-size: $font-size-normal;
 }
 
 span,
@@ -91,6 +92,32 @@ button:hover {
     width: $space-base * 3;
     height: $space-base * 3;
     border-radius: $space-base * 1.5;
+  }
+}
+
+input[type="text"],
+textarea {
+  // So when setting "width", the input/textarea outer size really matched the given width. Otherwise the inner width
+  // would be set. When then using "width:100px" we would actually have a width of e.g. 122px
+  // (100px + 2 * 10px padding + 2 * 1px border). The "border-box" value prevents this strange behavior.
+  box-sizing: border-box;
+  min-height: $space-large;
+  padding: $space-small;
+  margin: 0;
+
+  border: 1px solid $color-mid;
+  border-radius: $border-radius;
+
+  //flex-grow: 1;
+  //min-width: 0;
+
+  &::placeholder {
+    font-size: $font-size-small;
+  }
+
+  &:focus {
+    border: 1px solid $color-dark;
+    outline: 1px solid $color-dark;
   }
 }
 
