@@ -49,6 +49,11 @@ export class WmsCapabilitiesLayer extends Layer {
     super(title, url, "", false);
     this.setVisible(true);
   }
+
+  public override setVisible(visible: boolean): void {
+    this.wmsLayers?.forEach(l => l.setVisible(visible));
+    super.setVisible(visible);
+  }
 }
 
 export class WmsLayer extends Layer {
