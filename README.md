@@ -2,11 +2,11 @@
 
 # TinyGisViewer
 
-A tiny web-application to view geospatial data.
-The core idea is to just need a simple HTTP webspace and load the layers from existing servers.
-Configuration takes place in a simple JSON file on your webspace.
+TinyGisViewer is a simple frontend/viewer for your own GIS servers (GeoServer, MapServer, QGIS-Server, whatever).
+It has no backend and can be deployed on any web space or simple HTTP server.
 
-If you host your own GIS server (GeoServer, MapServer, QGIS-Server, whatever), then you can use TinyGisViewer as a simple frontend for your layers.
+The core idea is to _not_ need a dedicated server for configuration and data management, but to simply use a simple HTTP web space and load the layers from existing GIS servers.
+The configuration is done in a simple JSON file on your web space or by uploading such a file.
 
 <img align="center" style="width: 100%; max-width: 1200px;" src="https://raw.githubusercontent.com/hauke96/tiny-gis-viewer/master/screenshot.webp">
 
@@ -18,8 +18,11 @@ You can find a hosted version here: https://deneb.hauke-stieler.de/geo/viewer/
 
 * Show WMS and XYZ layers
   * Load WMS layers automatically based on `GetCapabilities`-URL
+  * Manually add layers
 * Select features and show their attributes
-* Measure distance and area 
+* Measure distance and area
+* Download and upload configurations
+* Share state of the map (including manually added layers) via URL
 
 ## Deployment
 
@@ -42,14 +45,14 @@ With docker-compose, you can easily deploy TGV on a server:
 ```yaml
 services:
   tiny-gis-viewer:
-    image: hauke96/tiny-gis-viewer:0.2.0
+    image: hauke96/tiny-gis-viewer:0.3.0
 ```
 
 That's it.
 
 ## Configuration
 
-Take a look at [public/config.json](./public/config.json) for an example or [config.ts](src/app/config/config.ts) for the corresponding TypeScript file.
+Take a look at the [public/config.json](./public/config.json) file for an example or at the [config.ts](src/app/config/config.ts) TypeScript file, which represents the configuration within the code.
 The `mapView` property can contain exactly the properties of an OpenLayers `ViewOptions` object.
 
 ## Development
@@ -78,5 +81,5 @@ Things I might add and thing I would accept via a PR:
 Things that will not be implemented:
 
 * Editing or creating data
-* User-management, admin-interface or any kind of configuration within the browser
+* User-management, admin-interface or persisting the configuration on the server
 * Anything that would require a proper backend server
