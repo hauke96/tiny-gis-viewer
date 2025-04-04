@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Layer} from '../../../layer/layer';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -9,16 +9,18 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrl: './layer-list-item.component.scss'
 })
 export class LayerListItemComponent {
-  @Input() layer!: Layer;
+  @Input()
+  public title:string="";
+  @Input()
+  public checked:boolean=false;
+  @Input()
+  public tooltipText:string|undefined;
 
-  constructor(private translate: TranslateService) {
-  }
+  @Output()
+  public click: EventEmitter<boolean> = new EventEmitter();
 
-  protected onClick(layerVisible: boolean) {
-    this.layer.setVisible(layerVisible);
-  }
-
-  protected get tooltipText(): string {
-    return this.translate.instant("wms-layer-tooltip", {name: this.layer.title});
+  protected onClick($event: MouseEvent) {
+    this.click.emit(!this.checked);
+    $event.stopPropagation();
   }
 }

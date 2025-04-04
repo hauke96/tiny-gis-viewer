@@ -1,6 +1,6 @@
 <app-icon-button iconName="plus" (click)="onAddLayerClicked()"></app-icon-button>
 
-<app-dialog *ngIf="!showDialog" [title]="'Add layer'" (close)="onDialogClose()">
+<app-dialog *ngIf="showDialog" [title]="'Add layer'" (close)="onDialogClose()">
   <div class="dialog-content">
     <div>
       <app-input-text [placeholder]="'Human readable title'" [title]="'Title'"></app-input-text>
