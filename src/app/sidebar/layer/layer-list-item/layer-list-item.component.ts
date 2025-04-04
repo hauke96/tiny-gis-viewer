@@ -20,7 +20,7 @@ export class LayerListItemComponent {
 
   getTooltipText(layer: Layer): string {
     // TODO rename translation key?
-    return this.translate.instant("wms-layer-tooltip", {name: layer.title});
+    return this.translate.instant("layer-tooltip", {name: layer.title});
   }
 
   onLayerSelectionClicked(layer: Layer, layerVisible: boolean) {
