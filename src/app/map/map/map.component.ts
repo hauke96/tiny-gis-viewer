@@ -3,7 +3,7 @@ import {Attribution, ScaleLine} from 'ol/control';
 import {Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
 import {LayerService} from '../../layer/layer.service';
 import {Unsubscriber} from '../../common/unsubscriber';
-import {Layer} from '../../layer/layer';
+import {Layer, WmsCapabilitiesLayer} from '../../layer/layer';
 import {ConfigService} from '../../config/config.service';
 import {ViewOptions} from 'ol/View';
 import {MapService} from '../map.service';
@@ -87,6 +87,13 @@ export class MapComponent extends Unsubscriber implements OnInit {
 
     this.unsubscribeLater(this.layerService.layers.subscribe(layers => {
       console.log(`Updating layers. Got ${layers.length} layers.`);
+
+      layers = layers.flatMap(l => {
+        if (l instanceof WmsCapabilitiesLayer) {
+          return l.wmsLayers;
+        }
+        return [l];
+      })
 
       // Reverse layers so that the first layer is on top
       layers = layers.slice();

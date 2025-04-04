@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Layer, WmsLayer, XyzLayer} from './layer';
+import {Layer, WmsCapabilitiesLayer, WmsLayer, XyzLayer} from './layer';
 import {BehaviorSubject, forkJoin, map, Observable, of} from 'rxjs';
 import {WMSCapabilities} from 'ol/format';
 import {HttpClient} from '@angular/common/http';
@@ -43,7 +43,7 @@ export class LayerService {
       });
   }
 
-  public loadLayersFromCapabilities(capabilitiesUrlString: string): Observable<Layer[]> {
+  public loadLayersFromCapabilities(capabilitiesUrlString: string): Observable<WmsCapabilitiesLayer[]> {
 
     const capabilitiesUrl = new URL(capabilitiesUrlString);
     const wmsBaseUrl = capabilitiesUrl.origin + capabilitiesUrl.pathname;
@@ -61,9 +61,11 @@ export class LayerService {
             return [];
           }
 
-          return result.Capability.Layer.Layer.map(layerDto => {
+          let wmsLayers = result.Capability.Layer.Layer.map(layerDto => {
             return new WmsLayer(layerDto.Title, wmsBaseUrl, layerDto.Name, layerDto.queryable, layerDto.Attribution?.Title ?? "")
           });
+
+          return [new WmsCapabilitiesLayer(result.Service.Name, capabilitiesUrlString, result.Service.Name, wmsLayers)];
         })
       )
   }

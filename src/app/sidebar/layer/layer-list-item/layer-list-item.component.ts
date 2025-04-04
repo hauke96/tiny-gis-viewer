@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Layer} from '../../../layer/layer';
+import {Layer, WmsCapabilitiesLayer} from '../../../layer/layer';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CheckboxComponent} from '../../../common/checkbox/checkbox.component';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
-import {NgIf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
+import {LucideAngularModule} from 'lucide-angular';
 
 @Component({
   selector: 'app-layer-list-item',
@@ -11,7 +12,9 @@ import {NgIf} from '@angular/common';
     CheckboxComponent,
     IconButtonComponent,
     NgIf,
-    TranslatePipe
+    TranslatePipe,
+    NgForOf,
+    LucideAngularModule
   ],
   templateUrl: './layer-list-item.component.html',
   styleUrl: './layer-list-item.component.scss'
@@ -21,6 +24,8 @@ export class LayerListItemComponent {
   public layer!: Layer;
   @Input()
   public isLast: boolean = false;
+  @Input()
+  public hasControlButtons: boolean = true;
 
   @Output()
   public moveDown: EventEmitter<void> = new EventEmitter();
@@ -44,5 +49,13 @@ export class LayerListItemComponent {
 
   public onDeleteClicked(): void {
     this.delete.emit();
+  }
+
+  public get hasSubLayers(): boolean {
+    return this.subLayers().length > 0;
+  }
+
+  public subLayers(): Layer[] {
+    return this.layer instanceof WmsCapabilitiesLayer ? this.layer.wmsLayers : [];
   }
 }

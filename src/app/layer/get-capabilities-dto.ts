@@ -8,6 +8,7 @@ export interface GetCapabilitiesDto {
 }
 
 export interface GetCapabilitiesServiceDto {
+  Name: string
   Title: string
 }
 

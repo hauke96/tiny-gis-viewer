@@ -2,13 +2,22 @@
 
 :host {
   display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-:host:hover {
+.row:hover {
   background-color: styles.$color-very-very-light;
+}
+
+.sub-layers {
+  margin-left: styles.$space-base;
 }
 
 app-checkbox {
