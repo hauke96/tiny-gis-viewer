@@ -1,0 +1,9 @@
+@use "styles";
+
+.active {
+  background-color: styles.$color-light;
+
+  &:hover {
+    background-color: styles.$color-mid;
+  }
+}

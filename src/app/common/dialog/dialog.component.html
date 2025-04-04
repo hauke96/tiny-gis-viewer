@@ -1,9 +1,7 @@
 <div class="background" (click)="onCloseClicked()">
 </div>
 <div class="window shadow">
-  <button class="flat icon-button close-button" (click)="onCloseClicked()">
-    <lucide-angular name="x"></lucide-angular>
-  </button>
+  <app-icon-button iconName="x" class="close-button" (click)="onCloseClicked()"></app-icon-button>
 
   <h3>{{title}}</h3>
 

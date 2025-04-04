@@ -1,7 +1,8 @@
-<button class="flat icon-button close-button shadow" (click)="expanded = !expanded">
-  <lucide-angular name="chevron-left" *ngIf="expanded"></lucide-angular>
-  <lucide-angular name="chevron-right" *ngIf="!expanded"></lucide-angular>
-</button>
+<app-icon-button class="close-button"
+                 [shadow]="true"
+                 [iconName]="expanded ? 'chevron-left' : 'chevron-right'"
+                 (click)="expanded = !expanded">
+</app-icon-button>
 <app-layer-list [expanded]="expanded" [class.extra-margin]="!expanded"></app-layer-list>
 <div [hidden]="!expanded">
   <hr/>

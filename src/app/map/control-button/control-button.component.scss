@@ -1,12 +1,10 @@
 @use "styles";
 
-button {
-  &.selected {
-    margin-left: styles.$space-base;
-    background-color: styles.$color-light;
+:host {
+  display: flex;
+  flex-direction: row;
+}
 
-    &:hover {
-      background-color: styles.$color-mid;
-    }
-  }
+.active {
+  padding-left: styles.$space-base;
 }

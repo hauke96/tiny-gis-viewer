@@ -1,0 +1,18 @@
+@use "styles";
+
+button {
+  display: flex;
+  flex-direction: row;
+
+  lucide-angular {
+    margin-right: styles.$space-small;
+  }
+
+  &.active {
+    background-color: styles.$color-light;
+
+    &:hover {
+      background-color: styles.$color-mid;
+    }
+  }
+}

@@ -3,6 +3,8 @@ import {LucideAngularModule} from 'lucide-angular';
 import {DialogComponent} from '../../../common/dialog/dialog.component';
 import {NgIf} from '@angular/common';
 import {InputTextComponent} from '../../../common/input-text/input-text.component';
+import {IconTextButtonComponent} from '../../../common/icon-text-button/icon-text-button.component';
+import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-edit-controls',
@@ -11,6 +13,8 @@ import {InputTextComponent} from '../../../common/input-text/input-text.componen
     DialogComponent,
     NgIf,
     InputTextComponent,
+    IconTextButtonComponent,
+    IconButtonComponent,
   ],
   templateUrl: './edit-controls.component.html',
   styleUrl: './edit-controls.component.scss'

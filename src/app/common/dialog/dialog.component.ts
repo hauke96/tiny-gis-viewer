@@ -1,10 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {LucideAngularModule} from "lucide-angular";
+import {IconButtonComponent} from '../icon-button/icon-button.component';
 
 @Component({
   selector: 'app-dialog',
   imports: [
-    LucideAngularModule
+    LucideAngularModule,
+    IconButtonComponent
   ],
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.scss'

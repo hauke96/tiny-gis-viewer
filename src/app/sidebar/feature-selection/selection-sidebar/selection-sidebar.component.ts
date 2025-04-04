@@ -7,6 +7,7 @@ import {FeatureSelectionMenuComponent} from '../feature-selection-menu/feature-s
 import {TranslatePipe} from '@ngx-translate/core';
 import {FeatureSelectionService} from '../../../feature/feature-selection.service';
 import {FeatureDetailsComponent} from '../feature-details/feature-details.component';
+import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-selection-sidebar',
@@ -15,6 +16,7 @@ import {FeatureDetailsComponent} from '../feature-details/feature-details.compon
     FeatureSelectionMenuComponent,
     TranslatePipe,
     FeatureDetailsComponent,
+    IconButtonComponent,
   ],
   templateUrl: './selection-sidebar.component.html',
   styleUrl: './selection-sidebar.component.scss'

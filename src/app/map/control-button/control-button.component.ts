@@ -1,10 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {LucideAngularModule} from "lucide-angular";
+import {IconButtonComponent} from '../../common/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-control-button',
   imports: [
-    LucideAngularModule
+    LucideAngularModule,
+    IconButtonComponent
   ],
   templateUrl: './control-button.component.html',
   styleUrl: './control-button.component.scss'
@@ -18,8 +20,7 @@ export class ControlButtonComponent {
   @Output()
   public click: EventEmitter<void> = new EventEmitter();
 
-  onClick($event: MouseEvent) {
+  onClick() {
     this.click.emit();
-    $event.stopPropagation();
   }
 }
