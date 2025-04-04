@@ -3,7 +3,10 @@
 <app-dialog *ngIf="!showDialog" [title]="'Add layer'" (close)="onDialogClose()">
   <div class="dialog-content">
     <div>
+      <app-input-text [placeholder]="'Human readable title'" [title]="'Title'"></app-input-text>
       <app-input-text placeholder="https://..." [title]="'WMS URL'"></app-input-text>
+      <app-input-text [placeholder]="'Technical ID'" [title]="'Name / ID'"></app-input-text>
+      <app-input-text [placeholder]="'Attribution text to show on the map'" [title]="'Attribution'"></app-input-text>
     </div>
     <div class="button-wrapper">
       <app-icon-text-button [text]="'Abort'" iconName="x"></app-icon-text-button>
