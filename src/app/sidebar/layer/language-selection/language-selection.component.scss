@@ -4,6 +4,7 @@
   font-size: styles.$font-size-small;
   padding-left: styles.$space-tiny;
   padding-right: styles.$space-tiny;
+  text-decoration-line: underline;
 
   &:hover {
     cursor: pointer;
@@ -12,5 +13,4 @@
 
 .current-lang {
   color: styles.$color-very-dark;
-  text-decoration-line: underline;
 }
