@@ -16,5 +16,24 @@
     "measure-length": "Measure length",
     "zoom-in": "Zoom in",
     "zoom-out": "Zoom out"
+  },
+  "layer-types": {
+    "wms": "WMS",
+    "wms-capabilities": "WMS Capabilities",
+    "xyz": "XYZ tiles"
+  },
+  "layer-form" : {
+    "layer-type": "Layer type",
+    "title": "Title",
+    "title-placeholder": "Human readable title",
+    "layer-url": "Layer URL",
+    "layer-url-placeholder": "https://...",
+    "name-id": "Name / Id",
+    "name-id-placeholder": "Technical ID",
+    "attribution": "Attribution",
+    "attribution-placeholder": "Attribution text to show the user",
+    "queryable": "Is queryable?",
+    "abort": "Abort",
+    "save": "Save"
   }
 }

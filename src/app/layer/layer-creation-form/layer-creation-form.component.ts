@@ -4,6 +4,7 @@ import {IconTextButtonComponent} from "../../common/icon-text-button/icon-text-b
 import {InputTextComponent} from "../../common/input-text/input-text.component";
 import {LayerConfig, LayerType} from '../../config/config';
 import {DropDownComponent} from '../../common/drop-down/drop-down.component';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-layer-creation-form',
@@ -11,7 +12,8 @@ import {DropDownComponent} from '../../common/drop-down/drop-down.component';
     CheckboxComponent,
     IconTextButtonComponent,
     InputTextComponent,
-    DropDownComponent
+    DropDownComponent,
+    TranslatePipe
   ],
   templateUrl: './layer-creation-form.component.html',
   styleUrl: './layer-creation-form.component.scss'
@@ -30,12 +32,11 @@ export class LayerCreationFormComponent {
   public layerAttribution: string = "";
   public layerIsQueryable: boolean = false;
 
-  constructor() {
-    // TODO translate
+  constructor(translate: TranslateService) {
     this.layerTypeValues = [
-      ["wms", "WMS"],
-      ["wms-capabilities", "WMS GetCapabilities"],
-      ["xyz", "XYZ tiles"],
+      ["wms", translate.instant("layer-types.wms")],
+      ["wms-capabilities", translate.instant("layer-types.wms-capabilities")],
+      ["xyz", translate.instant("layer-types.xyz")],
     ];
   }
 

@@ -1,14 +1,26 @@
 <div>
-  <app-drop-down [values]="layerTypeValues" [title]="'Layer type'" [(value)]="layerType"></app-drop-down>
-  <app-input-text [placeholder]="'Human readable title'" [title]="'Title'" [(text)]="layerTitle"></app-input-text>
-  <app-input-text placeholder="https://..." [title]="'WMS URL'" [(text)]="layerUrl"></app-input-text>
-  <app-input-text [placeholder]="'Technical ID'" [title]="'Name / ID'" [(text)]="layerName"></app-input-text>
-  <app-input-text [placeholder]="'Attribution text to show on the map'" [title]="'Attribution'"
+  <app-drop-down [values]="layerTypeValues"
+                 [title]="'layer-form.layer-type' | translate"
+                 [(value)]="layerType"></app-drop-down>
+  <app-input-text [placeholder]="'layer-form.title-placeholder' | translate"
+                  [title]="'layer-form.title' | translate"
+                  [(text)]="layerTitle"></app-input-text>
+  <app-input-text [placeholder]="'layer-form.layer-url-placeholder' | translate"
+                  [title]="'layer-form.layer-url' | translate"
+                  [(text)]="layerUrl"></app-input-text>
+  <app-input-text [placeholder]="'layer-form.name-id-placeholder' | translate"
+                  [title]="'layer-form.name-id' | translate"
+                  [(text)]="layerName"></app-input-text>
+  <app-input-text [placeholder]="'layer-form.attribution-placeholder' | translate"
+                  [title]="'layer-form.attribution' | translate"
                   [(text)]="layerAttribution"></app-input-text>
-  <app-checkbox [title]="'Is queryable?'" [(checked)]="layerIsQueryable"></app-checkbox>
+  <app-checkbox [title]="'layer-form.queryable' | translate"
+                [(checked)]="layerIsQueryable"></app-checkbox>
 </div>
 <div class="button-wrapper">
-  <app-icon-text-button [text]="'Abort'" iconName="x" (click)="onAbortClicked()"></app-icon-text-button>
-  <app-icon-text-button [text]="'Save'" iconName="save" (click)="onSaveClicked()"
+  <app-icon-text-button [text]="'layer-form.abort' | translate" iconName="x"
+                        (click)="onAbortClicked()"></app-icon-text-button>
+  <app-icon-text-button [text]="'layer-form.save' | translate" iconName="save"
+                        (click)="onSaveClicked()"
                         [enabled]="canSave()"></app-icon-text-button>
 </div>

@@ -16,5 +16,24 @@
     "measure-length": "Längen messen",
     "zoom-in": "Vergrößern",
     "zoom-out": "Verkleinen"
+  },
+  "layer-types": {
+    "wms": "WMS",
+    "wms-capabilities": "WMS Capabilities",
+    "xyz": "XYZ Kacheln"
+  },
+  "layer-form" : {
+    "layer-type": "Layer-Typ",
+    "title": "Titel",
+    "title-placeholder": "Menschenlesbarer Titel",
+    "layer-url": "Layer URL",
+    "layer-url-placeholder": "https://...",
+    "name-id": "Name / Id",
+    "name-id-placeholder": "Technische ID",
+    "attribution": "Attribution",
+    "attribution-placeholder": "Attribution zur Anzeige für die Nutzer",
+    "queryable": "Ist abfragbar?",
+    "abort": "Abbrechen",
+    "save": "Speichern"
   }
 }
