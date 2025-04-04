@@ -1,9 +1,9 @@
 <h3 class="title-heading" [class.no-bottom-margin]="!expanded">{{ "layers" | translate }}</h3>
 <div class="layer-list" *ngIf="expanded">
-  <app-layer-list-item *ngFor="let layer of layerService.layers | async"
+  <app-checkbox *ngFor="let layer of layerService.layers | async"
                        [title]="layer.title"
                        [checked]="layer.isVisible()"
                        [tooltipText]="getTooltipText(layer)"
                        (click)="onLayerSelectionClicked(layer, $event)">
-  </app-layer-list-item>
+  </app-checkbox>
 </div>

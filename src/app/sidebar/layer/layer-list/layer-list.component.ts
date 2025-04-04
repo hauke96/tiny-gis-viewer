@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {LayerService} from '../../../layer/layer.service';
-import {LayerListItemComponent} from '../layer-list-item/layer-list-item.component';
+import {CheckboxComponent} from '../../../common/checkbox/checkbox.component';
 import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {Layer} from '../../../layer/layer';
@@ -8,7 +8,7 @@ import {Layer} from '../../../layer/layer';
 @Component({
   selector: 'app-layer-list',
   imports: [
-    LayerListItemComponent,
+    CheckboxComponent,
     NgForOf,
     AsyncPipe,
     TranslatePipe,

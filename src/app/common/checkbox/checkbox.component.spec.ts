@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {LayerListItemComponent} from './layer-list-item.component';
+import {CheckboxComponent} from './checkbox.component';
 
 describe('LayerListItemComponent', () => {
-  let component: LayerListItemComponent;
-  let fixture: ComponentFixture<LayerListItemComponent>;
+  let component: CheckboxComponent;
+  let fixture: ComponentFixture<CheckboxComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LayerListItemComponent]
+      imports: [CheckboxComponent]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LayerListItemComponent);
+    fixture = TestBed.createComponent(CheckboxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
