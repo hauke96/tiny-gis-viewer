@@ -10,15 +10,17 @@ export class CheckboxComponent {
   @Input()
   public title: string = "";
   @Input()
-  public checked: boolean = false;
-  @Input()
   public tooltipText: string | undefined;
+  @Input()
+  public fadeOnUnchecked: boolean = false;
 
+  @Input()
+  public checked: boolean = false;
   @Output()
-  public click: EventEmitter<boolean> = new EventEmitter();
+  public checkedChange: EventEmitter<boolean> = new EventEmitter();
 
   protected onClick($event: MouseEvent) {
-    this.click.emit(!this.checked);
+    this.checkedChange.emit(!this.checked);
     $event.stopPropagation();
   }
 }

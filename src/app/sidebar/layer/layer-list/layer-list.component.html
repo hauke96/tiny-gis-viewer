@@ -4,6 +4,6 @@
                        [title]="layer.title"
                        [checked]="layer.isVisible()"
                        [tooltipText]="getTooltipText(layer)"
-                       (click)="onLayerSelectionClicked(layer, $event)">
+                       (checkedChange)="onLayerSelectionClicked(layer, $event)">
   </app-checkbox>
 </div>

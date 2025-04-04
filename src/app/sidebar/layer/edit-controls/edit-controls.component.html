@@ -7,6 +7,7 @@
       <app-input-text placeholder="https://..." [title]="'WMS URL'"></app-input-text>
       <app-input-text [placeholder]="'Technical ID'" [title]="'Name / ID'"></app-input-text>
       <app-input-text [placeholder]="'Attribution text to show on the map'" [title]="'Attribution'"></app-input-text>
+      <app-checkbox [title]="'Is queryable?'" [(checked)]="isQueryable"></app-checkbox>
     </div>
     <div class="button-wrapper">
       <app-icon-text-button [text]="'Abort'" iconName="x"></app-icon-text-button>
