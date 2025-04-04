@@ -1,15 +1,23 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {catchError, Observable, of, tap} from 'rxjs';
+import {BehaviorSubject, catchError, filter, Observable, of, tap} from 'rxjs';
 import {Config, LayerConfig, LayerType} from './config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
-  public config: Config | undefined = undefined;
+  private config$: BehaviorSubject<Config | undefined> = new BehaviorSubject<Config | undefined>(undefined);
 
   constructor(private httpClient: HttpClient) {
+  }
+
+  public get currentConfig(): Config | undefined {
+    return this.config$.value
+  }
+
+  public get config(): Observable<Config> {
+    return this.config$.asObservable().pipe(filter(c => !!c));
   }
 
   public loadAndStoreConfig(): Observable<Config> {
@@ -20,7 +28,7 @@ export class ConfigService {
 
           const newConfig = Object.assign(new Config([], {}, 0), c);
           newConfig.validate();
-          return this.config = newConfig;
+          return this.config$.next(newConfig);
         }),
         catchError(e => {
           console.error(e);

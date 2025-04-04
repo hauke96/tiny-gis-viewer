@@ -52,7 +52,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
       layers: [],
       view: new View({
         ...defaultViewOptions,
-        ...configService.config?.mapView,
+        ...configService.currentConfig?.mapView,
       })
     });
 

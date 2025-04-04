@@ -12,6 +12,7 @@ import {FeatureLayerComponent} from './layer/feature-layer/feature-layer.compone
 import {ControlPanelComponent} from './map/control-panel/control-panel.component';
 import {MeasureLengthLayerComponent} from './layer/measure/measure-length-layer.component';
 import {MeasureAreaLayerComponent} from './layer/measure/measure-area-layer.component';
+import {Unsubscriber} from './common/unsubscriber';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ import {MeasureAreaLayerComponent} from './layer/measure/measure-area-layer.comp
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent extends Unsubscriber implements OnInit {
   private readonly supportedLanguages = ['de', 'en'];
   private readonly defaultLanguage = 'en';
 
@@ -30,6 +31,8 @@ export class AppComponent implements OnInit {
     private configService: ConfigService,
     title: Title
   ) {
+    super();
+
     this.translate.addLangs(this.supportedLanguages);
     this.translate.setDefaultLang(this.defaultLanguage);
 
@@ -53,6 +56,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.layerService.loadFromConfig(this.configService.config!);
+    this.unsubscribeLater(
+      this.configService.config.subscribe(config => this.layerService.loadFromConfig(config))
+    )
   }
 }

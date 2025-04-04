@@ -106,7 +106,7 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
       projection,
       {
         "INFO_FORMAT": "application/geo+json",
-        "FEATURE_COUNT": this.configService.config?.queryFeatureCount ?? 3,
+        "FEATURE_COUNT": this.configService.currentConfig?.queryFeatureCount ?? 3,
         "WITH_GEOMETRY": "TRUE"
       }
     );
