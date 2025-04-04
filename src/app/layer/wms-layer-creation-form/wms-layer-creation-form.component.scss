@@ -1,0 +1,19 @@
+@use "styles";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .button-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+
+    margin-top: styles.$space-base;
+
+    app-icon-text-button:not(:last-child) {
+      margin-right: styles.$space-base;
+    }
+  }
+}

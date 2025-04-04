@@ -14,7 +14,6 @@ import {IconButtonComponent} from '../../../common/icon-button/icon-button.compo
     LayerListComponent,
     LanguageSelectionComponent,
     LucideAngularModule,
-    NgIf,
     EditControlsComponent,
     IconButtonComponent
   ],
