@@ -1,0 +1,5 @@
+<app-checkbox [title]="layer.title"
+              [checked]="layer.isVisible()"
+              [tooltipText]="getTooltipText(layer)"
+              (checkedChange)="onLayerSelectionClicked(layer, $event)">
+</app-checkbox>
