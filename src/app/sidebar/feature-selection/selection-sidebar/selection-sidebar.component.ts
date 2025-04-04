@@ -8,6 +8,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {FeatureSelectionService} from '../../../feature/feature-selection.service';
 import {FeatureDetailsComponent} from '../feature-details/feature-details.component';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-selection-sidebar',
@@ -17,6 +18,7 @@ import {IconButtonComponent} from '../../../common/icon-button/icon-button.compo
     TranslatePipe,
     FeatureDetailsComponent,
     IconButtonComponent,
+    NgIf,
   ],
   templateUrl: './selection-sidebar.component.html',
   styleUrl: './selection-sidebar.component.scss'
@@ -47,5 +49,9 @@ export class SelectionSidebarComponent extends Unsubscriber {
 
   protected get focussedFeature(): Feature | undefined {
     return this.featureSelectionService.currentlyFocussedFeature;
+  }
+
+  public hasFocussedFeature():boolean {
+    return !!this.focussedFeature;
   }
 }

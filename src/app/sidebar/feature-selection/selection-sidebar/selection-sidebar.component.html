@@ -5,6 +5,7 @@
 <app-feature-selection-menu [features]="layerToFeaturesMap"
                             (featureSelected)="onFeatureFromMenuSelected($event)"></app-feature-selection-menu>
 
-<hr>
-
-<app-feature-details [selectedFeature]="focussedFeature"></app-feature-details>
+<ng-container *ngIf="hasFocussedFeature()">
+  <hr>
+  <app-feature-details [selectedFeature]="focussedFeature"></app-feature-details>
+</ng-container>
