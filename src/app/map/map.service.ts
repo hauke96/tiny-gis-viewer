@@ -78,6 +78,7 @@ export class MapService {
   public resetClick(): void {
     let queryParams = {click: null};
     this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
+    this.clicked$.next(undefined);
   }
 
   private resolutionChanged$: BehaviorSubject<number | undefined> = new BehaviorSubject<number | undefined>(undefined);
@@ -86,18 +87,10 @@ export class MapService {
     this.resolutionChanged$.next(resolution);
   }
 
-  public get currentResolution(): number | undefined {
-    return this.resolutionChanged$.value;
-  }
-
   private projectionChanged$: BehaviorSubject<ProjectionLike | undefined> = new BehaviorSubject<ProjectionLike | undefined>(undefined);
 
   public changeProjection(projection: ProjectionLike | undefined): void {
     this.projectionChanged$.next(projection);
-  }
-
-  public get currentProjection(): ProjectionLike | undefined {
-    return this.projectionChanged$.value;
   }
 
   //
