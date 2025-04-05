@@ -1,6 +1,6 @@
 import BaseLayer from 'ol/layer/Base';
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, filter, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {Interaction} from 'ol/interaction';
 import {MapClickEvent} from '../common/map-click-event';
 import {ProjectionLike} from 'ol/proj';
@@ -71,8 +71,8 @@ export class MapService {
     this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
   }
 
-  public get clicked(): Observable<MapClickEvent> {
-    return this.clicked$.asObservable().pipe(filter(event => !!event));
+  public get clicked(): Observable<MapClickEvent | undefined> {
+    return this.clicked$.asObservable();
   }
 
   public resetClick(): void {

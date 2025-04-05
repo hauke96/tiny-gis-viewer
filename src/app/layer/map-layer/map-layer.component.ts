@@ -65,7 +65,7 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
     this.unsubscribeLater(
       this.layer.visible.subscribe((visible) => this.olLayer?.setVisible(visible)),
       this.mapService.clicked.subscribe(event => {
-        if (this.layer.queryable) {
+        if (event && this.layer.queryable) {
           this.selectFeaturesAtCoordinate(event.coordinate, event.resolution, event.projection);
         }
       }),

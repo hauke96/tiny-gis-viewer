@@ -10,9 +10,10 @@ import {MapService} from '../map.service';
 import {MapLayerComponent} from '../../layer/map-layer/map-layer.component';
 import {NgForOf} from '@angular/common';
 import {MapClickEvent} from '../../common/map-click-event';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Coordinate} from 'ol/coordinate';
 import {PinLayerComponent} from '../../layer/pin-layer/pin-layer.component';
+import {filter, first, of, switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -58,21 +59,27 @@ export class MapComponent extends Unsubscriber implements OnInit {
       })
     });
 
-    this.route.queryParamMap.subscribe(paramMap => {
-      if (paramMap.has("center")) {
-        let coordinate = JSON.parse(paramMap.get("center")!) as Coordinate;
-        this.map.getView().setCenter(coordinate);
-      }
-      if (paramMap.has("resolution")) {
-        let resolution = +paramMap.get("resolution")!;
-        this.map.getView().setResolution(resolution);
-        this.mapService.changeResolution(this.map.getView().getResolution());
-      }
-      if (paramMap.has("click")) {
-        let event = MapClickEvent.fromString(paramMap.get("click")!);
-        this.mapService.click(event);
-      }
-    })
+    // Read params once at the end of route navigation
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        switchMap(() => this.route.queryParamMap || of()),
+        first())
+      .subscribe(paramMap => {
+        if (paramMap.has("center")) {
+          let coordinate = JSON.parse(paramMap.get("center")!) as Coordinate;
+          this.map.getView().setCenter(coordinate);
+        }
+        if (paramMap.has("resolution")) {
+          let resolution = +paramMap.get("resolution")!;
+          this.map.getView().setResolution(resolution);
+          this.mapService.changeResolution(this.map.getView().getResolution());
+        }
+        if (paramMap.has("click")) {
+          let event = MapClickEvent.fromString(paramMap.get("click")!);
+          this.mapService.click(event);
+        }
+      })
 
     this.mapService.changeProjection(this.map.getView().getProjection());
     this.mapService.changeResolution(this.map.getView().getResolution());

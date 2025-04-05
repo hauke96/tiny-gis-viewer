@@ -37,7 +37,9 @@ export class PinLayerComponent extends Unsubscriber implements OnInit {
     this.unsubscribeLater(
       this.mapService.clicked.subscribe(event => {
         this.source.clear();
-        this.source.addFeature(new Feature(new Point(event.coordinate)));
+        if(!!event && event.coordinate && event.coordinate.length > 0) {
+          this.source.addFeature(new Feature(new Point(event.coordinate)));
+        }
       })
     )
   }
