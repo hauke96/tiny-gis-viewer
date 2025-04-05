@@ -1,8 +1,8 @@
 {
   "mapView": {
     "center": [
-      1110161,
-      7085688
+      1112312,
+      7085764
     ],
     "projection": "EPSG:3857",
     "zoom": 14,
@@ -10,6 +10,14 @@
     "maxZoom": 22
   },
   "layers": [
+    {
+      "type": "wms",
+      "url": "https://geodienste.hamburg.de/HH_WMS_Strassenbaumkataster",
+      "name": "strassenbaum",
+      "title": "Baumkataster (Geoportal Hamburg)",
+      "queryable": true,
+      "attribution": "Freie und Hansestadt Hamburg BUKEA"
+    },
     {
       "type": "wms-capabilities",
       "url": "https://deneb.hauke-stieler.de/geo/data/wms?SERVICE=WMS&request=GetCapabilities"

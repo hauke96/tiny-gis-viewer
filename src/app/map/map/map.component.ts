@@ -35,12 +35,12 @@ export class MapComponent extends Unsubscriber implements OnInit {
     private layerService: LayerService,
     private route: ActivatedRoute,
     private router: Router,
-    configService: ConfigService,
+    private configService: ConfigService,
   ) {
     super();
 
     let defaultViewOptions: ViewOptions = {
-      center: [1110161, 7085688], // Hamburg, Germany
+      center: [1112312, 7085764], // Hamburg, Germany
       projection: 'EPSG:3857',
       zoom: 14,
       minZoom: 0,
@@ -53,11 +53,15 @@ export class MapComponent extends Unsubscriber implements OnInit {
         new Attribution({collapsible: true, collapsed: false})
       ],
       layers: [],
-      view: new View({
+      view: new View(defaultViewOptions)
+    });
+
+    this.configService.config.subscribe(c => {
+      this.map.setView(new View({
         ...defaultViewOptions,
         ...configService.currentConfig?.mapView,
-      })
-    });
+      }))
+    })
 
     // Read params once at the end of route navigation
     this.router.events
