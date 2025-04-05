@@ -40,8 +40,17 @@ export class SelectionSidebarComponent extends Unsubscriber {
     );
   }
 
+  override ngOnDestroy() {
+    super.ngOnDestroy();
+
+    this.featureSelectionService.unfocusFeature()
+      .subscribe(() => this.mapService.resetClick());
+
+  }
+
   protected onCloseClicked(): void {
     this.featureSelectionService.deselectAllFeaturesOnMap();
+
     this.featureSelectionService.unfocusFeature()
       .subscribe(() => this.mapService.resetClick());
   }
