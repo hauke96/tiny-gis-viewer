@@ -9,6 +9,7 @@ import {FeatureSelectionService} from '../../../feature/feature-selection.servic
 import {FeatureDetailsComponent} from '../feature-details/feature-details.component';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 import {NgIf} from '@angular/common';
+import {MapService} from '../../../map/map.service';
 
 @Component({
   selector: 'app-selection-sidebar',
@@ -27,7 +28,7 @@ export class SelectionSidebarComponent extends Unsubscriber {
   protected layerToFeaturesMap: Map<Layer, Feature[]> = new Map<Layer, Feature[]>();
   protected selectedFeaturesFromMap: Feature[] = [];
 
-  constructor(private featureSelectionService: FeatureSelectionService) {
+  constructor(private featureSelectionService: FeatureSelectionService, private mapService: MapService) {
     super();
 
     this.unsubscribeLater(
@@ -41,17 +42,19 @@ export class SelectionSidebarComponent extends Unsubscriber {
 
   protected onCloseClicked(): void {
     this.featureSelectionService.deselectAllFeaturesOnMap();
+    this.featureSelectionService.unfocusFeature()
+      .subscribe(() => this.mapService.resetClick());
   }
 
-  protected onFeatureFromMenuSelected(feature: Feature): void {
-    this.featureSelectionService.focusFeature(feature);
+  protected onFeatureFromMenuSelected(eventData: [Layer, Feature]): void {
+    this.featureSelectionService.focusFeature(eventData[0], eventData[1]);
   }
 
   protected get focussedFeature(): Feature | undefined {
     return this.featureSelectionService.currentlyFocussedFeature;
   }
 
-  public hasFocussedFeature():boolean {
+  public hasFocussedFeature(): boolean {
     return !!this.focussedFeature;
   }
 }

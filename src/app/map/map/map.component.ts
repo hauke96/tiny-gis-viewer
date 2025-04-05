@@ -76,9 +76,6 @@ export class MapComponent extends Unsubscriber implements OnInit {
     this.map.setTarget("map")
 
     this.map.on("click", (event: MapBrowserEvent<UIEvent>) => {
-      let clickEventString = new MapClickEvent(event.coordinate, this.map.getView().getResolution(), this.map.getView().getProjection()).toString();
-      let queryParams = {click: clickEventString};
-      this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
       this.handleCoordinateClick(event.coordinate);
     });
     this.map.on("moveend", (e: MapEvent) => {

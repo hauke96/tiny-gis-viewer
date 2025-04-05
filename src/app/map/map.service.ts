@@ -4,11 +4,16 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {Interaction} from 'ol/interaction';
 import {MapClickEvent} from '../common/map-click-event';
 import {ProjectionLike} from 'ol/proj';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
+
+  constructor(private router: Router, private route: ActivatedRoute) {
+  }
+
   //
   // Layer add/remove
   //
@@ -61,10 +66,18 @@ export class MapService {
 
   public click(event: MapClickEvent): void {
     this.clicked$.next(event);
+
+    let queryParams = {click: event.toString()};
+    this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
   }
 
   public get clicked(): Observable<MapClickEvent> {
     return this.clicked$.asObservable()
+  }
+
+  public resetClick(): void {
+    let queryParams = {click: null};
+    this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
   }
 
   private resolutionChanged$: BehaviorSubject<number | undefined> = new BehaviorSubject<number | undefined>(undefined);

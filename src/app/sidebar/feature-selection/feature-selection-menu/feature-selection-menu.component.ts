@@ -48,7 +48,7 @@ export class FeatureSelectionMenuComponent extends Unsubscriber {
   }
 
   @Output()
-  public featureSelected = new EventEmitter<Feature>();
+  public featureSelected = new EventEmitter<[Layer, Feature]>();
 
   protected layers: Layer[] = [];
   protected selectedFeature: Feature | undefined = undefined;
@@ -91,11 +91,6 @@ export class FeatureSelectionMenuComponent extends Unsubscriber {
 
   public onFeatureSelected(layer: Layer, feature: Feature): void {
     this.selectedFeature = feature;
-    this.featureSelected.emit(this.selectedFeature);
-
-    if (layer instanceof WmsLayer) {
-      let queryParams = {feature: JSON.stringify([layer.name, feature.getId()])};
-      this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
-    }
+    this.featureSelected.emit([layer, this.selectedFeature]);
   }
 }

@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, from, Observable} from 'rxjs';
 import {Layer} from '../layer/layer';
 import {Feature} from 'ol';
 import {FeatureLike} from 'ol/Feature';
 import {Coordinate} from 'ol/coordinate';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class FeatureSelectionService {
   private selectionOnMap$: BehaviorSubject<[Coordinate, Map<Layer, Feature[]>]> = new BehaviorSubject<[Coordinate, Map<Layer, Feature[]>]>([[], new Map<Layer, Feature[]>()]);
   private focussedFeature$: BehaviorSubject<Feature | undefined> = new BehaviorSubject<Feature | undefined>(undefined);
 
-  constructor() {
+  constructor(private router: Router, private route: ActivatedRoute) {
   }
 
   public get selectionOnMap(): Observable<[Coordinate, Map<Layer, Feature[]>]> {
@@ -51,8 +52,18 @@ export class FeatureSelectionService {
     return this.selectionOnMap$.value[1].size > 0;
   }
 
-  public focusFeature(feature: Feature | undefined): void {
+  public focusFeature(layer: Layer, feature: Feature): void {
     this.focussedFeature$.next(feature);
+
+    let queryParams = {feature: JSON.stringify([layer.name, feature.getId()])};
+    this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"})
+  }
+
+  public unfocusFeature(): Observable<any> {
+    this.focussedFeature$.next(undefined);
+
+    let queryParams = {feature: null};
+    return from(this.router.navigate([], {relativeTo: this.route, queryParams, queryParamsHandling: "merge"}));
   }
 
   public get currentlyFocussedFeature(): Feature | undefined {
