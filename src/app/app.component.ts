@@ -6,17 +6,19 @@ import {TranslateService} from '@ngx-translate/core';
 import {Title} from '@angular/platform-browser';
 import {ConfigService} from './config/config.service';
 import {SelectionSidebarComponent} from './sidebar/feature-selection/selection-sidebar/selection-sidebar.component';
-import {NgIf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {FeatureSelectionService} from './feature/feature-selection.service';
 import {FeatureLayerComponent} from './layer/feature-layer/feature-layer.component';
 import {ControlPanelComponent} from './map/control-panel/control-panel.component';
 import {MeasureLengthLayerComponent} from './layer/measure/measure-length-layer.component';
 import {MeasureAreaLayerComponent} from './layer/measure/measure-area-layer.component';
 import {Unsubscriber} from './common/unsubscriber';
+import {MapLayerComponent} from './layer/map-layer/map-layer.component';
+import {PinLayerComponent} from './layer/pin-layer/pin-layer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent, NgIf, FeatureLayerComponent, ControlPanelComponent, MeasureLengthLayerComponent, MeasureAreaLayerComponent],
+  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent, NgIf, FeatureLayerComponent, ControlPanelComponent, MeasureLengthLayerComponent, MeasureAreaLayerComponent, MapLayerComponent, NgForOf, PinLayerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

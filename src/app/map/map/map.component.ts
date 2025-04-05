@@ -12,12 +12,14 @@ import {NgForOf} from '@angular/common';
 import {MapClickEvent} from '../../common/map-click-event';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Coordinate} from 'ol/coordinate';
+import {PinLayerComponent} from '../../layer/pin-layer/pin-layer.component';
 
 @Component({
   selector: 'app-map',
   imports: [
     MapLayerComponent,
-    NgForOf
+    NgForOf,
+    PinLayerComponent
   ],
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
@@ -65,6 +67,10 @@ export class MapComponent extends Unsubscriber implements OnInit {
         let resolution = +paramMap.get("resolution")!;
         this.map.getView().setResolution(resolution);
         this.mapService.changeResolution(this.map.getView().getResolution());
+      }
+      if (paramMap.has("click")) {
+        let event = MapClickEvent.fromString(paramMap.get("click")!);
+        this.mapService.click(event);
       }
     })
 

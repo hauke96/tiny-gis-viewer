@@ -12,9 +12,6 @@ import {ProjectionLike} from 'ol/proj';
 import {HttpClient} from '@angular/common/http';
 import {GeoJSON} from 'ol/format';
 import {FeatureSelectionService} from '../../feature/feature-selection.service';
-import {ActivatedRoute} from '@angular/router';
-import {first} from 'rxjs';
-import {MapClickEvent} from '../../common/map-click-event';
 
 @Component({
   selector: 'app-map-layer',
@@ -32,8 +29,7 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
     private mapService: MapService,
     private configService: ConfigService,
     private httpClient: HttpClient,
-    private featureSelectionService: FeatureSelectionService,
-    private route: ActivatedRoute
+    private featureSelectionService: FeatureSelectionService
   ) {
     super();
 
@@ -68,21 +64,12 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
 
     this.unsubscribeLater(
       this.layer.visible.subscribe((visible) => this.olLayer?.setVisible(visible)),
-    );
-
-    if (this.layer.queryable) {
-      this.unsubscribeLater(
-        this.mapService.clicked.subscribe(event => {
+      this.mapService.clicked.subscribe(event => {
+        if (this.layer.queryable) {
           this.selectFeaturesAtCoordinate(event.coordinate, event.resolution, event.projection);
-        }),
-        this.route.queryParams.pipe(first()).subscribe(queryParams => {
-          if (!!queryParams["click"]) {
-            let event = MapClickEvent.fromString(queryParams["click"]);
-            this.selectFeaturesAtCoordinate(event.coordinate, event.resolution, event.projection);
-          }
-        })
-      )
-    }
+        }
+      }),
+    )
   }
 
   override ngOnDestroy() {
