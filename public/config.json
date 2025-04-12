@@ -16,7 +16,8 @@
       "name": "strassenbaum",
       "title": "Baumkataster (Geoportal Hamburg)",
       "queryable": true,
-      "attribution": "Freie und Hansestadt Hamburg BUKEA"
+      "attribution": "Freie und Hansestadt Hamburg BUKEA",
+      "initiallyVisible": false
     },
     {
       "type": "wms-capabilities",

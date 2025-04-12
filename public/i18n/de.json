@@ -33,6 +33,7 @@
     "attribution": "Attribution",
     "attribution-placeholder": "Attribution zur Anzeige für die Nutzer",
     "queryable": "Ist abfragbar?",
+    "initiallyVisible": "Ist initial sichtbar?",
     "abort": "Abbrechen",
     "save": "Speichern"
   },

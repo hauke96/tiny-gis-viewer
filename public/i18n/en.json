@@ -37,6 +37,7 @@
     "attribution": "Attribution",
     "attribution-placeholder": "Attribution text to show the user",
     "queryable": "Is queryable?",
+    "initiallyVisible": "Is initially visible?",
     "abort": "Abort",
     "save": "Save"
   },

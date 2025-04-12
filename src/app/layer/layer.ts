@@ -8,9 +8,10 @@ export abstract class Layer {
    * @param layerConfig Configuration object for this layer
    */
   protected constructor(
-    public layerConfig: LayerConfig,
+    public layerConfig: LayerConfig
   ) {
-    this.setVisible(true);
+    // When this property is not set, then show the layer by default
+    this.setVisible(layerConfig.initiallyVisible === undefined ? true : layerConfig.initiallyVisible);
   }
 
   public get title(): string {
@@ -56,7 +57,6 @@ export class WmsCapabilitiesLayer extends Layer {
     public wmsLayers: WmsLayer[]
   ) {
     super(layerConfig);
-    this.setVisible(true);
   }
 
   public override setVisible(visible: boolean): void {
@@ -73,7 +73,6 @@ export class WmsLayer extends Layer {
     layerConfig: LayerConfig,
   ) {
     super(layerConfig);
-    this.setVisible(true);
   }
 }
 
@@ -85,6 +84,5 @@ export class XyzLayer extends Layer {
     layerConfig: LayerConfig,
   ) {
     super(layerConfig);
-    this.setVisible(true);
   }
 }

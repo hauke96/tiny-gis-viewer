@@ -31,6 +31,7 @@ export class LayerCreationFormComponent {
   public layerName: string = "";
   public layerAttribution: string = "";
   public layerIsQueryable: boolean = false;
+  public initiallyVisible: boolean = false;
 
   constructor(translate: TranslateService) {
     this.layerTypeValues = [
@@ -51,7 +52,8 @@ export class LayerCreationFormComponent {
       this.layerTitle,
       this.layerName,
       this.layerIsQueryable,
-      this.layerAttribution
+      this.layerAttribution,
+      this.initiallyVisible,
     ));
   }
 

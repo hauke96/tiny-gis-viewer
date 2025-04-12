@@ -66,7 +66,15 @@ export class LayerService {
           }
 
           let wmsLayers = result.Capability.Layer.Layer.map(layerDto => {
-            let wmsLayerConfig = new LayerConfig('wms', wmsBaseUrl, layerDto.Title, layerDto.Name, layerDto.queryable, layerDto.Attribution?.Title ?? "");
+            let wmsLayerConfig = new LayerConfig(
+              'wms',
+              wmsBaseUrl,
+              layerDto.Title,
+              layerDto.Name,
+              layerDto.queryable,
+              layerDto.Attribution?.Title ?? "",
+              true
+            );
             return new WmsLayer(wmsLayerConfig)
           });
 

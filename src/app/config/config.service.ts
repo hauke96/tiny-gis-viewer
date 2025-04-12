@@ -77,7 +77,15 @@ export class ConfigService {
         catchError(e => {
           console.error(e);
           console.error("Error reading config or the config was invalid. I use an empty config now.")
-          const defaultLayer = new LayerConfig('xyz', "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "OpenStreetMap Carto", "", false, "© OpenStreetMap contributors");
+          const defaultLayer = new LayerConfig(
+            'xyz',
+            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+            "OpenStreetMap Carto",
+            "",
+            false,
+            "© OpenStreetMap contributors",
+            true
+          );
           return of(new Config([defaultLayer], {}, 1));
         }),
         mergeMap(c => {
@@ -87,7 +95,12 @@ export class ConfigService {
   }
 
   public loadConfig(c: Config): Observable<Config> {
-    c.layers = c.layers.map(l => Object.assign(new LayerConfig("" as LayerType, "", "", "", false, ""), l));
+    c.layers = c.layers.map(l => {
+      return Object.assign(
+        new LayerConfig("" as LayerType, "", "", "", false, "", undefined),
+        l
+      );
+    });
 
     const newConfig = Object.assign(new Config([], {}, 0), c);
     newConfig.validate();

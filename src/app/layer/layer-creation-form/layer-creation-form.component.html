@@ -16,6 +16,8 @@
                   [(text)]="layerAttribution"></app-input-text>
   <app-checkbox [title]="'layer-form.queryable' | translate"
                 [(checked)]="layerIsQueryable"></app-checkbox>
+  <app-checkbox [title]="'layer-form.initiallyVisible' | translate"
+                [(checked)]="initiallyVisible"></app-checkbox>
 </div>
 <div class="button-wrapper">
   <app-icon-text-button [text]="'layer-form.abort' | translate" iconName="x"

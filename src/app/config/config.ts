@@ -27,6 +27,7 @@ export class LayerConfig {
     public name: string,
     public queryable: boolean,
     public attribution: string,
+    public initiallyVisible: boolean | undefined
   ) {
   }
 
