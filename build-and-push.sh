@@ -48,7 +48,6 @@ hline "[4/4] Compress into ZIP file"
   mv "tgv-$TAG.zip" ../../
   rm -rf tgv
 )
-mv "dist/tiny-gis-viewer/tgv-$TAG.zip" .
 echo "ZIP archive tgv-$TAG.zip created"
 
 echo

@@ -55,6 +55,12 @@ That's it.
 Take a look at the [public/config.json](./public/config.json) file for an example or at the [config.ts](src/app/config/config.ts) TypeScript file, which represents the configuration within the code.
 The `mapView` property can contain exactly the properties of an OpenLayers `ViewOptions` object.
 
+### Specify config in URL
+
+By default the `config.json` file is loaded.
+When the `configId=...` URL-parameter is set, then this config is loaded.
+This parameter should only contain the filename without the `.json` extension and without any special characters (just letters, numbers, "-" and "_" are allowed).
+
 ## Development
 
 Run the application locally with `ng serve`.
