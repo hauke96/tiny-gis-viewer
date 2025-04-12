@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, catchError, filter, Observable, of, tap} from 'rxjs';
+import {BehaviorSubject, catchError, filter, mergeMap, Observable, of} from 'rxjs';
 import {Config, LayerConfig, LayerType} from './config';
 import {Layer} from '../layer/layer';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -59,25 +59,29 @@ export class ConfigService {
     return this.loadConfig(config);
   }
 
-  public hasConfigInUrl(): boolean {
-    console.log(this.route.snapshot)
-    return !!this.route.snapshot.queryParams["config"];
-  }
-
   public loadConfigFromJson(jsonString: string): void {
     this.loadConfig(JSON.parse(jsonString) as Config);
   }
 
-  public loadDefaultConfig(): Observable<Config> {
-    return this.httpClient.get<Config>("./config.json")
+  public loadConfigByName(configName: string): Observable<Config> {
+    console.log(`Load config '${configName}'`)
+
+    const allowedChars = "a-zA-z0-9-_"
+    if (!configName.match("^[" + allowedChars + "]+$")) {
+      console.error(`Config name '${configName}' contains invalid characters. Allowed are: ${allowedChars}`)
+      return of();
+    }
+
+    return this.httpClient.get<Config>(`./${configName}.json`)
       .pipe(
-        tap(c => {
-          return this.loadConfig(c);
-        }),
         catchError(e => {
           console.error(e);
           console.error("Error reading config or the config was invalid. I use an empty config now.")
-          return of(new Config([], {}, 0));
+          const defaultLayer = new LayerConfig('xyz', "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "OpenStreetMap Carto", "", false, "© OpenStreetMap contributors");
+          return of(new Config([defaultLayer], {}, 1));
+        }),
+        mergeMap(c => {
+          return this.loadConfig(c);
         })
       )
   }

@@ -6,9 +6,11 @@ import {ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot} from '@angular/r
 export const configResolver: ResolveFn<Config> = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const configService = inject(ConfigService);
 
-  if (route.queryParamMap.has("config")) {
+  if (route.queryParamMap.has("configId")) {
+    return configService.loadConfigByName(route.queryParamMap.get("configId")!);
+  } else if (route.queryParamMap.has("config")) {
     return configService.loadConfigFromUrl(route.queryParamMap.get("config")!);
   } else {
-    return configService.loadDefaultConfig();
+    return configService.loadConfigByName("config");
   }
 }
