@@ -17,12 +17,18 @@ You can find a hosted version here: https://deneb.hauke-stieler.de/geo/viewer/
 ## Features
 
 * Show WMS and XYZ layers
-  * Load WMS layers automatically based on `GetCapabilities`-URL
-  * Manually add layers
+  * Add multiple WMS layers automatically via a `GetCapabilities`-URL
+* Add and delete layers manually
+* Show legend graphics of WMS layers
 * Select features and show their attributes
 * Measure distance and area
-* Download and upload configurations
-* Share state of the map (including manually added layers) via URL
+* Configuration
+  * Load configuration via simple JSON file from webspace where TGV is hosted
+    * Specify config filename in URL to support multiple different maps
+  * Upload own configuration (just a frontend-feature, config is not stored on server)
+  * Download current configuration
+  * Share current configuration via URL
+  * Share state of the map (including manually added layers) via URL
 
 ## Deployment
 
