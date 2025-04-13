@@ -13,6 +13,10 @@
   min-width: 200px;
 }
 
+h3 {
+  margin-bottom: styles.$space-base;
+}
+
 .close-button {
   position: absolute;
   top: 0;
@@ -27,4 +31,24 @@
 
 .content {
   overflow-y: scroll;
+}
+
+.layer-list-wrapper:not(:last-child) {
+  margin-bottom: styles.$space-base;
+}
+
+.layer-name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: styles.$space-small;
+
+  lucide-angular {
+    margin-right: styles.$space-tiny;
+  }
+
+  span {
+    font-weight: bold;
+  }
 }
