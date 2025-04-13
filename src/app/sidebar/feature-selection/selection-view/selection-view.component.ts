@@ -12,7 +12,7 @@ import {NgIf} from '@angular/common';
 import {MapService} from '../../../map/map.service';
 
 @Component({
-  selector: 'app-selection-sidebar',
+  selector: 'app-selection-view',
   imports: [
     LucideAngularModule,
     FeatureSelectionMenuComponent,
@@ -21,10 +21,10 @@ import {MapService} from '../../../map/map.service';
     IconButtonComponent,
     NgIf,
   ],
-  templateUrl: './selection-sidebar.component.html',
-  styleUrl: './selection-sidebar.component.scss'
+  templateUrl: './selection-view.component.html',
+  styleUrl: './selection-view.component.scss'
 })
-export class SelectionSidebarComponent extends Unsubscriber {
+export class SelectionViewComponent extends Unsubscriber {
   protected layerToFeaturesMap: Map<Layer, Feature[]> = new Map<Layer, Feature[]>();
   protected selectedFeaturesFromMap: Feature[] = [];
 

@@ -4,10 +4,10 @@
   <app-measure-area-layer></app-measure-area-layer>
 </app-map>
 <div class="layer-sidebar-wrapper">
-  <app-layer-sidebar class="sidebar-item"></app-layer-sidebar>
+  <app-layer-view class="sidebar-item"></app-layer-view>
   <app-control-panel></app-control-panel>
 </div>
 <div class="selection-sidebar-wrapper">
   <app-legend-graphic-view class="sidebar-item"></app-legend-graphic-view>
-  <app-selection-sidebar class="sidebar-item" *ngIf="featureSelectionService.hasSelectionOnMap"></app-selection-sidebar>
+  <app-selection-view class="sidebar-item" *ngIf="featureSelectionService.hasSelectionOnMap"></app-selection-view>
 </div>

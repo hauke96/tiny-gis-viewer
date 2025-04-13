@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {MapComponent} from './map/map/map.component';
 import {LayerService} from './map/layer.service';
-import {LayerSidebarComponent} from './sidebar/layer/layer-sidebar/layer-sidebar.component';
+import {LayerViewComponent} from './sidebar/layer/layer-view/layer-view.component';
 import {TranslateService} from '@ngx-translate/core';
 import {Title} from '@angular/platform-browser';
 import {ConfigService} from './config/config.service';
-import {SelectionSidebarComponent} from './sidebar/feature-selection/selection-sidebar/selection-sidebar.component';
+import {SelectionViewComponent} from './sidebar/feature-selection/selection-view/selection-view.component';
 import {NgIf} from '@angular/common';
 import {FeatureSelectionService} from './map/feature-selection.service';
 import {FeatureLayerComponent} from './map/feature-layer/feature-layer.component';
@@ -17,7 +17,7 @@ import {LegendGraphicViewComponent} from './sidebar/legend-graphic/legend-graphi
 
 @Component({
   selector: 'app-root',
-  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent, NgIf, FeatureLayerComponent, ControlPanelComponent, MeasureLengthLayerComponent, MeasureAreaLayerComponent, LegendGraphicViewComponent],
+  imports: [MapComponent, LayerViewComponent, SelectionViewComponent, NgIf, FeatureLayerComponent, ControlPanelComponent, MeasureLengthLayerComponent, MeasureAreaLayerComponent, LegendGraphicViewComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
