@@ -81,7 +81,7 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
   }
 
   private selectFeaturesAtCoordinate(coordinate: Coordinate, resolution: number | undefined, projection: ProjectionLike | undefined) {
-    if (!this.olLayer || !resolution || !projection) {
+    if (!this.olLayer || !resolution || !projection || !this.olLayer.isVisible()) {
       return;
     }
 
