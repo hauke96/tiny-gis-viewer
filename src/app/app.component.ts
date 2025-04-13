@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {MapComponent} from './map/map/map.component';
-import {LayerService} from './layer/layer.service';
+import {LayerService} from './map/layer.service';
 import {LayerSidebarComponent} from './sidebar/layer/layer-sidebar/layer-sidebar.component';
 import {TranslateService} from '@ngx-translate/core';
 import {Title} from '@angular/platform-browser';
 import {ConfigService} from './config/config.service';
 import {SelectionSidebarComponent} from './sidebar/feature-selection/selection-sidebar/selection-sidebar.component';
 import {NgIf} from '@angular/common';
-import {FeatureSelectionService} from './feature/feature-selection.service';
-import {FeatureLayerComponent} from './layer/feature-layer/feature-layer.component';
+import {FeatureSelectionService} from './map/feature-selection.service';
+import {FeatureLayerComponent} from './map/feature-layer/feature-layer.component';
 import {ControlPanelComponent} from './map/control-panel/control-panel.component';
-import {MeasureLengthLayerComponent} from './layer/measure/measure-length-layer.component';
-import {MeasureAreaLayerComponent} from './layer/measure/measure-area-layer.component';
+import {MeasureLengthLayerComponent} from './map/measure/measure-length-layer.component';
+import {MeasureAreaLayerComponent} from './map/measure/measure-area-layer.component';
 import {Unsubscriber} from './common/unsubscriber';
 
 @Component({

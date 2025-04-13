@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, catchError, filter, mergeMap, Observable, of} from 'rxjs';
 import {Config, LayerConfig, LayerType} from './config';
-import {Layer} from '../layer/layer';
+import {Layer} from '../map/layer';
 import {ActivatedRoute, Router} from '@angular/router';
 import {deflate, inflate} from 'pako';
 

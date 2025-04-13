@@ -1,12 +1,12 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Feature} from 'ol';
-import {MapService} from '../../map/map.service';
+import {MapService} from '../map.service';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import {Circle, Fill, Stroke, Style} from 'ol/style';
 import {Layer} from '../layer';
 import {FeatureLike} from 'ol/Feature';
-import {FeatureSelectionService} from '../../feature/feature-selection.service';
+import {FeatureSelectionService} from '../feature-selection.service';
 import {Unsubscriber} from '../../common/unsubscriber';
 
 @Component({

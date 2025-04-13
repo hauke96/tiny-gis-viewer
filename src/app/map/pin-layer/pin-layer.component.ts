@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Unsubscriber} from '../../common/unsubscriber';
-import {MapService} from '../../map/map.service';
+import {MapService} from '../map.service';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import {Icon, Style} from 'ol/style';

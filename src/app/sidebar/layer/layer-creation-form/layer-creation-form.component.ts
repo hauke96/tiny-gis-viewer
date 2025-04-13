@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {CheckboxComponent} from "../../common/checkbox/checkbox.component";
-import {IconTextButtonComponent} from "../../common/icon-text-button/icon-text-button.component";
-import {InputTextComponent} from "../../common/input-text/input-text.component";
-import {LayerConfig, LayerType} from '../../config/config';
-import {DropDownComponent} from '../../common/drop-down/drop-down.component';
+import {CheckboxComponent} from "../../../common/checkbox/checkbox.component";
+import {IconTextButtonComponent} from "../../../common/icon-text-button/icon-text-button.component";
+import {InputTextComponent} from "../../../common/input-text/input-text.component";
+import {LayerConfig, LayerType} from '../../../config/config';
+import {DropDownComponent} from '../../../common/drop-down/drop-down.component';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 
 @Component({

@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {MapService} from '../../map/map.service';
+import {MapService} from '../map.service';
 import {Layer as OlLayer} from 'ol/layer';
 import {Layer, WmsLayer, XyzLayer} from '../layer';
 import ImageLayer from 'ol/layer/Image';
@@ -11,7 +11,7 @@ import {ConfigService} from '../../config/config.service';
 import {ProjectionLike} from 'ol/proj';
 import {HttpClient} from '@angular/common/http';
 import {GeoJSON} from 'ol/format';
-import {FeatureSelectionService} from '../../feature/feature-selection.service';
+import {FeatureSelectionService} from '../feature-selection.service';
 
 @Component({
   selector: 'app-map-layer',

@@ -3,7 +3,7 @@ import {LucideAngularModule} from 'lucide-angular';
 import {DialogComponent} from '../../../common/dialog/dialog.component';
 import {NgIf} from '@angular/common';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
-import {LayerCreationFormComponent} from '../../../layer/layer-creation-form/layer-creation-form.component';
+import {LayerCreationFormComponent} from '../layer-creation-form/layer-creation-form.component';
 import {LayerConfig} from '../../../config/config';
 import {ConfigService} from '../../../config/config.service';
 import {TranslatePipe} from '@ngx-translate/core';

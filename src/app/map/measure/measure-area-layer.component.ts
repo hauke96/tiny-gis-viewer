@@ -3,7 +3,7 @@ import {Style} from 'ol/style';
 import {FeatureLike} from 'ol/Feature';
 import {Polygon} from 'ol/geom';
 import {getArea} from 'ol/sphere';
-import {MapService} from '../../map/map.service';
+import {MapService} from '../map.service';
 import {AbstractMeasureComponent} from './measure-common';
 import {Type} from 'ol/geom/Geometry';
 

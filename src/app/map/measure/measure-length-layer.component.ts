@@ -3,7 +3,7 @@ import {Fill, RegularShape, Style, Text} from 'ol/style';
 import {FeatureLike} from 'ol/Feature';
 import {LineString, Point} from 'ol/geom';
 import {getLength} from 'ol/sphere';
-import {MapService} from '../../map/map.service';
+import {MapService} from '../map.service';
 import {AbstractMeasureComponent} from './measure-common';
 import {Type} from 'ol/geom/Geometry';
 

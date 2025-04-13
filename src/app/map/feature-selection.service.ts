@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, from, Observable} from 'rxjs';
-import {Layer} from '../layer/layer';
+import {Layer} from './layer';
 import {Feature} from 'ol';
 import {FeatureLike} from 'ol/Feature';
 import {Coordinate} from 'ol/coordinate';

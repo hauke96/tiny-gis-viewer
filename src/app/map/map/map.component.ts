@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
 import {Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
-import {LayerService} from '../../layer/layer.service';
+import {LayerService} from '../layer.service';
 import {Unsubscriber} from '../../common/unsubscriber';
-import {Layer, WmsCapabilitiesLayer} from '../../layer/layer';
+import {Layer, WmsCapabilitiesLayer} from '../layer';
 import {ConfigService} from '../../config/config.service';
 import {ViewOptions} from 'ol/View';
 import {MapService} from '../map.service';
-import {MapLayerComponent} from '../../layer/map-layer/map-layer.component';
+import {MapLayerComponent} from '../map-layer/map-layer.component';
 import {NgForOf} from '@angular/common';
 import {MapClickEvent} from '../../common/map-click-event';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Coordinate} from 'ol/coordinate';
-import {PinLayerComponent} from '../../layer/pin-layer/pin-layer.component';
+import {PinLayerComponent} from '../pin-layer/pin-layer.component';
 import {filter, first, of, switchMap} from 'rxjs';
 
 @Component({

@@ -2,9 +2,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Feature} from 'ol';
 import {NgForOf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {Layer, WmsLayer} from '../../../layer/layer';
+import {Layer, WmsLayer} from '../../../map/layer';
 import {LucideAngularModule} from 'lucide-angular';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Unsubscriber} from '../../../common/unsubscriber';
 
 @Component({
@@ -58,7 +58,6 @@ export class FeatureSelectionMenuComponent extends Unsubscriber {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
   ) {
     super();
 
