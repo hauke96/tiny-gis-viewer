@@ -57,6 +57,8 @@ export class WmsCapabilitiesLayer extends Layer {
     public wmsLayers: WmsLayer[]
   ) {
     super(layerConfig);
+    // Ensure all sub-layers have the same initial visibility as the capabilities-layer
+    this.setVisible(layerConfig.initiallyVisible === undefined ? true : layerConfig.initiallyVisible);
   }
 
   public override setVisible(visible: boolean): void {
