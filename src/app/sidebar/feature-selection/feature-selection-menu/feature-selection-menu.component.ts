@@ -83,6 +83,9 @@ export class FeatureSelectionMenuComponent extends Unsubscriber {
     if (properties["id"]) {
       return properties["id"];
     }
+    if (properties["fid"]) {
+      return properties["fid"];
+    }
 
     // TODO translate
     return "<unknown>";
