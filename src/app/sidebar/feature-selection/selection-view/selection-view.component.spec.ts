@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {SelectionSidebarComponent} from './selection-sidebar.component';
+import {SelectionViewComponent} from './selection-view.component';
 
 describe('SidebarComponent', () => {
-  let component: SelectionSidebarComponent;
-  let fixture: ComponentFixture<SelectionSidebarComponent>;
+  let component: SelectionViewComponent;
+  let fixture: ComponentFixture<SelectionViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SelectionSidebarComponent]
+      imports: [SelectionViewComponent]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(SelectionSidebarComponent);
+    fixture = TestBed.createComponent(SelectionViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

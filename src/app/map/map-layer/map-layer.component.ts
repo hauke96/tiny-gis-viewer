@@ -38,12 +38,18 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
 
   ngOnInit(): void {
     if (this.layer instanceof WmsLayer) {
-      this.olLayer = new ImageLayer({
-        source: new ImageWMS({
-          url: this.layer.url,
-          params: {'LAYERS': this.layer.name}
-        })
+      let wmsSource = new ImageWMS({
+        url: this.layer.url,
+        params: {'LAYERS': this.layer.name}
       });
+      this.olLayer = new ImageLayer({
+        source: wmsSource
+      });
+
+      let legendGraphicUrl = wmsSource.getLegendUrl(undefined);
+      if (legendGraphicUrl) {
+        this.layer.legendGraphicUrl = legendGraphicUrl;
+      }
     } else if (this.layer instanceof XyzLayer) {
       this.olLayer = new TileLayer({
         source: new XYZ({

@@ -4,6 +4,8 @@ import {LayerConfig} from '../config/config';
 export abstract class Layer {
   private visible$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
+  public legendGraphicUrl: string | undefined = undefined;
+
   /**
    * @param layerConfig Configuration object for this layer
    */

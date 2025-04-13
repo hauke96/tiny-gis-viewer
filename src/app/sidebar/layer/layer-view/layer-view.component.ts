@@ -9,7 +9,7 @@ import {EditControlsComponent} from '../edit-controls/edit-controls.component';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 
 @Component({
-  selector: 'app-layer-sidebar',
+  selector: 'app-layer-view',
   imports: [
     LayerListComponent,
     LanguageSelectionComponent,
@@ -17,10 +17,10 @@ import {IconButtonComponent} from '../../../common/icon-button/icon-button.compo
     EditControlsComponent,
     IconButtonComponent
   ],
-  templateUrl: './layer-sidebar.component.html',
-  styleUrl: './layer-sidebar.component.scss'
+  templateUrl: './layer-view.component.html',
+  styleUrl: './layer-view.component.scss'
 })
-export class LayerSidebarComponent {
+export class LayerViewComponent {
   protected version = packageInfo.version;
   protected sourceRepoUrl = environment.sourceRepoUrl;
   protected expanded = true;
