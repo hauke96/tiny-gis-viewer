@@ -3,12 +3,13 @@
                  [iconName]="expanded ? 'chevron-up' : 'chevron-down'"
                  (click)="expanded = !expanded">
 </app-icon-button>
-<h3 class="extra-margin">Legend</h3>
+<h3 class="extra-margin" [class.no-bottom-margin]="!expanded">Legend</h3>
 <div [hidden]="!expanded" class="content">
-  <div *ngFor="let layer of layers | async" class="layer-list-wrapper">
+  <div *ngFor="let layer of layers" class="layer-list-wrapper">
     <div class="layer-name">
       <lucide-angular name="layers-2"></lucide-angular>
       <span>{{ layer.title }}</span>
     </div>
+    <img [src]="layer.legendGraphicUrl!">
   </div>
 </div>

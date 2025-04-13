@@ -2,43 +2,41 @@ import {Component} from '@angular/core';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 import {Layer, WmsCapabilitiesLayer, WmsLayer} from '../../../map/layer';
 import {LayerService} from '../../../map/layer.service';
-import {map, Observable} from 'rxjs';
-import {AsyncPipe, NgForOf} from '@angular/common';
+import {NgForOf} from '@angular/common';
 import {LucideAngularModule} from 'lucide-angular';
+import {Unsubscriber} from '../../../common/unsubscriber';
 
 @Component({
   selector: 'app-legend-graphic-view',
   imports: [
     IconButtonComponent,
     NgForOf,
-    AsyncPipe,
     LucideAngularModule
   ],
   templateUrl: './legend-graphic-view.component.html',
   styleUrl: './legend-graphic-view.component.scss'
 })
-export class LegendGraphicViewComponent {
+export class LegendGraphicViewComponent extends Unsubscriber {
   protected expanded = true;
+  protected layers: Layer[] = [];
 
   constructor(protected layerService: LayerService) {
-  }
+    super();
 
-  public get layers(): Observable<Layer[]> {
-    return this.layerService.layers
-      .pipe(
-        map((layers: Layer[]) => {
-          const unwrappedLayers: Layer[] = [];
+    this.unsubscribeLater(
+      this.layerService.layers.subscribe(layers => {
+        const unwrappedLayers: Layer[] = [];
 
-          layers.forEach(layer => {
-            if (layer instanceof WmsCapabilitiesLayer) {
-              unwrappedLayers.push(...layer.wmsLayers);
-            } else if (layer instanceof WmsLayer) {
-              unwrappedLayers.push(layer);
-            }
-          })
+        layers.forEach(layer => {
+          if (layer instanceof WmsCapabilitiesLayer) {
+            unwrappedLayers.push(...layer.wmsLayers);
+          } else if (layer instanceof WmsLayer) {
+            unwrappedLayers.push(layer);
+          }
+        })
 
-          return unwrappedLayers;
-        }),
-      );
+        this.layers = unwrappedLayers;
+      })
+    )
   }
 }

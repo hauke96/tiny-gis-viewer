@@ -29,6 +29,10 @@ h3 {
   margin-left: styles.$space-base;
 }
 
+.no-bottom-margin {
+  margin-bottom: 0;
+}
+
 .content {
   overflow-y: scroll;
 }
