@@ -25,7 +25,7 @@ $color-error-light: #ef5350; // #400 Red
 $color-error: #f44336d9; // #500 Red
 
 // Spacings:
-$space-base: 1rem;
+$space-base: 0.9rem;
 $space-tiny: math.div($space-base, 3);
 $space-small: math.div($space-base, 2);
 $space-large: $space-base * 2;
@@ -33,7 +33,7 @@ $space-huge: $space-base * 3.5;
 
 $border-radius: $space-small;
 
-$font-size-normal: 1rem;
+$font-size-normal: 0.9rem;
 $font-size-small: 0.75 * $font-size-normal;
 
 * {
