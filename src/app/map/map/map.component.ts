@@ -14,6 +14,7 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Coordinate} from 'ol/coordinate';
 import {PinLayerComponent} from '../pin-layer/pin-layer.component';
 import {filter, first, of, switchMap} from 'rxjs';
+import {FeatureSelectionService} from '../feature-selection.service';
 
 @Component({
   selector: 'app-map',
@@ -33,6 +34,7 @@ export class MapComponent extends Unsubscriber implements OnInit {
   public constructor(
     private mapService: MapService,
     private layerService: LayerService,
+    private featureSelectionService: FeatureSelectionService,
     private route: ActivatedRoute,
     private router: Router,
     private configService: ConfigService,
@@ -137,10 +139,12 @@ export class MapComponent extends Unsubscriber implements OnInit {
   private handleCoordinateClick(coordinate: Array<number>) {
     console.log("Click on coordinate " + coordinate);
 
-    let resolution = this.map.getView().getResolution();
-    if (resolution) {
-      this.mapService.click(new MapClickEvent(coordinate, resolution, this.map.getView().getProjection()));
-    }
+    this.featureSelectionService.unfocusFeature().subscribe(() => {
+      let resolution = this.map.getView().getResolution();
+      if (resolution) {
+        this.mapService.click(new MapClickEvent(coordinate, resolution, this.map.getView().getProjection()));
+      }
+    })
   }
 
   public zoomIn(): void {
