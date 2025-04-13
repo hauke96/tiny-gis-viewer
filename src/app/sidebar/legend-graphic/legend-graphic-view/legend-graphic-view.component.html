@@ -1,0 +1,15 @@
+<app-icon-button class="close-button"
+                 [shadow]="true"
+                 [iconName]="expanded ? 'chevron-up' : 'chevron-down'"
+                 (click)="expanded = !expanded">
+</app-icon-button>
+<h3 class="extra-margin">Legend</h3>
+<div [hidden]="!expanded" class="content">
+  <p>Foobar</p>
+  <p>Foobar</p>
+  <p>Foobar</p>
+  <p>Foobar</p>
+  <p>Foobar</p>
+  <p>Foobar</p>
+  <p>Foobar</p>
+</div>

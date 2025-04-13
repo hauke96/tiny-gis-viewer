@@ -13,10 +13,11 @@ import {ControlPanelComponent} from './map/control-panel/control-panel.component
 import {MeasureLengthLayerComponent} from './map/measure/measure-length-layer.component';
 import {MeasureAreaLayerComponent} from './map/measure/measure-area-layer.component';
 import {Unsubscriber} from './common/unsubscriber';
+import {LegendGraphicViewComponent} from './sidebar/legend-graphic/legend-graphic-view/legend-graphic-view.component';
 
 @Component({
   selector: 'app-root',
-  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent, NgIf, FeatureLayerComponent, ControlPanelComponent, MeasureLengthLayerComponent, MeasureAreaLayerComponent],
+  imports: [MapComponent, LayerSidebarComponent, SelectionSidebarComponent, NgIf, FeatureLayerComponent, ControlPanelComponent, MeasureLengthLayerComponent, MeasureAreaLayerComponent, LegendGraphicViewComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

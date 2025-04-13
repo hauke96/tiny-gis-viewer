@@ -1,0 +1,30 @@
+@use "styles";
+
+:host {
+  @extend .shadow;
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  background-color: styles.$color-background;
+  border-radius: styles.$border-radius;
+
+  min-width: 200px;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: styles.$space-small;
+  margin-left: -(styles.$space-base * 1.25);
+}
+
+.extra-margin {
+  margin-left: styles.$space-base;
+}
+
+.content {
+  overflow-y: scroll;
+}
