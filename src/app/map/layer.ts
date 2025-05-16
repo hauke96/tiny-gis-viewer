@@ -49,6 +49,20 @@ export abstract class Layer {
   }
 }
 
+export class GroupLayer extends Layer {
+  /**
+   * @param layerConfig Configuration object for this layer
+   * @param children Child layers of this group layer.
+   */
+  constructor(
+    layerConfig: LayerConfig,
+    public children: Layer[] | undefined
+  ) {
+    super(layerConfig);
+  }
+}
+
+
 export class WmsCapabilitiesLayer extends Layer {
   /**
    * @param layerConfig Configuration object for this layer

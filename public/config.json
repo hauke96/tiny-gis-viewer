@@ -27,9 +27,46 @@
         {
           "type": "wms",
           "url": "https://deneb.hauke-stieler.de/geo/data/wms",
+          "name": "osm-hh-example-stations",
+          "title": "OSM Hamburg example - Stations",
+          "queryable": true,
+          "attribution": "© OpenStreetMap contributors"
+        },
+        {
+          "type": "wms",
+          "url": "https://deneb.hauke-stieler.de/geo/data/wms",
           "name": "osm-hh-example-buildings",
           "title": "OSM Hamburg example - Buildings",
           "queryable": true,
+          "attribution": "© OpenStreetMap contributors"
+        },
+        {
+          "type": "group",
+          "name": "test-group",
+          "title": "Testgroup",
+          "children": [
+            {
+              "type": "wms",
+              "url": "https://deneb.hauke-stieler.de/geo/data/wms",
+              "name": "osm-hh-example-roads",
+              "title": "OSM Hamburg example - Roads",
+              "queryable": true,
+              "attribution": "© OpenStreetMap contributors"
+            },
+            {
+              "type": "xyz",
+              "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+              "name": "osm-carto",
+              "title": "OSM Carto",
+              "attribution": "© OpenStreetMap contributors"
+            }
+          ]
+        },
+        {
+          "type": "xyz",
+          "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+          "name": "osm-carto",
+          "title": "OSM Carto",
           "attribution": "© OpenStreetMap contributors"
         }
       ]

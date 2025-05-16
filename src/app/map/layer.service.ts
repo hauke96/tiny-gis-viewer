@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Layer, WmsCapabilitiesLayer, WmsLayer, XyzLayer} from './layer';
+import {GroupLayer, Layer, WmsCapabilitiesLayer, WmsLayer, XyzLayer} from './layer';
 import {BehaviorSubject, forkJoin, map, Observable, of} from 'rxjs';
 import {WMSCapabilities} from 'ol/format';
 import {HttpClient} from '@angular/common/http';
@@ -30,28 +30,40 @@ export class LayerService {
     }
 
     const layerObservables = config.layers.map(layer => {
-      switch (layer.type) {
-        case "group":
-          console.log("TODO")
-          return of([])
-        case "wms":
-          return this.loadWmsLayer(layer);
-        case "wms-capabilities":
-          return this.loadLayersFromCapabilities(layer);
-        case "xyz":
-          return this.loadXyzLayer(layer);
-        default:
-          console.error(`Unknown layer type '${layer.type}'`);
-          return of([]);
-      }
+      return this.loadLayer(layer);
     });
     forkJoin(layerObservables)
       .subscribe(layers => {
-        this.setLayers(layers.flatMap(l => l));
+        this.setLayers(layers.filter(l => !!l).flatMap(l => l));
       });
   }
 
-  public loadLayersFromCapabilities(layerConfig: LayerConfig): Observable<WmsCapabilitiesLayer[]> {
+  private loadLayer(layerConfig: LayerConfig): Observable<Layer | undefined> {
+    switch (layerConfig.type) {
+      case "group":
+        return this.loadGroupLayer(layerConfig)
+      case "wms":
+        return this.loadWmsLayer(layerConfig);
+      case "wms-capabilities":
+        return this.loadLayersFromCapabilities(layerConfig);
+      case "xyz":
+        return this.loadXyzLayer(layerConfig);
+      default:
+        console.error(`Unknown layer type '${layerConfig.type}'`);
+        return of(undefined);
+    }
+  }
+
+  private loadGroupLayer(layerConfig: LayerConfig): Observable<Layer> {
+    if (layerConfig.children) {
+      let childLayerObservables = layerConfig.children.map(child => this.loadLayer(child));
+      return forkJoin(childLayerObservables)
+        .pipe(map(layer => new GroupLayer(layerConfig, layer.filter(l => !!l))))
+    }
+    return of(new GroupLayer(layerConfig, []));
+  }
+
+  public loadLayersFromCapabilities(layerConfig: LayerConfig): Observable<WmsCapabilitiesLayer | undefined> {
     const capabilitiesUrl = new URL(layerConfig.url);
     const wmsBaseUrl = capabilitiesUrl.origin + capabilitiesUrl.pathname;
 
@@ -65,7 +77,7 @@ export class LayerService {
 
           if (!result.Capability || !result.Capability.Layer || !result.Capability.Layer.Layer || result.Capability.Layer.Layer.length === 0) {
             console.log("Result of GetCapabilities request has no layers")
-            return [];
+            return undefined;
           }
 
           let wmsLayers = result.Capability.Layer.Layer.map(layerDto => {
@@ -84,16 +96,16 @@ export class LayerService {
 
           layerConfig.name = result.Service.Name;
           layerConfig.title = result.Service.Title;
-          return [new WmsCapabilitiesLayer(layerConfig, wmsLayers)];
+          return new WmsCapabilitiesLayer(layerConfig, wmsLayers);
         })
       )
   }
 
-  private loadWmsLayer(layerConfig: LayerConfig): Observable<Layer[]> {
-    return of([new WmsLayer(layerConfig)]);
+  private loadWmsLayer(layerConfig: LayerConfig): Observable<Layer> {
+    return of(new WmsLayer(layerConfig));
   }
 
-  private loadXyzLayer(layerConfig: LayerConfig): Observable<Layer[]> {
-    return of([new XyzLayer(layerConfig)]);
+  private loadXyzLayer(layerConfig: LayerConfig): Observable<Layer> {
+    return of(new XyzLayer(layerConfig));
   }
 }
