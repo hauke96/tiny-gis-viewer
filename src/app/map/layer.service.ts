@@ -31,6 +31,9 @@ export class LayerService {
 
     const layerObservables = config.layers.map(layer => {
       switch (layer.type) {
+        case "group":
+          console.log("TODO")
+          return of([])
         case "wms":
           return this.loadWmsLayer(layer);
         case "wms-capabilities":
@@ -73,7 +76,8 @@ export class LayerService {
               layerDto.Name,
               layerDto.queryable,
               layerDto.Attribution?.Title ?? "",
-              true
+              true,
+              undefined
             );
             return new WmsLayer(wmsLayerConfig)
           });
