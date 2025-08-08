@@ -38,6 +38,7 @@ export abstract class Layer {
 
   public setVisible(visible: boolean): void {
     this.getSubLayers()?.forEach(l => l.setVisible(visible));
+    this.layerConfig.initiallyVisible = visible;
     this.visible$.next(visible);
   }
 

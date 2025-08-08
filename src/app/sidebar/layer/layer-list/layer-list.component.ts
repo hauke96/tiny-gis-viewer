@@ -22,18 +22,10 @@ import {ConfigService} from '../../../config/config.service';
 export class LayerListComponent {
   @Input() expanded!: boolean;
 
-  constructor(protected layerService: LayerService, protected configService: ConfigService) {
+  constructor(protected layerService: LayerService) {
   }
 
   public get layers(): Observable<Layer[]> {
     return this.layerService.layers;
-  }
-
-  public onMoveLayerDown(layer: Layer): void {
-    this.configService.moveLayerDown(layer);
-  }
-
-  public onDeleteLayer(layer: Layer): void {
-    this.configService.deleteLayer(layer);
   }
 }

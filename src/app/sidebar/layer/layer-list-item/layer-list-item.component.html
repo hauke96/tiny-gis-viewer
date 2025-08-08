@@ -1,8 +1,8 @@
 <div class="row">
   <app-checkbox [title]="layer.title"
                 [checked]="layer.isVisible()"
-                [tooltipText]="getTooltipText(layer)"
-                (checkedChange)="onLayerSelectionClicked(layer, $event)">
+                [tooltipText]="getTooltipText()"
+                (checkedChange)="onLayerSelectionClicked($event)">
   </app-checkbox>
   <div class="button-wrapper" *ngIf="hasControlButtons">
     <app-icon-button iconName="move-down"

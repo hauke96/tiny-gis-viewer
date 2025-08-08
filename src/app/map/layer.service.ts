@@ -5,6 +5,7 @@ import {WMSCapabilities} from 'ol/format';
 import {HttpClient} from '@angular/common/http';
 import {GetCapabilitiesDto} from './get-capabilities-dto';
 import {Config, LayerConfig} from '../config/config';
+import {ConfigService} from '../config/config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,15 @@ import {Config, LayerConfig} from '../config/config';
 export class LayerService {
   private layers$: BehaviorSubject<Layer[]> = new BehaviorSubject<Layer[]>([]);
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private configService: ConfigService) {
   }
 
   public get layers(): Observable<Layer[]> {
     return this.layers$.asObservable()
+  }
+
+  public get currentLayers(): Layer[] {
+    return this.layers$.value;
   }
 
   public setLayers(layers: Layer[]): void {
@@ -107,5 +112,40 @@ export class LayerService {
 
   private loadXyzLayer(layerConfig: LayerConfig): Observable<Layer> {
     return of(new XyzLayer(layerConfig));
+  }
+
+  public moveLayerDown(layer: Layer): void {
+    let layers = this.currentLayers.slice();
+    let indexOfLayerToMove = layers.indexOf(layer);
+
+    if (indexOfLayerToMove === -1 || indexOfLayerToMove == layers.length - 1) {
+      return;
+    }
+
+    // Swap elements
+    let layerConfig = layers[indexOfLayerToMove];
+    layers[indexOfLayerToMove] = layers[indexOfLayerToMove + 1];
+    layers[indexOfLayerToMove + 1] = layerConfig;
+
+    this.configService.updateConfig(layers);
+  }
+
+  public deleteLayer(layer: Layer): void {
+    let layers = this.currentLayers.slice();
+    let indexOfLayerToDelete = layers.indexOf(layer);
+
+    if (indexOfLayerToDelete === -1) {
+      throw new Error(`Layer ${layer.name} was not found and could not be removed`);
+    }
+
+    // Remove item at index
+    layers.splice(indexOfLayerToDelete, 1);
+
+    this.configService.updateConfig(layers);
+  }
+
+  public setLayerVisibility(layer: Layer, isVisible: boolean): void {
+    layer.setVisible(isVisible);
+    this.configService.updateConfig(this.currentLayers);
   }
 }

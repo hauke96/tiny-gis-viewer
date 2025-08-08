@@ -7,6 +7,7 @@ import {LayerCreationFormComponent} from '../layer-creation-form/layer-creation-
 import {LayerConfig} from '../../../config/config';
 import {ConfigService} from '../../../config/config.service';
 import {TranslatePipe} from '@ngx-translate/core';
+import {LayerService} from '../../../map/layer.service';
 
 @Component({
   selector: 'app-edit-controls',
@@ -37,7 +38,7 @@ export class EditControlsComponent {
   }
 
   public onWmsLayerSave(layer: LayerConfig): void {
-    this.configService.addLayer(layer);
+    this.configService.addLayerConfig(layer);
     this.onDialogClose();
   }
 

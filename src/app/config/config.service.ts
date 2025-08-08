@@ -121,7 +121,10 @@ export class ConfigService {
     })
   }
 
-  public addLayer(layer: LayerConfig): void {
+  /**
+   * Adds the layer to the top of the config list and propagates this change via the "config$" event.
+   */
+  public addLayerConfig(layer: LayerConfig): void {
     if (!this.currentConfig) {
       throw new Error("There must be an existing config to add a layer");
     }
@@ -132,44 +135,17 @@ export class ConfigService {
     this.config$.next(newConfig);
   }
 
-  public moveLayerDown(layer: Layer): void {
+  /**
+   * Updates the current config based on the "layerConfig" property of the given layers. The new config will be
+   * propagated using the "config$" event.
+   */
+  public updateConfig(layers: Layer[]): void {
     if (!this.currentConfig) {
       throw new Error("There must be an existing config to add a layer");
     }
 
-
-    let layers = (this.currentConfig.layers ?? []).slice();
-    let indexOfLayerToMove = layers.indexOf(layer.layerConfig);
-
-    if (indexOfLayerToMove === -1 || indexOfLayerToMove == layers.length - 1) {
-      return;
-    }
-
-    // Swap elements
-    let layerConfig = layers[indexOfLayerToMove];
-    layers[indexOfLayerToMove] = layers[indexOfLayerToMove + 1];
-    layers[indexOfLayerToMove + 1] = layerConfig;
-
-    const newConfig = new Config(layers, this.currentConfig.mapView, this.currentConfig.queryFeatureCount);
-    this.config$.next(newConfig);
-  }
-
-  public deleteLayer(layer: Layer): void {
-    if (!this.currentConfig) {
-      throw new Error("There must be an existing config to add a layer");
-    }
-
-    let layers = (this.currentConfig.layers ?? []).slice();
-    let indexOfLayerToDelete = layers.indexOf(layer.layerConfig);
-
-    if (indexOfLayerToDelete === -1) {
-      return;
-    }
-
-    // Remove item at index
-    layers.splice(indexOfLayerToDelete, 1);
-
-    const newConfig = new Config(layers, this.currentConfig.mapView, this.currentConfig.queryFeatureCount);
+    const layerConfigs = layers.map(l => l.layerConfig);
+    const newConfig = new Config(layerConfigs, this.currentConfig.mapView, this.currentConfig.queryFeatureCount);
     this.config$.next(newConfig);
   }
 }

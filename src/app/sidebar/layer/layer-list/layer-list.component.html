@@ -2,8 +2,6 @@
 <div class="layer-list" *ngIf="expanded">
   <app-layer-list-item *ngFor="let layer of layers | async; let last = last;"
                        [layer]="layer"
-                       [isLast]="last"
-                       (moveDown)="onMoveLayerDown(layer)"
-                       (delete)="onDeleteLayer(layer)">
+                       [isLast]="last">
   </app-layer-list-item>
 </div>

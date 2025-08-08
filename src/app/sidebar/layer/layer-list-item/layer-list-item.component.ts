@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {GroupLayer, Layer, WmsCapabilitiesLayer} from '../../../map/layer';
+import {Component, Input} from '@angular/core';
+import {Layer} from '../../../map/layer';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CheckboxComponent} from '../../../common/checkbox/checkbox.component';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 import {NgForOf, NgIf} from '@angular/common';
 import {LucideAngularModule} from 'lucide-angular';
+import {LayerService} from '../../../map/layer.service';
 
 @Component({
   selector: 'app-layer-list-item',
@@ -27,28 +28,23 @@ export class LayerListItemComponent {
   @Input()
   public hasControlButtons: boolean = true;
 
-  @Output()
-  public moveDown: EventEmitter<void> = new EventEmitter();
-  @Output()
-  public delete: EventEmitter<void> = new EventEmitter();
-
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService, private layerService: LayerService) {
   }
 
-  public getTooltipText(layer: Layer): string {
-    return this.translate.instant("layer-list.layer-tooltip", {name: layer.title});
+  public getTooltipText(): string {
+    return this.translate.instant("layer-list.layer-tooltip", {name: this.layer.title});
   }
 
-  public onLayerSelectionClicked(layer: Layer, layerVisible: boolean): void {
-    layer.setVisible(layerVisible);
+  public onLayerSelectionClicked(layerVisible: boolean): void {
+    this.layerService.setLayerVisibility(this.layer, layerVisible);
   }
 
   public onMoveDownClicked(): void {
-    this.moveDown.emit();
+    this.layerService.moveLayerDown(this.layer);
   }
 
   public onDeleteClicked(): void {
-    this.delete.emit();
+    this.layerService.deleteLayer(this.layer);
   }
 
   public get hasSubLayers(): boolean {
