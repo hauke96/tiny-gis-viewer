@@ -96,13 +96,18 @@ export class WmsCapabilitiesLayer extends Layer {
 }
 
 export class WmsLayer extends Layer {
+  public readonly featureInfoResponseTypes: string[];
+
   /**
    * @param layerConfig Configuration object for this layer
+   * @param featureInfoResponseTypes List of MIME-types that are supported for the GetFeatureInfo requests.
    */
   constructor(
     layerConfig: LayerConfig,
+    featureInfoResponseTypes: string[]
   ) {
     super(layerConfig);
+    this.featureInfoResponseTypes = featureInfoResponseTypes;
   }
 
   public override getSubLayers(): Layer[] | undefined {

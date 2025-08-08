@@ -13,7 +13,8 @@ export interface GetCapabilitiesServiceDto {
 }
 
 export interface GetCapabilitiesCapabilityDto {
-  Layer: GetCapabilitiesLayerDto
+  Layer: GetCapabilitiesLayerDto,
+  Request: GetCapabilitiesRequestDto
 }
 
 export interface GetCapabilitiesLayerDto {
@@ -26,4 +27,12 @@ export interface GetCapabilitiesLayerDto {
 
 export interface GetCapabilitiesLayerAttributionDto {
   Title: string
+}
+
+interface GetCapabilitiesRequestDto {
+  GetFeatureInfo: GetCapabilitiesRequestGetFeatureInfoDto
+}
+
+interface GetCapabilitiesRequestGetFeatureInfoDto {
+  Format: string[]
 }

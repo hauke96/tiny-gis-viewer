@@ -81,9 +81,11 @@ export class LayerService {
           const result = parser.read(response) as GetCapabilitiesDto;
 
           if (!result.Capability || !result.Capability.Layer || !result.Capability.Layer.Layer || result.Capability.Layer.Layer.length === 0) {
-            console.log("Result of GetCapabilities request has no layers")
+            console.log("Result of GetCapabilities request has no capabilities and/or no layers")
             return undefined;
           }
+
+          let featureInfoFormats = result.Capability.Request?.GetFeatureInfo?.Format ?? [];
 
           let wmsLayers = result.Capability.Layer.Layer.map(layerDto => {
             let wmsLayerConfig = new LayerConfig(
@@ -96,7 +98,7 @@ export class LayerService {
               true,
               undefined
             );
-            return new WmsLayer(wmsLayerConfig)
+            return new WmsLayer(wmsLayerConfig, featureInfoFormats)
           });
 
           layerConfig.name = result.Service.Name;
@@ -107,7 +109,20 @@ export class LayerService {
   }
 
   private loadWmsLayer(layerConfig: LayerConfig): Observable<Layer> {
-    return of(new WmsLayer(layerConfig));
+    const capabilitiesUrl = new URL(layerConfig.url);
+    capabilitiesUrl.searchParams.set('REQUEST', "GetCapabilities");
+
+    return this.httpClient.get(capabilitiesUrl.toString(), {responseType: 'text'})
+      .pipe(
+        map(response => {
+          const parser = new WMSCapabilities();
+          const result = parser.read(response) as GetCapabilitiesDto;
+
+          let featureInfoFormats = result.Capability?.Request?.GetFeatureInfo?.Format ?? [];
+
+          return new WmsLayer(layerConfig, featureInfoFormats);
+        })
+      );
   }
 
   private loadXyzLayer(layerConfig: LayerConfig): Observable<Layer> {
