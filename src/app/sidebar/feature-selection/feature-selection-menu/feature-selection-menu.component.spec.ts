@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { FeatureSelectionMenuComponent } from './feature-selection-menu.component';
+import {FeatureSelectionMenuComponent} from './feature-selection-menu.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(FeatureSelectionMenuComponent.name, () => {
   let component: FeatureSelectionMenuComponent;
-  let fixture: ComponentFixture<FeatureSelectionMenuComponent>;
+  let fixture: MockedComponentFixture<FeatureSelectionMenuComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [FeatureSelectionMenuComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(FeatureSelectionMenuComponent);
+  });
 
-    fixture = TestBed.createComponent(FeatureSelectionMenuComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(FeatureSelectionMenuComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

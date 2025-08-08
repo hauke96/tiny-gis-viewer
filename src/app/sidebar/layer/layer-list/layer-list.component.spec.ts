@@ -1,19 +1,17 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {LayerListComponent} from './layer-list.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(LayerListComponent.name, () => {
   let component: LayerListComponent;
-  let fixture: ComponentFixture<LayerListComponent>;
+  let fixture: MockedComponentFixture<LayerListComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [LayerListComponent]
-    })
-      .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(LayerListComponent);
+  });
 
-    fixture = TestBed.createComponent(LayerListComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(LayerListComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

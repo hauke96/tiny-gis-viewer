@@ -1,19 +1,17 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {LayerViewComponent} from './layer-view.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
-describe(SidebarComponent.name, () => {
+describe(LayerViewComponent.name, () => {
   let component: LayerViewComponent;
-  let fixture: ComponentFixture<LayerViewComponent>;
+  let fixture: MockedComponentFixture<LayerViewComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [LayerViewComponent]
-    })
-      .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(LayerViewComponent);
+  });
 
-    fixture = TestBed.createComponent(LayerViewComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(LayerViewComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

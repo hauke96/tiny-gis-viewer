@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {LayerCreationFormComponent} from './layer-creation-form.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
-import { LayerCreationFormComponent } from './layer-creation-form.component';
-
-describe(WmsLayerCreationFormComponent.name, () => {
+describe(LayerCreationFormComponent.name, () => {
   let component: LayerCreationFormComponent;
-  let fixture: ComponentFixture<LayerCreationFormComponent>;
+  let fixture: MockedComponentFixture<LayerCreationFormComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [LayerCreationFormComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(LayerCreationFormComponent);
+  });
 
-    fixture = TestBed.createComponent(LayerCreationFormComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(LayerCreationFormComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

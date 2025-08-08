@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { DropDownComponent } from './drop-down.component';
+import {DropDownComponent} from './drop-down.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(DropDownComponent.name, () => {
   let component: DropDownComponent;
-  let fixture: ComponentFixture<DropDownComponent>;
+  let fixture: MockedComponentFixture<DropDownComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [DropDownComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(DropDownComponent);
+  });
 
-    fixture = TestBed.createComponent(DropDownComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(DropDownComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

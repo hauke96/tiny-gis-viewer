@@ -1,19 +1,17 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {MapComponent} from './map.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(MapComponent.name, () => {
   let component: MapComponent;
-  let fixture: ComponentFixture<MapComponent>;
+  let fixture: MockedComponentFixture<MapComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [MapComponent]
-    })
-      .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(MapComponent);
+  });
 
-    fixture = TestBed.createComponent(MapComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(MapComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

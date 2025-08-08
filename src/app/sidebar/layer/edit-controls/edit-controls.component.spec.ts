@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { EditControlsComponent } from './edit-controls.component';
+import {EditControlsComponent} from './edit-controls.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(EditControlsComponent.name, () => {
   let component: EditControlsComponent;
-  let fixture: ComponentFixture<EditControlsComponent>;
+  let fixture: MockedComponentFixture<EditControlsComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [EditControlsComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(EditControlsComponent);
+  });
 
-    fixture = TestBed.createComponent(EditControlsComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(EditControlsComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

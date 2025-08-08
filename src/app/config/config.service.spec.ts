@@ -1,13 +1,20 @@
-import { TestBed } from '@angular/core/testing';
-
-import { ConfigService } from './config.service';
+import {ConfigService} from './config.service';
+import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
 
 describe(ConfigService.name, () => {
   let service: ConfigService;
 
+  let httpClient: HttpClient;
+  let router: Router;
+  let activatedRoute: ActivatedRoute;
+
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ConfigService);
+    httpClient = {} as never as HttpClient;
+    router = {} as never as Router;
+    activatedRoute = {} as never as ActivatedRoute;
+
+    service = new ConfigService(httpClient, router, activatedRoute);
   });
 
   it('should be created', () => {

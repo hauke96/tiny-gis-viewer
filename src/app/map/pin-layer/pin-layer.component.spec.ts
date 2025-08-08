@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PinLayerComponent } from './pin-layer.component';
+import {PinLayerComponent} from './pin-layer.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(PinLayerComponent.name, () => {
   let component: PinLayerComponent;
-  let fixture: ComponentFixture<PinLayerComponent>;
+  let fixture: MockedComponentFixture<PinLayerComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [PinLayerComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(PinLayerComponent);
+  });
 
-    fixture = TestBed.createComponent(PinLayerComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(PinLayerComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

@@ -1,19 +1,17 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {CheckboxComponent} from './checkbox.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(CheckboxComponent.name, () => {
   let component: CheckboxComponent;
-  let fixture: ComponentFixture<CheckboxComponent>;
+  let fixture: MockedComponentFixture<CheckboxComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CheckboxComponent]
-    })
-      .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(CheckboxComponent);
+  });
 
-    fixture = TestBed.createComponent(CheckboxComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(CheckboxComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

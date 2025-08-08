@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { IconButtonComponent } from './icon-button.component';
+import {IconButtonComponent} from './icon-button.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(IconButtonComponent.name, () => {
   let component: IconButtonComponent;
-  let fixture: ComponentFixture<IconButtonComponent>;
+  let fixture: MockedComponentFixture<IconButtonComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [IconButtonComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(IconButtonComponent);
+  });
 
-    fixture = TestBed.createComponent(IconButtonComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(IconButtonComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

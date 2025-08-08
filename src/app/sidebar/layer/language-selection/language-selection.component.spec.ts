@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { LanguageSelectionComponent } from './language-selection.component';
+import {LanguageSelectionComponent} from './language-selection.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(LanguageSelectionComponent.name, () => {
   let component: LanguageSelectionComponent;
-  let fixture: ComponentFixture<LanguageSelectionComponent>;
+  let fixture: MockedComponentFixture<LanguageSelectionComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [LanguageSelectionComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(LanguageSelectionComponent);
+  });
 
-    fixture = TestBed.createComponent(LanguageSelectionComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(LanguageSelectionComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

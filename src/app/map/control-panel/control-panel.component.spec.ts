@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ControlPanelComponent } from './control-panel.component';
+import {ControlPanelComponent} from './control-panel.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(ControlPanelComponent.name, () => {
   let component: ControlPanelComponent;
-  let fixture: ComponentFixture<ControlPanelComponent>;
+  let fixture: MockedComponentFixture<ControlPanelComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ControlPanelComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(ControlPanelComponent);
+  });
 
-    fixture = TestBed.createComponent(ControlPanelComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(ControlPanelComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

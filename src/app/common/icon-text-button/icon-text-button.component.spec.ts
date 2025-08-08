@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { IconTextButtonComponent } from './icon-text-button.component';
+import {IconTextButtonComponent} from './icon-text-button.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(IconTextButtonComponent.name, () => {
   let component: IconTextButtonComponent;
-  let fixture: ComponentFixture<IconTextButtonComponent>;
+  let fixture: MockedComponentFixture<IconTextButtonComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [IconTextButtonComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(IconTextButtonComponent);
+  });
 
-    fixture = TestBed.createComponent(IconTextButtonComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(IconTextButtonComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

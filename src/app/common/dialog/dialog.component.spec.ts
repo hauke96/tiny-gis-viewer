@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { DialogComponent } from './dialog.component';
+import {DialogComponent} from './dialog.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(DialogComponent.name, () => {
   let component: DialogComponent;
-  let fixture: ComponentFixture<DialogComponent>;
+  let fixture: MockedComponentFixture<DialogComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [DialogComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(DialogComponent);
+  });
 
-    fixture = TestBed.createComponent(DialogComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(DialogComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

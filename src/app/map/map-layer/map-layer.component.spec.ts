@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {MapLayerComponent} from './map-layer.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
-import { MapLayerComponent } from './map-layer.component';
-
-describe(WmsLayerComponent.name, () => {
+describe(MapLayerComponent.name, () => {
   let component: MapLayerComponent;
-  let fixture: ComponentFixture<MapLayerComponent>;
+  let fixture: MockedComponentFixture<MapLayerComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [MapLayerComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(MapLayerComponent);
+  });
 
-    fixture = TestBed.createComponent(MapLayerComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(MapLayerComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

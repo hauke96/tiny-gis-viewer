@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ControlButtonComponent } from './control-button.component';
+import {ControlButtonComponent} from './control-button.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(ControlButtonComponent.name, () => {
   let component: ControlButtonComponent;
-  let fixture: ComponentFixture<ControlButtonComponent>;
+  let fixture: MockedComponentFixture<ControlButtonComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ControlButtonComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(ControlButtonComponent);
+  });
 
-    fixture = TestBed.createComponent(ControlButtonComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(ControlButtonComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

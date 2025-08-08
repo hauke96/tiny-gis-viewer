@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { LegendGraphicViewComponent } from './legend-graphic-view.component';
+import {LegendGraphicViewComponent} from './legend-graphic-view.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(LegendGraphicViewComponent.name, () => {
   let component: LegendGraphicViewComponent;
-  let fixture: ComponentFixture<LegendGraphicViewComponent>;
+  let fixture: MockedComponentFixture<LegendGraphicViewComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [LegendGraphicViewComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(LegendGraphicViewComponent);
+  });
 
-    fixture = TestBed.createComponent(LegendGraphicViewComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(LegendGraphicViewComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

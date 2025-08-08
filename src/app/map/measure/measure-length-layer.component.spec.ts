@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { MeasureLengthLayerComponent } from './measure-length-layer.component';
+import {MeasureLengthLayerComponent} from './measure-length-layer.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(MeasureLengthLayerComponent.name, () => {
   let component: MeasureLengthLayerComponent;
-  let fixture: ComponentFixture<MeasureLengthLayerComponent>;
+  let fixture: MockedComponentFixture<MeasureLengthLayerComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [MeasureLengthLayerComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(MeasureLengthLayerComponent);
+  });
 
-    fixture = TestBed.createComponent(MeasureLengthLayerComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(MeasureLengthLayerComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

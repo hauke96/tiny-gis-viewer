@@ -1,18 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { InputTextComponent } from './input-text.component';
+import {InputTextComponent} from './input-text.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
 describe(InputTextComponent.name, () => {
   let component: InputTextComponent;
-  let fixture: ComponentFixture<InputTextComponent>;
+  let fixture: MockedComponentFixture<InputTextComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [InputTextComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(InputTextComponent);
+  });
 
-    fixture = TestBed.createComponent(InputTextComponent);
+  beforeEach(() => {
+    fixture = MockRender(InputTextComponent);
+    component = fixture.point.componentInstance;
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

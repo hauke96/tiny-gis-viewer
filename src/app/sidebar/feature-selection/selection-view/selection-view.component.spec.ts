@@ -1,19 +1,17 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {SelectionViewComponent} from './selection-view.component';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 
-describe(SidebarComponent.name, () => {
+describe(SelectionViewComponent.name, () => {
   let component: SelectionViewComponent;
-  let fixture: ComponentFixture<SelectionViewComponent>;
+  let fixture: MockedComponentFixture<SelectionViewComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SelectionViewComponent]
-    })
-      .compileComponents();
+  beforeEach(() => {
+    return MockBuilder(SelectionViewComponent);
+  });
 
-    fixture = TestBed.createComponent(SelectionViewComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(SelectionViewComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 
