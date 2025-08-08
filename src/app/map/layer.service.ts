@@ -72,7 +72,7 @@ export class LayerService {
     const capabilitiesUrl = new URL(layerConfig.url);
     const wmsBaseUrl = capabilitiesUrl.origin + capabilitiesUrl.pathname;
 
-    console.log(`Load layers from ${capabilitiesUrl}`);
+    console.debug(`Load layers from ${capabilitiesUrl}`);
 
     return this.httpClient.get(layerConfig.url, {responseType: 'text'})
       .pipe(

@@ -32,6 +32,9 @@ export class MapLayerComponent implements OnInit, OnDestroy {
   private gml2: GML2;
   private olLayer: OlLayer | undefined;
 
+  private featureFormat: 'geojson' | 'gml32' | 'gml3' | 'gml2' | undefined = undefined;
+  private infoRequestMimeType: string | undefined = undefined;
+
   constructor(
     private mapService: MapService,
     private configService: ConfigService,
@@ -46,6 +49,8 @@ export class MapLayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loadFeatureInfoFormats();
+
     if (this.layer instanceof WmsLayer) {
       let wmsSource = new ImageWMS({
         url: this.layer.url,
@@ -91,6 +96,42 @@ export class MapLayerComponent implements OnInit, OnDestroy {
     }
   }
 
+  private loadFeatureInfoFormats(): void {
+    if (this.layer instanceof WmsLayer) {
+      this.infoRequestMimeType = this.getBestGeoJsonMatch(this.layer.featureInfoResponseTypes);
+      if (!!this.infoRequestMimeType) {
+        this.featureFormat = 'geojson';
+      }
+
+      if (!this.infoRequestMimeType) {
+        this.infoRequestMimeType = this.getBestGML32Match(this.layer.featureInfoResponseTypes);
+        if (!!this.infoRequestMimeType) {
+          this.featureFormat = 'gml32';
+        }
+      }
+
+      if (!this.infoRequestMimeType) {
+        this.infoRequestMimeType = this.getBestGML3Match(this.layer.featureInfoResponseTypes);
+        if (!!this.infoRequestMimeType) {
+          this.featureFormat = 'gml3';
+        }
+      }
+
+      if (!this.infoRequestMimeType) {
+        this.infoRequestMimeType = this.getBestGML2Match(this.layer.featureInfoResponseTypes);
+        if (!!this.infoRequestMimeType) {
+          this.featureFormat = 'gml2';
+        }
+      }
+    }
+
+    if (!this.infoRequestMimeType) {
+      console.debug(`Layer ${this.layer.name} has no supported MIME format (GeoJSON, GML32, GML3, GML2). I'll try GeoJSON as fallback.`);
+      this.infoRequestMimeType = "application/geo+json";
+      this.featureFormat = 'geojson';
+    }
+  }
+
   private selectFeaturesAtCoordinate(coordinate: Coordinate, resolution: number | undefined, projection: ProjectionLike | undefined) {
     if (!this.olLayer || !resolution || !projection || !this.olLayer.isVisible()) {
       return;
@@ -98,48 +139,12 @@ export class MapLayerComponent implements OnInit, OnDestroy {
 
     let source = this.olLayer.getSource() as ImageWMS;
 
-    let featureFormat: 'geojson' | 'gml32' | 'gml3' | 'gml2' | undefined = undefined;
-    let infoRequestMimeType = undefined;
-    if (this.layer instanceof WmsLayer) {
-      infoRequestMimeType = this.getBestGeoJsonMatch(this.layer.featureInfoResponseTypes);
-      if (!!infoRequestMimeType) {
-        featureFormat = 'geojson';
-      }
-
-      if (!infoRequestMimeType) {
-        infoRequestMimeType = this.getBestGML32Match(this.layer.featureInfoResponseTypes);
-        if (!!infoRequestMimeType) {
-          featureFormat = 'gml32';
-        }
-      }
-
-      if (!infoRequestMimeType) {
-        infoRequestMimeType = this.getBestGML3Match(this.layer.featureInfoResponseTypes);
-        if (!!infoRequestMimeType) {
-          featureFormat = 'gml3';
-        }
-      }
-
-      if (!infoRequestMimeType) {
-        infoRequestMimeType = this.getBestGML2Match(this.layer.featureInfoResponseTypes);
-        if (!!infoRequestMimeType) {
-          featureFormat = 'gml2';
-        }
-      }
-    }
-
-    if (!infoRequestMimeType) {
-      console.log("No supported MIME format (GeoJSON, GML32, GML3, GML2) for layer " + this.layer.name + " found. I'll try GeoJSON.");
-      infoRequestMimeType = "application/geo+json";
-      featureFormat = 'geojson';
-    }
-
     let featureInfoUrl = source.getFeatureInfoUrl(
       coordinate,
       resolution,
       projection,
       {
-        "INFO_FORMAT": infoRequestMimeType,
+        "INFO_FORMAT": this.infoRequestMimeType,
         "FEATURE_COUNT": this.configService.currentConfig?.queryFeatureCount ?? 3,
         "WITH_GEOMETRY": "TRUE"
       }
@@ -151,7 +156,7 @@ export class MapLayerComponent implements OnInit, OnDestroy {
 
     this.httpClient.get(featureInfoUrl, {responseType: 'text'}).subscribe(response => {
       let features: Feature[] = [];
-      switch (featureFormat) {
+      switch (this.featureFormat) {
         case "geojson":
           features = this.geoJSON.readFeatures(response);
           break;

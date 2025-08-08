@@ -64,7 +64,7 @@ export class ConfigService {
   }
 
   public loadConfigByName(configName: string): Observable<Config> {
-    console.log(`Load config '${configName}'`)
+    console.debug(`Load config '${configName}'`)
 
     const allowedChars = "a-zA-z0-9-_"
     if (!configName.match("^[" + allowedChars + "]+$")) {

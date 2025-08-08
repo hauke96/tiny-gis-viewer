@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
 import {Map as OlMap, MapEvent, View} from 'ol';
 import {LayerService} from '../layer.service';
-import {Layer} from '../layer';
+import {GroupLayer, Layer, WmsCapabilitiesLayer} from '../layer';
 import {ConfigService} from '../../config/config.service';
 import {ViewOptions} from 'ol/View';
 import {MapService} from '../map.service';
@@ -88,14 +88,12 @@ export class MapComponent implements OnInit {
     this.mapService.changeResolution(this.map.getView().getResolution());
 
     this.layerService.layers.pipe(takeUntilDestroyed()).subscribe(layers => {
-      console.log(`Updating layers. Got ${layers.length} layers.`);
+      console.debug(`Updating layers. Got ${layers.length} layers.`);
 
-      layers = layers.flatMap(l => this.layerService.unwrapLayer(l));
-
-      // Reverse layers so that the first layer is on top
-      layers.reverse();
-
-      this.layers = layers;
+      this.layers = layers.flatMap(l => this.layerService.unwrapLayer(l))
+        .filter(layer => !(layer instanceof WmsCapabilitiesLayer) && !(layer instanceof GroupLayer))
+        // Reverse layers so that the first layer is on top
+        .reverse();
     });
 
     this.mapService.layerAdded.pipe(takeUntilDestroyed()).subscribe(layer => this.map.addLayer(layer));
@@ -127,7 +125,7 @@ export class MapComponent implements OnInit {
   }
 
   private handleCoordinateClick(coordinate: Array<number>) {
-    console.log("Click on coordinate " + coordinate);
+    console.debug("Click on coordinate " + coordinate);
 
     this.featureSelectionService.unfocusFeature().subscribe(() => {
       let resolution = this.map.getView().getResolution();
