@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Layer, WmsCapabilitiesLayer} from '../../../map/layer';
+import {GroupLayer, Layer, WmsCapabilitiesLayer} from '../../../map/layer';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CheckboxComponent} from '../../../common/checkbox/checkbox.component';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
@@ -56,6 +56,6 @@ export class LayerListItemComponent {
   }
 
   public subLayers(): Layer[] {
-    return this.layer instanceof WmsCapabilitiesLayer ? this.layer.wmsLayers : [];
+    return this.layer.getSubLayers() ?? [];
   }
 }

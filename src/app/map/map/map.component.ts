@@ -3,7 +3,7 @@ import {Attribution, ScaleLine} from 'ol/control';
 import {Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
 import {LayerService} from '../layer.service';
 import {Unsubscriber} from '../../common/unsubscriber';
-import {Layer, WmsCapabilitiesLayer} from '../layer';
+import {Layer} from '../layer';
 import {ConfigService} from '../../config/config.service';
 import {ViewOptions} from 'ol/View';
 import {MapService} from '../map.service';
@@ -104,15 +104,10 @@ export class MapComponent extends Unsubscriber implements OnInit {
     this.unsubscribeLater(this.layerService.layers.subscribe(layers => {
       console.log(`Updating layers. Got ${layers.length} layers.`);
 
-      layers = layers.flatMap(l => {
-        if (l instanceof WmsCapabilitiesLayer) {
-          return l.wmsLayers;
-        }
-        return [l];
-      })
+      layers = layers.flatMap(l => this.unwrapLayer(l));
 
       // Reverse layers so that the first layer is on top
-      layers = layers.slice();
+      // layers = layers.slice();
       layers.reverse();
 
       this.layers = layers;
@@ -126,6 +121,17 @@ export class MapComponent extends Unsubscriber implements OnInit {
       this.mapService.zoomedIn.subscribe(() => this.zoomIn()),
       this.mapService.zoomedOut.subscribe(() => this.zoomOut()),
     )
+  }
+
+  private unwrapLayer(layer: Layer): Layer[] {
+    let subLayers = layer.getSubLayers();
+    if (!subLayers) {
+      return [layer];
+    }
+
+    const unwrappedSubLayers = subLayers.flatMap(l => this.unwrapLayer(l));
+
+    return [layer, ...unwrappedSubLayers];
   }
 
   private onResolutionChanged() {
