@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
 import {Map as OlMap, MapEvent, View} from 'ol';
 import {LayerService} from '../layer.service';
-import {Unsubscriber} from '../../common/unsubscriber';
 import {Layer} from '../layer';
 import {ConfigService} from '../../config/config.service';
 import {ViewOptions} from 'ol/View';
@@ -15,6 +14,7 @@ import {Coordinate} from 'ol/coordinate';
 import {PinLayerComponent} from '../pin-layer/pin-layer.component';
 import {filter, first, of, switchMap} from 'rxjs';
 import {FeatureSelectionService} from '../feature-selection.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-map',
@@ -25,7 +25,7 @@ import {FeatureSelectionService} from '../feature-selection.service';
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
 })
-export class MapComponent extends Unsubscriber implements OnInit {
+export class MapComponent implements OnInit {
   public map: OlMap;
 
   protected layers: Layer[] = [];
@@ -38,8 +38,6 @@ export class MapComponent extends Unsubscriber implements OnInit {
     private router: Router,
     private configService: ConfigService,
   ) {
-    super();
-
     let defaultViewOptions: ViewOptions = {
       center: [1112312, 7085764], // Hamburg, Germany
       projection: 'EPSG:3857',
@@ -88,16 +86,8 @@ export class MapComponent extends Unsubscriber implements OnInit {
 
     this.mapService.changeProjection(this.map.getView().getProjection());
     this.mapService.changeResolution(this.map.getView().getResolution());
-  }
 
-  ngOnInit(): void {
-    this.map.setTarget("map")
-
-    this.map.on("moveend", (e: MapEvent) => {
-      this.onResolutionChanged();
-    });
-
-    this.unsubscribeLater(this.layerService.layers.subscribe(layers => {
+    this.layerService.layers.pipe(takeUntilDestroyed()).subscribe(layers => {
       console.log(`Updating layers. Got ${layers.length} layers.`);
 
       layers = layers.flatMap(l => this.unwrapLayer(l));
@@ -107,16 +97,22 @@ export class MapComponent extends Unsubscriber implements OnInit {
       layers.reverse();
 
       this.layers = layers;
-    }));
+    });
 
-    this.unsubscribeLater(
-      this.mapService.layerAdded.subscribe(layer => this.map.addLayer(layer)),
-      this.mapService.layerRemoved.subscribe(layer => this.map.removeLayer(layer)),
-      this.mapService.interactionAdded.subscribe(interaction => this.map.addInteraction(interaction)),
-      this.mapService.interactionRemoved.subscribe(interaction => this.map.removeInteraction(interaction)),
-      this.mapService.zoomedIn.subscribe(() => this.zoomIn()),
-      this.mapService.zoomedOut.subscribe(() => this.zoomOut()),
-    )
+    this.mapService.layerAdded.pipe(takeUntilDestroyed()).subscribe(layer => this.map.addLayer(layer));
+    this.mapService.layerRemoved.pipe(takeUntilDestroyed()).subscribe(layer => this.map.removeLayer(layer));
+    this.mapService.interactionAdded.pipe(takeUntilDestroyed()).subscribe(interaction => this.map.addInteraction(interaction));
+    this.mapService.interactionRemoved.pipe(takeUntilDestroyed()).subscribe(interaction => this.map.removeInteraction(interaction));
+    this.mapService.zoomedIn.pipe(takeUntilDestroyed()).subscribe(() => this.zoomIn());
+    this.mapService.zoomedOut.pipe(takeUntilDestroyed()).subscribe(() => this.zoomOut());
+  }
+
+  ngOnInit(): void {
+    this.map.setTarget("map")
+
+    this.map.on("moveend", (e: MapEvent) => {
+      this.onResolutionChanged();
+    });
   }
 
   protected onMapClicked(event: MouseEvent): void {

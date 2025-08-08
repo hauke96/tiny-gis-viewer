@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {LucideAngularModule} from 'lucide-angular';
-import {Unsubscriber} from '../../../common/unsubscriber';
 import {Layer} from '../../../map/layer';
 import {Feature} from 'ol';
 import {FeatureSelectionMenuComponent} from '../feature-selection-menu/feature-selection-menu.component';
@@ -10,6 +9,7 @@ import {FeatureDetailsComponent} from '../feature-details/feature-details.compon
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 
 import {MapService} from '../../../map/map.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-selection-view',
@@ -19,29 +19,24 @@ import {MapService} from '../../../map/map.service';
     TranslatePipe,
     FeatureDetailsComponent,
     IconButtonComponent
-],
+  ],
   templateUrl: './selection-view.component.html',
   styleUrl: './selection-view.component.scss'
 })
-export class SelectionViewComponent extends Unsubscriber {
+export class SelectionViewComponent {
   protected layerToFeaturesMap: Map<Layer, Feature[]> = new Map<Layer, Feature[]>();
   protected selectedFeaturesFromMap: Feature[] = [];
 
   constructor(private featureSelectionService: FeatureSelectionService, private mapService: MapService) {
-    super();
-
-    this.unsubscribeLater(
-      featureSelectionService.selectionOnMap
-        .subscribe(layerToFeaturesMap => {
-          this.layerToFeaturesMap = layerToFeaturesMap[1];
-          this.selectedFeaturesFromMap = Array.from(this.layerToFeaturesMap.keys()).flatMap(key => this.layerToFeaturesMap.get(key) ?? []);
-        })
-    );
+    featureSelectionService.selectionOnMap
+      .pipe(takeUntilDestroyed())
+      .subscribe(layerToFeaturesMap => {
+        this.layerToFeaturesMap = layerToFeaturesMap[1];
+        this.selectedFeaturesFromMap = Array.from(this.layerToFeaturesMap.keys()).flatMap(key => this.layerToFeaturesMap.get(key) ?? []);
+      });
   }
 
-  override ngOnDestroy() {
-    super.ngOnDestroy();
-
+  ngOnDestroy() {
     this.featureSelectionService.deselectAllFeaturesOnMap();
     this.featureSelectionService.unfocusFeature();
   }

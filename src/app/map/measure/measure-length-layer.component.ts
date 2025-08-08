@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
-import {Fill, RegularShape, Style, Text} from 'ol/style';
+import {Fill, Style, Text} from 'ol/style';
 import {FeatureLike} from 'ol/Feature';
 import {LineString, Point} from 'ol/geom';
 import {getLength} from 'ol/sphere';
 import {MapService} from '../map.service';
 import {AbstractMeasureComponent} from './measure-common';
 import {Type} from 'ol/geom/Geometry';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-measure-length-layer',
@@ -31,10 +32,8 @@ export class MeasureLengthLayerComponent extends AbstractMeasureComponent {
   constructor(mapService: MapService) {
     super(mapService);
 
-    this.unsubscribeLater(
-      mapService.lengthMeasurementStarted.subscribe(() => this.startMeasurement()),
-      mapService.lengthMeasurementEnded.subscribe(() => this.endMeasurement()),
-    );
+    mapService.lengthMeasurementStarted.pipe(takeUntilDestroyed()).subscribe(() => this.startMeasurement());
+    mapService.lengthMeasurementEnded.pipe(takeUntilDestroyed()).subscribe(() => this.endMeasurement());
   }
 
   protected override getStyle(feature: FeatureLike): Style[] {

@@ -1,24 +1,24 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {MapService} from '../map.service';
 import {Layer as OlLayer} from 'ol/layer';
 import {Layer, WmsLayer, XyzLayer} from '../layer';
 import ImageLayer from 'ol/layer/Image';
 import {ImageWMS, XYZ} from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
-import {Unsubscriber} from '../../common/unsubscriber';
 import {Coordinate} from 'ol/coordinate';
 import {ConfigService} from '../../config/config.service';
 import {ProjectionLike} from 'ol/proj';
 import {HttpClient} from '@angular/common/http';
 import {GeoJSON} from 'ol/format';
 import {FeatureSelectionService} from '../feature-selection.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-map-layer',
   imports: [],
   template: '',
 })
-export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy {
+export class MapLayerComponent implements OnInit, OnDestroy {
   @Input()
   public layer!: Layer;
 
@@ -29,10 +29,9 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
     private mapService: MapService,
     private configService: ConfigService,
     private httpClient: HttpClient,
-    private featureSelectionService: FeatureSelectionService
+    private featureSelectionService: FeatureSelectionService,
+    private destroyRef: DestroyRef
   ) {
-    super();
-
     this.geoJSON = new GeoJSON();
   }
 
@@ -68,19 +67,15 @@ export class MapLayerComponent extends Unsubscriber implements OnInit, OnDestroy
 
     this.mapService.addLayer(this.olLayer);
 
-    this.unsubscribeLater(
-      this.layer.visible.subscribe((visible) => this.olLayer?.setVisible(visible)),
-      this.mapService.clicked.subscribe(event => {
-        if (event && this.layer.queryable) {
-          this.selectFeaturesAtCoordinate(event.coordinate, event.resolution, event.projection);
-        }
-      }),
-    )
+    this.layer.visible.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((visible) => this.olLayer?.setVisible(visible));
+    this.mapService.clicked.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
+      if (event && this.layer.queryable) {
+        this.selectFeaturesAtCoordinate(event.coordinate, event.resolution, event.projection);
+      }
+    });
   }
 
-  override ngOnDestroy() {
-    super.ngOnDestroy();
-
+  public ngOnDestroy() {
     if (!!this.olLayer) {
       this.mapService.removeLayer(this.olLayer);
     }

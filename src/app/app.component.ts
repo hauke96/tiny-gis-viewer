@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MapComponent} from './map/map/map.component';
 import {LayerService} from './map/layer.service';
 import {LayerViewComponent} from './sidebar/layer/layer-view/layer-view.component';
@@ -12,8 +12,8 @@ import {FeatureLayerComponent} from './map/feature-layer/feature-layer.component
 import {ControlPanelComponent} from './map/control-panel/control-panel.component';
 import {MeasureLengthLayerComponent} from './map/measure/measure-length-layer.component';
 import {MeasureAreaLayerComponent} from './map/measure/measure-area-layer.component';
-import {Unsubscriber} from './common/unsubscriber';
 import {LegendGraphicViewComponent} from './sidebar/legend-graphic/legend-graphic-view/legend-graphic-view.component';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +22,7 @@ import {LegendGraphicViewComponent} from './sidebar/legend-graphic/legend-graphi
   styleUrl: './app.component.scss',
   standalone: true,
 })
-export class AppComponent extends Unsubscriber implements OnInit {
+export class AppComponent {
   private readonly supportedLanguages = ['de', 'en'];
   private readonly defaultLanguage = 'en';
 
@@ -33,8 +33,6 @@ export class AppComponent extends Unsubscriber implements OnInit {
     private configService: ConfigService,
     title: Title
   ) {
-    super();
-
     this.translate.addLangs(this.supportedLanguages);
     this.translate.setDefaultLang(this.defaultLanguage);
 
@@ -55,11 +53,7 @@ export class AppComponent extends Unsubscriber implements OnInit {
         title.setTitle(res);
       });
     });
-  }
 
-  ngOnInit() {
-    this.unsubscribeLater(
-      this.configService.config.subscribe(config => this.layerService.loadFromConfig(config))
-    )
+    this.configService.config.pipe(takeUntilDestroyed()).subscribe(config => this.layerService.loadFromConfig(config))
   }
 }

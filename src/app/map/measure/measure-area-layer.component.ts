@@ -6,6 +6,7 @@ import {getArea} from 'ol/sphere';
 import {MapService} from '../map.service';
 import {AbstractMeasureComponent} from './measure-common';
 import {Type} from 'ol/geom/Geometry';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-measure-area-layer',
@@ -17,10 +18,8 @@ export class MeasureAreaLayerComponent extends AbstractMeasureComponent {
   constructor(mapService: MapService) {
     super(mapService);
 
-    this.unsubscribeLater(
-      mapService.areaMeasurementStarted.subscribe(() => this.startMeasurement()),
-      mapService.areaMeasurementEnded.subscribe(() => this.endMeasurement()),
-    );
+    mapService.areaMeasurementStarted.pipe(takeUntilDestroyed()).subscribe(() => this.startMeasurement());
+    mapService.areaMeasurementEnded.pipe(takeUntilDestroyed()).subscribe(() => this.endMeasurement());
   }
 
   protected override getStyle(feature: FeatureLike): Style[] {

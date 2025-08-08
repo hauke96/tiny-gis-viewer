@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {ControlButtonComponent} from '../control-button/control-button.component';
 import {MapService} from '../map.service';
 import {TranslatePipe} from '@ngx-translate/core';
-import {Unsubscriber} from '../../common/unsubscriber';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-control-panel',
@@ -13,18 +13,14 @@ import {Unsubscriber} from '../../common/unsubscriber';
   templateUrl: './control-panel.component.html',
   styleUrl: './control-panel.component.scss'
 })
-export class ControlPanelComponent extends Unsubscriber {
+export class ControlPanelComponent {
   protected activeMeasurementMode: 'area' | 'length' | undefined = undefined;
 
   constructor(private mapService: MapService) {
-    super();
-
-    this.unsubscribeLater(
-      mapService.areaMeasurementStarted.subscribe(() => this.activeMeasurementMode = 'area'),
-      mapService.areaMeasurementEnded.subscribe(() => this.activeMeasurementMode = undefined),
-      mapService.lengthMeasurementStarted.subscribe(() => this.activeMeasurementMode = 'length'),
-      mapService.lengthMeasurementEnded.subscribe(() => this.activeMeasurementMode = undefined),
-    );
+    mapService.areaMeasurementStarted.pipe(takeUntilDestroyed()).subscribe(() => this.activeMeasurementMode = 'area');
+    mapService.areaMeasurementEnded.pipe(takeUntilDestroyed()).subscribe(() => this.activeMeasurementMode = undefined);
+    mapService.lengthMeasurementStarted.pipe(takeUntilDestroyed()).subscribe(() => this.activeMeasurementMode = 'length');
+    mapService.lengthMeasurementEnded.pipe(takeUntilDestroyed()).subscribe(() => this.activeMeasurementMode = undefined);
   }
 
   public onMeasureAreaClicked(): void {

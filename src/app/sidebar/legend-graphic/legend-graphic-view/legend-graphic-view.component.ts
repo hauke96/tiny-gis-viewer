@@ -4,38 +4,34 @@ import {Layer, WmsCapabilitiesLayer, WmsLayer} from '../../../map/layer';
 import {LayerService} from '../../../map/layer.service';
 
 import {LucideAngularModule} from 'lucide-angular';
-import {Unsubscriber} from '../../../common/unsubscriber';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-legend-graphic-view',
   imports: [
     IconButtonComponent,
     LucideAngularModule
-],
+  ],
   templateUrl: './legend-graphic-view.component.html',
   styleUrl: './legend-graphic-view.component.scss'
 })
-export class LegendGraphicViewComponent extends Unsubscriber {
+export class LegendGraphicViewComponent {
   protected expanded = true;
   protected layers: Layer[] = [];
 
   constructor(protected layerService: LayerService) {
-    super();
+    this.layerService.layers.pipe(takeUntilDestroyed()).subscribe(layers => {
+      const unwrappedLayers: Layer[] = [];
 
-    this.unsubscribeLater(
-      this.layerService.layers.subscribe(layers => {
-        const unwrappedLayers: Layer[] = [];
-
-        layers.forEach(layer => {
-          if (layer instanceof WmsCapabilitiesLayer) {
-            unwrappedLayers.push(...layer.wmsLayers);
-          } else if (layer instanceof WmsLayer) {
-            unwrappedLayers.push(layer);
-          }
-        })
-
-        this.layers = unwrappedLayers;
+      layers.forEach(layer => {
+        if (layer instanceof WmsCapabilitiesLayer) {
+          unwrappedLayers.push(...layer.wmsLayers);
+        } else if (layer instanceof WmsLayer) {
+          unwrappedLayers.push(layer);
+        }
       })
-    )
+
+      this.layers = unwrappedLayers;
+    })
   }
 }

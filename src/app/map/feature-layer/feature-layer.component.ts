@@ -7,7 +7,7 @@ import {Circle, Fill, Stroke, Style} from 'ol/style';
 import {Layer} from '../layer';
 import {FeatureLike} from 'ol/Feature';
 import {FeatureSelectionService} from '../feature-selection.service';
-import {Unsubscriber} from '../../common/unsubscriber';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-feature-layer',
@@ -15,7 +15,7 @@ import {Unsubscriber} from '../../common/unsubscriber';
   templateUrl: './feature-layer.component.html',
   styleUrl: './feature-layer.component.scss',
 })
-export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDestroy {
+export class FeatureLayerComponent implements OnInit, OnDestroy {
   @Input()
   set features(featureMap: Map<Layer, Feature[]>) {
     if (this.vectorSource && this.vectorLayer) {
@@ -28,11 +28,9 @@ export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDes
   private vectorLayer: VectorLayer | undefined = undefined;
 
   constructor(private mapService: MapService, private featureSelectionService: FeatureSelectionService) {
-    super();
-
-    this.unsubscribeLater(featureSelectionService.focussedFeature.subscribe(feature => {
+    featureSelectionService.focussedFeature.pipe(takeUntilDestroyed()).subscribe(feature => {
       this.vectorLayer?.changed();
-    }))
+    });
   }
 
   ngOnInit() {
@@ -47,8 +45,7 @@ export class FeatureLayerComponent extends Unsubscriber implements OnInit, OnDes
     this.mapService.addLayer(this.vectorLayer);
   }
 
-  override ngOnDestroy(): void {
-    super.ngOnDestroy();
+  public ngOnDestroy(): void {
     this.mapService.removeLayer(this.vectorLayer!);
   }
 

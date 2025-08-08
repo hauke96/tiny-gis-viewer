@@ -1,4 +1,3 @@
-import {Unsubscriber} from '../../common/unsubscriber';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MapService} from '../map.service';
 import VectorSource from 'ol/source/Vector';
@@ -6,12 +5,12 @@ import VectorLayer from 'ol/layer/Vector';
 import {Draw, Modify} from 'ol/interaction';
 import {Type} from 'ol/geom/Geometry';
 import {FeatureLike} from 'ol/Feature';
-import {Circle, Fill, RegularShape, Stroke, Style, Text} from 'ol/style';
+import {Circle, Fill, Stroke, Style, Text} from 'ol/style';
 
 @Component({
   template: ''
 })
-export abstract class AbstractMeasureComponent extends Unsubscriber implements OnInit, OnDestroy {
+export abstract class AbstractMeasureComponent implements OnInit, OnDestroy {
 
   protected readonly darkSlightlyTransparentGrey = 'rgba(60, 60, 60, 0.7)';
   protected readonly darkTransparentGrey = 'rgba(60, 60, 60, 0.5)';
@@ -74,8 +73,6 @@ export abstract class AbstractMeasureComponent extends Unsubscriber implements O
   protected measureModifyInteraction!: Modify;
 
   protected constructor(private mapService: MapService) {
-    super();
-
     this.initMeasurement();
   }
 
@@ -89,9 +86,7 @@ export abstract class AbstractMeasureComponent extends Unsubscriber implements O
     this.mapService.addLayer(this.measureLayer);
   }
 
-  public override ngOnDestroy() {
-    super.ngOnDestroy();
-
+  public ngOnDestroy() {
     this.mapService.removeInteraction(this.measureModifyInteraction);
     this.mapService.removeInteraction(this.measureDrawInteraction);
     this.mapService.removeLayer(this.measureLayer);

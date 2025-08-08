@@ -5,18 +5,18 @@ import {FormsModule} from '@angular/forms';
 import {Layer, WmsLayer} from '../../../map/layer';
 import {LucideAngularModule} from 'lucide-angular';
 import {ActivatedRoute} from '@angular/router';
-import {Unsubscriber} from '../../../common/unsubscriber';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-feature-selection-menu',
   imports: [
     FormsModule,
     LucideAngularModule
-],
+  ],
   templateUrl: './feature-selection-menu.component.html',
   styleUrl: './feature-selection-menu.component.scss'
 })
-export class FeatureSelectionMenuComponent extends Unsubscriber {
+export class FeatureSelectionMenuComponent {
   protected _features: Map<Layer, Feature[]> = new Map<Layer, Feature[]>();
   @Input()
   public set features(layerToFeaturesMap: Map<Layer, Feature[]>) {
@@ -58,20 +58,16 @@ export class FeatureSelectionMenuComponent extends Unsubscriber {
   constructor(
     private route: ActivatedRoute,
   ) {
-    super();
-
-    this.unsubscribeLater(
-      this.route.queryParamMap.subscribe(paramMap => {
-        if (paramMap.has("feature") && paramMap.get("feature")?.trim() !== "") {
-          let [layerName, featureId] = JSON.parse(paramMap.get("feature")!) as [string, string];
-          this.urlSelectedFeatureLayerName = layerName;
-          this.urlSelectedFeatureId = featureId;
-        } else {
-          this.urlSelectedFeatureLayerName = undefined;
-          this.urlSelectedFeatureId = undefined;
-        }
-      })
-    )
+    this.route.queryParamMap.pipe(takeUntilDestroyed()).subscribe(paramMap => {
+      if (paramMap.has("feature") && paramMap.get("feature")?.trim() !== "") {
+        let [layerName, featureId] = JSON.parse(paramMap.get("feature")!) as [string, string];
+        this.urlSelectedFeatureLayerName = layerName;
+        this.urlSelectedFeatureId = featureId;
+      } else {
+        this.urlSelectedFeatureLayerName = undefined;
+        this.urlSelectedFeatureId = undefined;
+      }
+    })
   }
 
   getNameForFeature(feature: Feature): string {
