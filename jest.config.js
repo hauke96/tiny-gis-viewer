@@ -6,6 +6,6 @@ module.exports = {
     '^.+\\.ts$': 'ts-jest', // Only transform .ts files
   },
   transformIgnorePatterns: [
-    '/node_modules/(?!flat)/', // Exclude modules except 'flat' from transformation
   ],
+  collectCoverage: true,
 };
