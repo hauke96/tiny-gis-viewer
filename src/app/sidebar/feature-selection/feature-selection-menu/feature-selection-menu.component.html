@@ -1,4 +1,4 @@
-@for (layer of layers; track layer) {
+@for (layer of layers; track layer.trackKey) {
   <div class="layer-list-wrapper">
     <div class="layer-name">
       <lucide-angular name="layers-2"></lucide-angular>
@@ -6,7 +6,7 @@
     </div>
     <div class="feature-table-wrapper">
       <table class="data-table">
-        @for (feature of features.get(layer); track feature) {
+        @for (feature of features.get(layer); track feature.getId()) {
           <tr class="selectable" [class.active]="selectedFeature === feature"
             (click)="onFeatureSelected(layer, feature)">
             <td>{{ getNameForFeature(feature) }}</td>

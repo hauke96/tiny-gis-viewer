@@ -1,7 +1,7 @@
 <h3 class="title-heading" [class.no-bottom-margin]="!expanded">{{ "layers" | translate }}</h3>
 @if (expanded) {
   <div class="layer-list">
-    @for (layer of layers | async; track layer; let last = $last) {
+    @for (layer of layers | async; track layer.trackKey; let last = $last) {
       <app-layer-list-item
         [layer]="layer"
         [isLast]="last">

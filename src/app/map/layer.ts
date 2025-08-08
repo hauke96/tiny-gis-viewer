@@ -6,6 +6,11 @@ export abstract class Layer {
 
   public legendGraphicUrl: string | undefined = undefined;
 
+  // When using @for expressions in the HTML, a track value is needed. Using the whole object is discouraged. Since
+  // a layer doesn't have an ID, we use a numeric value as track value.
+  private static trackKeyCounter: number = 0;
+  public readonly trackKey: number;
+
   /**
    * @param layerConfig Configuration object for this layer
    */
@@ -14,6 +19,7 @@ export abstract class Layer {
   ) {
     // When this property is not set, then show the layer by default
     this.setVisible(layerConfig.initiallyVisible === undefined ? true : layerConfig.initiallyVisible);
+    this.trackKey = Layer.trackKeyCounter++;
   }
 
   public get title(): string {

@@ -24,7 +24,7 @@
 </div>
 @if (hasSubLayers) {
   <div class="sub-layers">
-    @for (layer of subLayers(); track layer) {
+    @for (layer of subLayers(); track layer.trackKey) {
       <app-layer-list-item
         [layer]="layer"
         [hasControlButtons]="false">
