@@ -54,6 +54,7 @@ export class LayerCreationFormComponent {
       this.layerIsQueryable,
       this.layerAttribution,
       this.initiallyVisible,
+      undefined,
     ));
   }
 

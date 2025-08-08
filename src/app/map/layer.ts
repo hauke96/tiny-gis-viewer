@@ -37,6 +37,7 @@ export abstract class Layer {
   }
 
   public setVisible(visible: boolean): void {
+    this.getSubLayers()?.forEach(l => l.setVisible(visible));
     this.visible$.next(visible);
   }
 
@@ -46,6 +47,25 @@ export abstract class Layer {
 
   public get visible(): Observable<boolean> {
     return this.visible$.asObservable()
+  }
+
+  public abstract getSubLayers(): Layer[] | undefined
+}
+
+export class GroupLayer extends Layer {
+  /**
+   * @param layerConfig Configuration object for this layer
+   * @param children Child layers of this group layer.
+   */
+  constructor(
+    layerConfig: LayerConfig,
+    public children: Layer[]
+  ) {
+    super(layerConfig);
+  }
+
+  public override getSubLayers(): Layer[] | undefined {
+    return this.children;
   }
 }
 
@@ -63,9 +83,8 @@ export class WmsCapabilitiesLayer extends Layer {
     this.setVisible(layerConfig.initiallyVisible === undefined ? true : layerConfig.initiallyVisible);
   }
 
-  public override setVisible(visible: boolean): void {
-    this.wmsLayers?.forEach(l => l.setVisible(visible));
-    super.setVisible(visible);
+  public override getSubLayers(): Layer[] | undefined {
+    return this.wmsLayers;
   }
 }
 
@@ -78,6 +97,10 @@ export class WmsLayer extends Layer {
   ) {
     super(layerConfig);
   }
+
+  public override getSubLayers(): Layer[] | undefined {
+    return undefined;
+  }
 }
 
 export class XyzLayer extends Layer {
@@ -88,5 +111,9 @@ export class XyzLayer extends Layer {
     layerConfig: LayerConfig,
   ) {
     super(layerConfig);
+  }
+
+  public override getSubLayers(): Layer[] | undefined {
+    return undefined;
   }
 }

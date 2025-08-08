@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, catchError, filter, mergeMap, Observable, of} from 'rxjs';
-import {Config, LayerConfig, LayerType} from './config';
+import {Config, LayerConfig} from './config';
 import {Layer} from '../map/layer';
 import {ActivatedRoute, Router} from '@angular/router';
 import {deflate, inflate} from 'pako';
@@ -84,7 +84,8 @@ export class ConfigService {
             "",
             false,
             "© OpenStreetMap contributors",
-            true
+            true,
+            undefined
           );
           return of(new Config([defaultLayer], {}, 1));
         }),
@@ -97,16 +98,27 @@ export class ConfigService {
   public loadConfig(c: Config): Observable<Config> {
     c.layers = c.layers.map(l => {
       return Object.assign(
-        new LayerConfig("" as LayerType, "", "", "", false, "", undefined),
+        LayerConfig.newDefaultLayerConfig(),
         l
       );
     });
 
     const newConfig = Object.assign(new Config([], {}, 0), c);
+    newConfig.layers = this.objectAssignLayerConfigs(newConfig.layers);
     newConfig.validate();
     this.config$.next(newConfig);
 
     return of(newConfig);
+  }
+
+  private objectAssignLayerConfigs(layerConfigs: LayerConfig[]) {
+    return layerConfigs.map(layerConfig => {
+      layerConfig = Object.assign(LayerConfig.newDefaultLayerConfig(), layerConfig);
+      if (layerConfig.children) {
+        layerConfig.children = this.objectAssignLayerConfigs(layerConfig.children);
+      }
+      return layerConfig
+    })
   }
 
   public addLayer(layer: LayerConfig): void {
