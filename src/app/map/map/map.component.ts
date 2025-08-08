@@ -90,7 +90,7 @@ export class MapComponent implements OnInit {
     this.layerService.layers.pipe(takeUntilDestroyed()).subscribe(layers => {
       console.log(`Updating layers. Got ${layers.length} layers.`);
 
-      layers = layers.flatMap(l => this.unwrapLayer(l));
+      layers = layers.flatMap(l => this.layerService.unwrapLayer(l));
 
       // Reverse layers so that the first layer is on top
       layers.reverse();
@@ -116,17 +116,6 @@ export class MapComponent implements OnInit {
 
   protected onMapClicked(event: MouseEvent): void {
     this.handleCoordinateClick(this.map.getEventCoordinate(event));
-  }
-
-  private unwrapLayer(layer: Layer): Layer[] {
-    let subLayers = layer.getSubLayers();
-    if (!subLayers) {
-      return [layer];
-    }
-
-    const unwrappedSubLayers = subLayers.flatMap(l => this.unwrapLayer(l));
-
-    return [layer, ...unwrappedSubLayers];
   }
 
   private onResolutionChanged() {
