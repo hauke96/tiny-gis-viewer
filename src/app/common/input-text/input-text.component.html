@@ -1,2 +1,4 @@
-<span *ngIf="title != null" class="input-title">{{ title }}</span>
+@if (title != null) {
+  <span class="input-title">{{ title }}</span>
+}
 <input type="text" [placeholder]="placeholder ?? ''" [ngModel]="text" (ngModelChange)="onTextChanged($event)"/>

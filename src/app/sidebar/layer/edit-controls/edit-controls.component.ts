@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {LucideAngularModule} from 'lucide-angular';
 import {DialogComponent} from '../../../common/dialog/dialog.component';
-import {NgIf} from '@angular/common';
+
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 import {LayerCreationFormComponent} from '../layer-creation-form/layer-creation-form.component';
 import {LayerConfig} from '../../../config/config';
@@ -14,11 +14,10 @@ import {LayerService} from '../../../map/layer.service';
   imports: [
     LucideAngularModule,
     DialogComponent,
-    NgIf,
     IconButtonComponent,
     LayerCreationFormComponent,
-    TranslatePipe,
-  ],
+    TranslatePipe
+],
   templateUrl: './edit-controls.component.html',
   styleUrl: './edit-controls.component.scss'
 })

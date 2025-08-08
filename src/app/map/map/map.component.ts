@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
-import {Map as OlMap, MapBrowserEvent, MapEvent, View} from 'ol';
+import {Map as OlMap, MapEvent, View} from 'ol';
 import {LayerService} from '../layer.service';
 import {Unsubscriber} from '../../common/unsubscriber';
 import {Layer} from '../layer';
@@ -8,7 +8,7 @@ import {ConfigService} from '../../config/config.service';
 import {ViewOptions} from 'ol/View';
 import {MapService} from '../map.service';
 import {MapLayerComponent} from '../map-layer/map-layer.component';
-import {NgForOf} from '@angular/common';
+
 import {MapClickEvent} from '../../common/map-click-event';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Coordinate} from 'ol/coordinate';
@@ -20,7 +20,6 @@ import {FeatureSelectionService} from '../feature-selection.service';
   selector: 'app-map',
   imports: [
     MapLayerComponent,
-    NgForOf,
     PinLayerComponent
   ],
   templateUrl: './map.component.html',
@@ -94,9 +93,6 @@ export class MapComponent extends Unsubscriber implements OnInit {
   ngOnInit(): void {
     this.map.setTarget("map")
 
-    this.map.on("click", (event: MapBrowserEvent<UIEvent>) => {
-      this.handleCoordinateClick(event.coordinate);
-    });
     this.map.on("moveend", (e: MapEvent) => {
       this.onResolutionChanged();
     });
@@ -121,6 +117,10 @@ export class MapComponent extends Unsubscriber implements OnInit {
       this.mapService.zoomedIn.subscribe(() => this.zoomIn()),
       this.mapService.zoomedOut.subscribe(() => this.zoomOut()),
     )
+  }
+
+  protected onMapClicked(event: MouseEvent): void {
+    this.handleCoordinateClick(this.map.getEventCoordinate(event));
   }
 
   private unwrapLayer(layer: Layer): Layer[] {

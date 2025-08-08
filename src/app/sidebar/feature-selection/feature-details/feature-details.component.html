@@ -1,20 +1,28 @@
 <table class="statistic-table">
-  <tr *ngIf="areaSizeInM2 != null">
-    <td>{{ "feature-details.area-size" | translate }}</td>
-    <td>{{ areaSizeInM2 | number: '1.0-2' }} m²</td>
-  </tr>
-  <tr *ngIf="lineLengthInM != null">
-    <td>{{ "feature-details.line-length" | translate }}</td>
-    <td>{{ lineLengthInM | number: '1.0-2' }} m</td>
-  </tr>
-  <tr *ngIf="geometryType != null">
-    <td>{{ "feature-details.geometry-type" | translate }}</td>
-    <td>{{ geometryType }}</td>
-  </tr>
-  <tr *ngIf="numberOfGeometries != null">
-    <td>{{ "feature-details.number-of-geometries" | translate }}</td>
-    <td>{{ numberOfGeometries }}</td>
-  </tr>
+  @if (areaSizeInM2 != null) {
+    <tr>
+      <td>{{ "feature-details.area-size" | translate }}</td>
+      <td>{{ areaSizeInM2 | number: '1.0-2' }} m²</td>
+    </tr>
+  }
+  @if (lineLengthInM != null) {
+    <tr>
+      <td>{{ "feature-details.line-length" | translate }}</td>
+      <td>{{ lineLengthInM | number: '1.0-2' }} m</td>
+    </tr>
+  }
+  @if (geometryType != null) {
+    <tr>
+      <td>{{ "feature-details.geometry-type" | translate }}</td>
+      <td>{{ geometryType }}</td>
+    </tr>
+  }
+  @if (numberOfGeometries != null) {
+    <tr>
+      <td>{{ "feature-details.number-of-geometries" | translate }}</td>
+      <td>{{ numberOfGeometries }}</td>
+    </tr>
+  }
 </table>
 
 <div class="attribute-table-wrapper">
@@ -23,12 +31,18 @@
       <th>{{ "feature-details.key" | translate }}</th>
       <th>{{ "feature-details.value" | translate }}</th>
     </tr>
-    <tr *ngFor="let t of relevantTags">
-      <td [title]="t[0]" class="no-overflow">{{ t[0] }}</td>
-      <td [title]="t[1]" *ngIf="!isUrl(t[1])">{{ t[1] }}</td>
-      <td [title]="t[1]" *ngIf="isUrl(t[1])">
-        <a [href]="t[1]" target="_blank">{{ t[1] }}</a>
-      </td>
-    </tr>
+    @for (t of relevantTags; track t) {
+      <tr>
+        <td [title]="t[0]" class="no-overflow">{{ t[0] }}</td>
+        @if (!isUrl(t[1])) {
+          <td [title]="t[1]">{{ t[1] }}</td>
+        }
+        @if (isUrl(t[1])) {
+          <td [title]="t[1]">
+            <a [href]="t[1]" target="_blank">{{ t[1] }}</a>
+          </td>
+        }
+      </tr>
+    }
   </table>
 </div>

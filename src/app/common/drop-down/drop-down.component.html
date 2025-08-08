@@ -1,4 +1,8 @@
-<span *ngIf="title != null" class="input-title">{{ title }}</span>
+@if (title != null) {
+  <span class="input-title">{{ title }}</span>
+}
 <select [(ngModel)]="value" (ngModelChange)="onValueSelected($event)">
-  <option *ngFor="let value of values" [ngValue]="value[0]">{{ value[1] }}</option>
+  @for (value of values; track value) {
+    <option [ngValue]="value[0]">{{ value[1] }}</option>
+  }
 </select>

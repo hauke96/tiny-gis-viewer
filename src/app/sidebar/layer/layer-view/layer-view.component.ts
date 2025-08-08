@@ -4,7 +4,7 @@ import packageInfo from '../../../../../package.json';
 import {LayerListComponent} from '../layer-list/layer-list.component';
 import {LanguageSelectionComponent} from '../language-selection/language-selection.component';
 import {LucideAngularModule} from 'lucide-angular';
-import {NgIf} from '@angular/common';
+
 import {EditControlsComponent} from '../edit-controls/edit-controls.component';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 

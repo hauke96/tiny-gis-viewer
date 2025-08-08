@@ -8,7 +8,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {FeatureSelectionService} from '../../../map/feature-selection.service';
 import {FeatureDetailsComponent} from '../feature-details/feature-details.component';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
-import {NgIf} from '@angular/common';
+
 import {MapService} from '../../../map/map.service';
 
 @Component({
@@ -18,9 +18,8 @@ import {MapService} from '../../../map/map.service';
     FeatureSelectionMenuComponent,
     TranslatePipe,
     FeatureDetailsComponent,
-    IconButtonComponent,
-    NgIf,
-  ],
+    IconButtonComponent
+],
   templateUrl: './selection-view.component.html',
   styleUrl: './selection-view.component.scss'
 })

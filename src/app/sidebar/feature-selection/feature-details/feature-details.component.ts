@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
-import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import {Feature} from 'ol';
 import {Geometry, GeometryCollection, MultiLineString, MultiPoint, MultiPolygon} from 'ol/geom';
 import {getArea, getLength} from 'ol/sphere';
@@ -9,10 +9,8 @@ import {getArea, getLength} from 'ol/sphere';
   selector: 'app-feature-details',
   imports: [
     TranslatePipe,
-    NgForOf,
-    NgIf,
     DecimalPipe
-  ],
+],
   templateUrl: './feature-details.component.html',
   styleUrl: './feature-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush // Performance enhancement to not render the table over and over again

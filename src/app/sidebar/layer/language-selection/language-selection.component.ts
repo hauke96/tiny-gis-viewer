@@ -1,12 +1,10 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {NgForOf} from '@angular/common';
+
 
 @Component({
   selector: 'app-language-selection',
-  imports: [
-    NgForOf
-  ],
+  imports: [],
   templateUrl: './language-selection.component.html',
   styleUrl: './language-selection.component.scss'
 })

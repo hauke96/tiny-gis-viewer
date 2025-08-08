@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Feature} from 'ol';
-import {NgForOf} from '@angular/common';
+
 import {FormsModule} from '@angular/forms';
 import {Layer, WmsLayer} from '../../../map/layer';
 import {LucideAngularModule} from 'lucide-angular';
@@ -10,10 +10,9 @@ import {Unsubscriber} from '../../../common/unsubscriber';
 @Component({
   selector: 'app-feature-selection-menu',
   imports: [
-    NgForOf,
     FormsModule,
     LucideAngularModule
-  ],
+],
   templateUrl: './feature-selection-menu.component.html',
   styleUrl: './feature-selection-menu.component.scss'
 })

@@ -1,13 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {NgIf} from '@angular/common';
+
 import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-input-text',
   imports: [
-    NgIf,
     FormsModule
-  ],
+],
   templateUrl: './input-text.component.html',
   styleUrl: './input-text.component.scss'
 })

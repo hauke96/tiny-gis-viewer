@@ -1,1 +1,3 @@
-<span *ngFor="let lang of allLanguages" class="lang-label" [class.current-lang]="isCurrentLanguage(lang)" (click)="onClick(lang)">{{ lang }}</span>
+@for (lang of allLanguages; track lang) {
+  <span class="lang-label" [class.current-lang]="isCurrentLanguage(lang)" (click)="onClick(lang)">{{ lang }}</span>
+}

@@ -1,26 +1,34 @@
 <div class="row">
   <app-checkbox [title]="layer.title"
-                [checked]="layer.isVisible()"
-                [tooltipText]="getTooltipText()"
-                (checkedChange)="onLayerSelectionClicked($event)">
+    [checked]="layer.isVisible()"
+    [tooltipText]="getTooltipText()"
+    (checkedChange)="onLayerSelectionClicked($event)">
   </app-checkbox>
-  <div class="button-wrapper" *ngIf="hasControlButtons">
-    <app-icon-button iconName="move-down"
-                     [size]="'small'"
-                     [title]="'layer-list.move-down' | translate"
-                     (click)="onMoveDownClicked()"
-                     *ngIf="!isLast">
-    </app-icon-button>
-    <app-icon-button iconName="trash-2"
-                     [size]="'small'"
-                     [title]="'layer-list.delete' | translate"
-                     (click)="onDeleteClicked()">
-    </app-icon-button>
+  @if (hasControlButtons) {
+    <div class="button-wrapper">
+      @if (!isLast) {
+        <app-icon-button iconName="move-down"
+          [size]="'small'"
+          [title]="'layer-list.move-down' | translate"
+          (click)="onMoveDownClicked()"
+          >
+        </app-icon-button>
+      }
+      <app-icon-button iconName="trash-2"
+        [size]="'small'"
+        [title]="'layer-list.delete' | translate"
+        (click)="onDeleteClicked()">
+      </app-icon-button>
+    </div>
+  }
+</div>
+@if (hasSubLayers) {
+  <div class="sub-layers">
+    @for (layer of subLayers(); track layer) {
+      <app-layer-list-item
+        [layer]="layer"
+        [hasControlButtons]="false">
+      </app-layer-list-item>
+    }
   </div>
-</div>
-<div *ngIf="hasSubLayers" class="sub-layers">
-  <app-layer-list-item *ngFor="let layer of subLayers()"
-                       [layer]="layer"
-                       [hasControlButtons]="false">
-  </app-layer-list-item>
-</div>
+}

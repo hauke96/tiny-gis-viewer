@@ -1,7 +1,11 @@
 <h3 class="title-heading" [class.no-bottom-margin]="!expanded">{{ "layers" | translate }}</h3>
-<div class="layer-list" *ngIf="expanded">
-  <app-layer-list-item *ngFor="let layer of layers | async; let last = last;"
-                       [layer]="layer"
-                       [isLast]="last">
-  </app-layer-list-item>
-</div>
+@if (expanded) {
+  <div class="layer-list">
+    @for (layer of layers | async; track layer; let last = $last) {
+      <app-layer-list-item
+        [layer]="layer"
+        [isLast]="last">
+      </app-layer-list-item>
+    }
+  </div>
+}

@@ -1,3 +1,5 @@
-<div id="map"></div>
-<app-map-layer *ngFor="let layer of layers" [layer]="layer"></app-map-layer>
+<div id="map" (click)="onMapClicked($event)"></div>
+@for (layer of layers; track layer) {
+  <app-map-layer [layer]="layer"></app-map-layer>
+}
 <app-pin-layer></app-pin-layer>

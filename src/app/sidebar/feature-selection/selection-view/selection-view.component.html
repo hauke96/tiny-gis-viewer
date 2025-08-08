@@ -3,9 +3,9 @@
 <h3 class="title-heading">{{ "selected-features" | translate }}</h3>
 
 <app-feature-selection-menu [features]="layerToFeaturesMap"
-                            (featureSelected)="onFeatureFromMenuSelected($event)"></app-feature-selection-menu>
+(featureSelected)="onFeatureFromMenuSelected($event)"></app-feature-selection-menu>
 
-<ng-container *ngIf="hasFocussedFeature()">
+@if (hasFocussedFeature()) {
   <hr>
-  <app-feature-details [selectedFeature]="focussedFeature"></app-feature-details>
-</ng-container>
+    <app-feature-details [selectedFeature]="focussedFeature"></app-feature-details>
+  }

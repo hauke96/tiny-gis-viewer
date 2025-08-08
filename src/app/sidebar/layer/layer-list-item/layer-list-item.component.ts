@@ -3,7 +3,7 @@ import {Layer} from '../../../map/layer';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CheckboxComponent} from '../../../common/checkbox/checkbox.component';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
-import {NgForOf, NgIf} from '@angular/common';
+
 import {LucideAngularModule} from 'lucide-angular';
 import {LayerService} from '../../../map/layer.service';
 
@@ -12,11 +12,9 @@ import {LayerService} from '../../../map/layer.service';
   imports: [
     CheckboxComponent,
     IconButtonComponent,
-    NgIf,
     TranslatePipe,
-    NgForOf,
     LucideAngularModule
-  ],
+],
   templateUrl: './layer-list-item.component.html',
   styleUrl: './layer-list-item.component.scss'
 })

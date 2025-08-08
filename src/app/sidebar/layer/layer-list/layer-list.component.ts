@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {LayerService} from '../../../map/layer.service';
-import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 import {Layer} from '../../../map/layer';
 import {Observable} from 'rxjs';
@@ -10,12 +10,10 @@ import {ConfigService} from '../../../config/config.service';
 @Component({
   selector: 'app-layer-list',
   imports: [
-    NgForOf,
     AsyncPipe,
     TranslatePipe,
-    NgIf,
     LayerListItemComponent
-  ],
+],
   templateUrl: './layer-list.component.html',
   styleUrl: './layer-list.component.scss'
 })

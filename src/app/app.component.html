@@ -9,5 +9,7 @@
 </div>
 <div class="selection-sidebar-wrapper">
   <app-legend-graphic-view class="sidebar-item"></app-legend-graphic-view>
-  <app-selection-view class="sidebar-item" *ngIf="featureSelectionService.hasSelectionOnMap"></app-selection-view>
+  @if (featureSelectionService.hasSelectionOnMap) {
+    <app-selection-view class="sidebar-item"></app-selection-view>
+  }
 </div>

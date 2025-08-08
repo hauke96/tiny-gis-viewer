@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 import {Layer, WmsCapabilitiesLayer, WmsLayer} from '../../../map/layer';
 import {LayerService} from '../../../map/layer.service';
-import {NgForOf} from '@angular/common';
+
 import {LucideAngularModule} from 'lucide-angular';
 import {Unsubscriber} from '../../../common/unsubscriber';
 
@@ -10,9 +10,8 @@ import {Unsubscriber} from '../../../common/unsubscriber';
   selector: 'app-legend-graphic-view',
   imports: [
     IconButtonComponent,
-    NgForOf,
     LucideAngularModule
-  ],
+],
   templateUrl: './legend-graphic-view.component.html',
   styleUrl: './legend-graphic-view.component.scss'
 })

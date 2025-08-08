@@ -1,14 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {NgForOf, NgIf} from '@angular/common';
+
 
 @Component({
   selector: 'app-drop-down',
   imports: [
-    FormsModule,
-    NgForOf,
-    NgIf
-  ],
+    FormsModule
+],
   templateUrl: './drop-down.component.html',
   styleUrl: './drop-down.component.scss'
 })
