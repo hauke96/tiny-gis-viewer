@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ControlButtonComponent } from './control-button.component';
 
-describe('ControlButtonComponent', () => {
+describe(ControlButtonComponent.name, () => {
   let component: ControlButtonComponent;
   let fixture: ComponentFixture<ControlButtonComponent>;
 

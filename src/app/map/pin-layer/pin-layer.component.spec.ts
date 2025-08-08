@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PinLayerComponent } from './pin-layer.component';
 
-describe('PinLayerComponent', () => {
+describe(PinLayerComponent.name, () => {
   let component: PinLayerComponent;
   let fixture: ComponentFixture<PinLayerComponent>;
 

@@ -1,13 +1,18 @@
-import {TestBed} from '@angular/core/testing';
-
 import {LayerService} from './layer.service';
+import {ConfigService} from '../config/config.service';
+import {HttpClient} from '@angular/common/http';
 
-describe('LayerService', () => {
+describe(LayerService.name, () => {
   let service: LayerService;
 
+  let configService: ConfigService;
+  let httpClient: HttpClient;
+
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(LayerService);
+    configService = {} as never as ConfigService;
+    httpClient = {} as never as HttpClient;
+
+    service = new LayerService(httpClient, configService);
   });
 
   it('should be created', () => {

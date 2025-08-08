@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LegendGraphicViewComponent } from './legend-graphic-view.component';
 
-describe('LegendGraphicViewComponent', () => {
+describe(LegendGraphicViewComponent.name, () => {
   let component: LegendGraphicViewComponent;
   let fixture: ComponentFixture<LegendGraphicViewComponent>;
 

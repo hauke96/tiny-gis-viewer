@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FeatureSelectionMenuComponent } from './feature-selection-menu.component';
 
-describe('FeatureSelectionMenuComponent', () => {
+describe(FeatureSelectionMenuComponent.name, () => {
   let component: FeatureSelectionMenuComponent;
   let fixture: ComponentFixture<FeatureSelectionMenuComponent>;
 

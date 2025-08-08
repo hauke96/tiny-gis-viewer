@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { FeatureSelectionService } from './feature-selection.service';
 
-describe('FeatureSelectionService', () => {
+describe(FeatureSelectionService.name, () => {
   let service: FeatureSelectionService;
 
   beforeEach(() => {

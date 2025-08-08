@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FeatureLayerComponent } from './feature-layer.component';
 
-describe('FeatureLayerComponent', () => {
+describe(FeatureLayerComponent.name, () => {
   let component: FeatureLayerComponent;
   let fixture: ComponentFixture<FeatureLayerComponent>;
 

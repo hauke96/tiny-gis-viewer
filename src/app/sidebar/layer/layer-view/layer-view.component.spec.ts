@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {LayerViewComponent} from './layer-view.component';
 
-describe('SidebarComponent', () => {
+describe(SidebarComponent.name, () => {
   let component: LayerViewComponent;
   let fixture: ComponentFixture<LayerViewComponent>;
 

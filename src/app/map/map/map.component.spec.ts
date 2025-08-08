@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MapComponent} from './map.component';
 
-describe('MapComponent', () => {
+describe(MapComponent.name, () => {
   let component: MapComponent;
   let fixture: ComponentFixture<MapComponent>;
 

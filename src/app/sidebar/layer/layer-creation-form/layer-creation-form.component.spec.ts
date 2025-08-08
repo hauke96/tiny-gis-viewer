@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LayerCreationFormComponent } from './layer-creation-form.component';
 
-describe('WmsLayerCreationFormComponent', () => {
+describe(WmsLayerCreationFormComponent.name, () => {
   let component: LayerCreationFormComponent;
   let fixture: ComponentFixture<LayerCreationFormComponent>;
 

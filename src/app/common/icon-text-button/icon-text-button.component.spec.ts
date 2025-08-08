@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IconTextButtonComponent } from './icon-text-button.component';
 
-describe('IconTextButtonComponent', () => {
+describe(IconTextButtonComponent.name, () => {
   let component: IconTextButtonComponent;
   let fixture: ComponentFixture<IconTextButtonComponent>;
 

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MapLayerComponent } from './map-layer.component';
 
-describe('WmsLayerComponent', () => {
+describe(WmsLayerComponent.name, () => {
   let component: MapLayerComponent;
   let fixture: ComponentFixture<MapLayerComponent>;
 

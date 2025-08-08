@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SelectionViewComponent} from './selection-view.component';
 
-describe('SidebarComponent', () => {
+describe(SidebarComponent.name, () => {
   let component: SelectionViewComponent;
   let fixture: ComponentFixture<SelectionViewComponent>;
 

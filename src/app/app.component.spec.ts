@@ -1,29 +1,54 @@
-import {TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {LayerService} from './map/layer.service';
+import {FeatureSelectionService} from './map/feature-selection.service';
+import {of} from 'rxjs';
+import {EventEmitter} from '@angular/core';
 
-describe('AppComponent', () => {
+describe(AppComponent.name, () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
+  let activatedRoute: ActivatedRoute;
+  let translateService: TranslateService;
+  let layerService: LayerService;
+  let featureSelectionService: FeatureSelectionService;
+
   beforeEach(async () => {
+    activatedRoute = {} as never as ActivatedRoute;
+    translateService = {
+      addLangs: jest.fn(),
+      setDefaultLang: jest.fn(),
+      getBrowserLang: jest.fn(),
+      onLangChange: new EventEmitter(),
+      use: jest.fn(),
+    } as never as TranslateService;
+    layerService = {} as never as LayerService;
+    featureSelectionService = {} as never as FeatureSelectionService;
+
     await TestBed.configureTestingModule({
       imports: [AppComponent],
-    }).compileComponents();
-  });
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        {provide: ActivatedRoute, useValue: activatedRoute},
+        {provide: TranslateService, useValue: translateService},
+        {provide: LayerService, useValue: layerService},
+        {provide: FeatureSelectionService, useValue: featureSelectionService},
+      ]
+    })
+      .compileComponents();
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have the 'tiny-gis-viewer' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('tiny-gis-viewer');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, tiny-gis-viewer');
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 });

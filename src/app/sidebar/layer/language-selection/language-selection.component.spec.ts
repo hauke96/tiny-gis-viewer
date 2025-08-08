@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LanguageSelectionComponent } from './language-selection.component';
 
-describe('LanguageSelectionComponent', () => {
+describe(LanguageSelectionComponent.name, () => {
   let component: LanguageSelectionComponent;
   let fixture: ComponentFixture<LanguageSelectionComponent>;
 

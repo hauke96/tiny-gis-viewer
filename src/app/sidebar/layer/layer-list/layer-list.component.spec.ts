@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {LayerListComponent} from './layer-list.component';
 
-describe('LayerListComponent', () => {
+describe(LayerListComponent.name, () => {
   let component: LayerListComponent;
   let fixture: ComponentFixture<LayerListComponent>;
 
