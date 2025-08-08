@@ -31,7 +31,7 @@
       <th>{{ "feature-details.key" | translate }}</th>
       <th>{{ "feature-details.value" | translate }}</th>
     </tr>
-    @for (t of relevantTags; track t) {
+    @for (t of relevantTags; track $index) {
       <tr>
         <td [title]="t[0]" class="no-overflow">{{ t[0] }}</td>
         @if (!isUrl(t[1])) {
