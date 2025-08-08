@@ -59,7 +59,7 @@ export class GroupLayer extends Layer {
    */
   constructor(
     layerConfig: LayerConfig,
-    public children: Layer[] | undefined // TODO remove | "| undefined" ?
+    public children: Layer[]
   ) {
     super(layerConfig);
   }
