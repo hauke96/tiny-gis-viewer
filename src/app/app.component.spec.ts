@@ -1,25 +1,27 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
-import {provideHttpClientTesting} from '@angular/common/http/testing';
-import {provideHttpClient} from '@angular/common/http';
-import {ActivatedRoute} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {LayerService} from './map/layer.service';
 import {FeatureSelectionService} from './map/feature-selection.service';
-import {of} from 'rxjs';
 import {EventEmitter} from '@angular/core';
+import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
+import {ConfigService} from './config/config.service';
+import {BehaviorSubject, of} from 'rxjs';
+import {Layer} from './map/layer';
+import {Feature} from 'ol';
 
 describe(AppComponent.name, () => {
   let component: AppComponent;
-  let fixture: ComponentFixture<AppComponent>;
+  let fixture: MockedComponentFixture<AppComponent>;
 
-  let activatedRoute: ActivatedRoute;
+  let configService: ConfigService;
   let translateService: TranslateService;
   let layerService: LayerService;
   let featureSelectionService: FeatureSelectionService;
 
-  beforeEach(async () => {
-    activatedRoute = {} as never as ActivatedRoute;
+  beforeEach(() => {
+    configService = {
+      config: of(),
+    } as never as ConfigService;
     translateService = {
       addLangs: jest.fn(),
       setDefaultLang: jest.fn(),
@@ -28,23 +30,20 @@ describe(AppComponent.name, () => {
       use: jest.fn(),
     } as never as TranslateService;
     layerService = {} as never as LayerService;
-    featureSelectionService = {} as never as FeatureSelectionService;
+    featureSelectionService = {
+      selectedFeaturesOnMap: [[], new Map<Layer, Feature[]>()],
+    } as never as FeatureSelectionService;
 
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
-      providers: [
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        {provide: ActivatedRoute, useValue: activatedRoute},
-        {provide: TranslateService, useValue: translateService},
-        {provide: LayerService, useValue: layerService},
-        {provide: FeatureSelectionService, useValue: featureSelectionService},
-      ]
-    })
-      .compileComponents();
+    return MockBuilder(AppComponent)
+      .provide({provide: ConfigService, useValue: configService})
+      .provide({provide: TranslateService, useValue: translateService})
+      .provide({provide: LayerService, useValue: layerService})
+      .provide({provide: FeatureSelectionService, useValue: featureSelectionService});
+  });
 
-    fixture = TestBed.createComponent(AppComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(AppComponent);
+    component = fixture.point.componentInstance;
     fixture.detectChanges();
   });
 

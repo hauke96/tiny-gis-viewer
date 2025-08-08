@@ -19,7 +19,8 @@ import {LegendGraphicViewComponent} from './sidebar/legend-graphic/legend-graphi
   selector: 'app-root',
   imports: [MapComponent, LayerViewComponent, SelectionViewComponent, FeatureLayerComponent, ControlPanelComponent, MeasureLengthLayerComponent, MeasureAreaLayerComponent, LegendGraphicViewComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  standalone: true,
 })
 export class AppComponent extends Unsubscriber implements OnInit {
   private readonly supportedLanguages = ['de', 'en'];
