@@ -37,6 +37,7 @@ export abstract class Layer {
   }
 
   public setVisible(visible: boolean): void {
+    this.getSubLayers()?.forEach(l => l.setVisible(visible));
     this.visible$.next(visible);
   }
 
@@ -80,11 +81,6 @@ export class WmsCapabilitiesLayer extends Layer {
     super(layerConfig);
     // Ensure all sub-layers have the same initial visibility as the capabilities-layer
     this.setVisible(layerConfig.initiallyVisible === undefined ? true : layerConfig.initiallyVisible);
-  }
-
-  public override setVisible(visible: boolean): void {
-    this.wmsLayers?.forEach(l => l.setVisible(visible));
-    super.setVisible(visible);
   }
 
   public override getSubLayers(): Layer[] | undefined {
