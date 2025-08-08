@@ -93,7 +93,6 @@ export class MapComponent implements OnInit {
       layers = layers.flatMap(l => this.unwrapLayer(l));
 
       // Reverse layers so that the first layer is on top
-      // layers = layers.slice();
       layers.reverse();
 
       this.layers = layers;
