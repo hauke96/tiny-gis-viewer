@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
 import {Map as OlMap, MapEvent, View} from 'ol';
 import {LayerService} from '../layer.service';
@@ -28,7 +28,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 export class MapComponent implements OnInit {
   public map: OlMap;
 
-  protected layers: Layer[] = [];
+  protected layers = signal<Layer[]>([]);
 
   public constructor(
     private mapService: MapService,
@@ -55,7 +55,7 @@ export class MapComponent implements OnInit {
       view: new View(defaultViewOptions)
     });
 
-    this.configService.config.subscribe(c => {
+    this.configService.configLoaded.subscribe(c => {
       this.map.setView(new View({
         ...defaultViewOptions,
         ...configService.currentConfig?.mapView,
@@ -88,12 +88,12 @@ export class MapComponent implements OnInit {
     this.mapService.changeResolution(this.map.getView().getResolution());
 
     this.layerService.layers.pipe(takeUntilDestroyed()).subscribe(layers => {
-      console.debug(`Updating layers. Got ${layers.length} layers.`);
-
-      this.layers = layers.flatMap(l => this.layerService.unwrapLayer(l))
-        .filter(layer => !(layer instanceof WmsCapabilitiesLayer) && !(layer instanceof GroupLayer))
-        // Reverse layers so that the first layer is on top
-        .reverse();
+      this.layers.set(
+        layers.flatMap(l => this.layerService.unwrapLayer(l))
+          .filter(layer => !(layer instanceof WmsCapabilitiesLayer) && !(layer instanceof GroupLayer))
+          // Reverse layers so that the first layer is on top
+          .reverse()
+      );
     });
 
     this.mapService.layerAdded.pipe(takeUntilDestroyed()).subscribe(layer => this.map.addLayer(layer));

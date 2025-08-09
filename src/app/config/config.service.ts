@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, catchError, filter, mergeMap, Observable, of} from 'rxjs';
+import {BehaviorSubject, catchError, filter, mergeMap, Observable, of, Subject} from 'rxjs';
 import {Config, LayerConfig} from './config';
 import {Layer} from '../map/layer';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -11,6 +11,7 @@ import {deflate, inflate} from 'pako';
 })
 export class ConfigService {
   private config$: BehaviorSubject<Config | undefined> = new BehaviorSubject<Config | undefined>(undefined);
+  private configLoaded$: Subject<Config> = new Subject<Config>();
 
   constructor(
     private httpClient: HttpClient,
@@ -25,6 +26,10 @@ export class ConfigService {
 
   public get config(): Observable<Config> {
     return this.config$.asObservable().pipe(filter(c => !!c));
+  }
+
+  public get configLoaded(): Observable<Config> {
+    return this.configLoaded$.asObservable();
   }
 
   public getConfigAsJson(): string {
@@ -106,7 +111,9 @@ export class ConfigService {
     const newConfig = Object.assign(new Config([], {}, 0), c);
     newConfig.layers = this.objectAssignLayerConfigs(newConfig.layers);
     newConfig.validate();
+
     this.config$.next(newConfig);
+    this.configLoaded$.next(newConfig);
 
     return of(newConfig);
   }

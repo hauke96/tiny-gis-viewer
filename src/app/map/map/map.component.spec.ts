@@ -40,7 +40,7 @@ describe(MapComponent.name, () => {
     } as never as Router;
     activatedRoute = {} as never as ActivatedRoute;
     configService = {
-      config: of()
+      configLoaded: of()
     } as never as ConfigService;
 
     return MockBuilder(MapComponent)

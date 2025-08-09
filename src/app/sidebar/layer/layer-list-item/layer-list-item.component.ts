@@ -34,7 +34,7 @@ export class LayerListItemComponent {
   }
 
   public onLayerSelectionClicked(layerVisible: boolean): void {
-    this.layerService.setLayerVisibility(this.layer, layerVisible);
+    this.layer.setVisible(layerVisible)
   }
 
   public onMoveDownClicked(): void {

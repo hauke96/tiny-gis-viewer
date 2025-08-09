@@ -15,7 +15,7 @@ export abstract class Layer {
    * @param layerConfig Configuration object for this layer
    */
   protected constructor(
-    public layerConfig: LayerConfig
+    public readonly layerConfig: LayerConfig
   ) {
     // When this property is not set, then show the layer by default
     this.setVisible(layerConfig.initiallyVisible === undefined ? true : layerConfig.initiallyVisible);

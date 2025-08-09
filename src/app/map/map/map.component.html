@@ -1,5 +1,5 @@
 <div id="map" (click)="onMapClicked($event)"></div>
-@for (layer of layers; track layer.trackKey) {
+@for (layer of layers(); track layer.trackKey) {
   <app-map-layer [layer]="layer"></app-map-layer>
 }
 <app-pin-layer></app-pin-layer>

@@ -159,19 +159,6 @@ export class LayerService {
     this.configService.updateConfig(layers);
   }
 
-  public setLayerVisibility(layer: Layer, isVisible: boolean): void {
-    layer.setVisible(isVisible);
-
-    // WmsCapabilitiesLayer are special because they have sub-layers that are note represented by any LayerConfig, thus
-    // we don't need to reload any configs.
-    const allCapabilitiesLayer = this.currentLayers.flatMap(l => this.unwrapLayer(l)).filter(l => l instanceof WmsCapabilitiesLayer);
-    let isPartOfCapabilitiesLayer = allCapabilitiesLayer.some(l => l.getSubLayers()?.includes(layer));
-
-    if (!isPartOfCapabilitiesLayer) {
-      this.configService.updateConfig(this.currentLayers);
-    }
-  }
-
   public unwrapLayer(layer: Layer): Layer[] {
     let subLayers = layer.getSubLayers();
     if (!subLayers) {
