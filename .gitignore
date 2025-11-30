@@ -37,6 +37,7 @@ yarn-error.log
 testem.log
 /typings
 *.zip
+sbom.json
 
 # System files
 .DS_Store
