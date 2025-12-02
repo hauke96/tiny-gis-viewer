@@ -13,7 +13,7 @@ export class LanguageSelectionComponent {
   }
 
   protected get allLanguages(): string[] {
-    let languages = this.translate.langs;
+    let languages = [...this.translate.getLangs()];
     languages.sort();
     return languages;
   }
