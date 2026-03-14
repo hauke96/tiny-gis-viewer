@@ -10,7 +10,7 @@ describe(LanguageSelectionComponent.name, () => {
 
   beforeEach(() => {
     translateService = {
-      langs: [],
+      getLangs: jest.fn().mockReturnValue([]),
     } as never as TranslateService;
 
     return MockBuilder(LanguageSelectionComponent)
