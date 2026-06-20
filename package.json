@@ -40,5 +40,8 @@
     "jest-preset-angular": "^16.2.0",
     "ng-mocks": "^14.15.3",
     "typescript": "~6.0.3"
+  },
+  "overrides": {
+    "chokidar": "5.0.0"
   }
 }
