@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
 import {Attribution, ScaleLine} from 'ol/control';
 import {Map as OlMap, MapEvent, View} from 'ol';
 import {LayerService} from '../layer.service';
@@ -23,6 +23,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     PinLayerComponent
   ],
   templateUrl: './map.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './map.component.scss',
 })
 export class MapComponent implements OnInit {

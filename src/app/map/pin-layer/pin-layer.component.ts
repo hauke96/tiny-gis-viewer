@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MapService} from '../map.service';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
@@ -10,6 +10,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-pin-layer',
   imports: [],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: '',
 })
 export class PinLayerComponent implements OnInit {

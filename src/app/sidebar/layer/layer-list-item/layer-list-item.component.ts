@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {Layer} from '../../../map/layer';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CheckboxComponent} from '../../../common/checkbox/checkbox.component';
@@ -16,6 +16,7 @@ import {LayerService} from '../../../map/layer.service';
     LucideAngularModule
 ],
   templateUrl: './layer-list-item.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './layer-list-item.component.scss'
 })
 export class LayerListItemComponent {

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MapService} from '../map.service';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
@@ -8,6 +8,7 @@ import {FeatureLike} from 'ol/Feature';
 import {Circle, Fill, Stroke, Style, Text} from 'ol/style';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: ''
 })
 export abstract class AbstractMeasureComponent implements OnInit, OnDestroy {

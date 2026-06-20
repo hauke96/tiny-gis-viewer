@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import {Feature} from 'ol';
 
 import {FormsModule} from '@angular/forms';
@@ -14,6 +14,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     LucideAngularModule
   ],
   templateUrl: './feature-selection-menu.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './feature-selection-menu.component.scss'
 })
 export class FeatureSelectionMenuComponent {

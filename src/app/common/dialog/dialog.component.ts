@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import {LucideAngularModule} from "lucide-angular";
 import {IconButtonComponent} from '../icon-button/icon-button.component';
 
@@ -9,6 +9,7 @@ import {IconButtonComponent} from '../icon-button/icon-button.component';
     IconButtonComponent
   ],
   templateUrl: './dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dialog.component.scss'
 })
 export class DialogComponent {

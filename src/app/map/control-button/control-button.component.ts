@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import {LucideAngularModule} from "lucide-angular";
 import {IconButtonComponent} from '../../common/icon-button/icon-button.component';
 
@@ -9,6 +9,7 @@ import {IconButtonComponent} from '../../common/icon-button/icon-button.componen
     IconButtonComponent
   ],
   templateUrl: './control-button.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './control-button.component.scss'
 })
 export class ControlButtonComponent {

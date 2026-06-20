@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {LayerService} from '../../../map/layer.service';
 import { AsyncPipe } from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -15,6 +15,7 @@ import {ConfigService} from '../../../config/config.service';
     LayerListItemComponent
 ],
   templateUrl: './layer-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './layer-list.component.scss'
 })
 export class LayerListComponent {

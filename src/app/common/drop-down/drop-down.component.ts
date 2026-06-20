@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 
@@ -8,6 +8,7 @@ import {FormsModule} from '@angular/forms';
     FormsModule
 ],
   templateUrl: './drop-down.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './drop-down.component.scss'
 })
 export class DropDownComponent {

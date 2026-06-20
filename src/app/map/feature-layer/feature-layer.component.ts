@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Feature} from 'ol';
 import {MapService} from '../map.service';
 import VectorSource from 'ol/source/Vector';
@@ -13,6 +13,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   selector: 'app-feature-layer',
   imports: [],
   templateUrl: './feature-layer.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './feature-layer.component.scss',
 })
 export class FeatureLayerComponent implements OnInit, OnDestroy {

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {Fill, Style, Text} from 'ol/style';
 import {FeatureLike} from 'ol/Feature';
 import {LineString, Point} from 'ol/geom';
@@ -11,6 +11,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-measure-length-layer',
   imports: [],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: '',
 })
 export class MeasureLengthLayerComponent extends AbstractMeasureComponent {

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {Style} from 'ol/style';
 import {FeatureLike} from 'ol/Feature';
 import {Polygon} from 'ol/geom';
@@ -11,6 +11,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-measure-area-layer',
   imports: [],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: '',
 })
 export class MeasureAreaLayerComponent extends AbstractMeasureComponent {

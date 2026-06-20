@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 import {Layer} from '../../../map/layer';
 import {LayerService} from '../../../map/layer.service';
@@ -13,6 +13,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     LucideAngularModule
   ],
   templateUrl: './legend-graphic-view.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './legend-graphic-view.component.scss'
 })
 export class LegendGraphicViewComponent {

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {ControlButtonComponent} from '../control-button/control-button.component';
 import {MapService} from '../map.service';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -11,6 +11,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     TranslatePipe
   ],
   templateUrl: './control-panel.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './control-panel.component.scss'
 })
 export class ControlPanelComponent {

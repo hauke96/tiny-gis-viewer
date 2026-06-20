@@ -1,4 +1,4 @@
-import {Component, DestroyRef, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MapService} from '../map.service';
 import {Layer as OlLayer} from 'ol/layer';
 import {Layer, WmsLayer, XyzLayer} from '../layer';
@@ -20,6 +20,7 @@ import GML3 from 'ol/format/GML3';
 @Component({
   selector: 'app-map-layer',
   imports: [],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: '',
 })
 export class MapLayerComponent implements OnInit, OnDestroy {

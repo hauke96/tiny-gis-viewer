@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output, ChangeDetectionStrategy} from '@angular/core';
 import {CheckboxComponent} from "../../../common/checkbox/checkbox.component";
 import {IconTextButtonComponent} from "../../../common/icon-text-button/icon-text-button.component";
 import {InputTextComponent} from "../../../common/input-text/input-text.component";
@@ -16,6 +16,7 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
     TranslatePipe
   ],
   templateUrl: './layer-creation-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './layer-creation-form.component.scss'
 })
 export class LayerCreationFormComponent {

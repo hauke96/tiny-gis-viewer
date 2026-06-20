@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import packageInfo from '../../../../../package.json';
 import {LayerListComponent} from '../layer-list/layer-list.component';
@@ -18,6 +18,7 @@ import {IconButtonComponent} from '../../../common/icon-button/icon-button.compo
     IconButtonComponent
   ],
   templateUrl: './layer-view.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './layer-view.component.scss'
 })
 export class LayerViewComponent {

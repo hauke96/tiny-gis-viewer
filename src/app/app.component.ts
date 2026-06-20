@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {MapComponent} from './map/map/map.component';
 import {LayerService} from './map/layer.service';
 import {LayerViewComponent} from './sidebar/layer/layer-view/layer-view.component';
@@ -20,6 +20,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   imports: [MapComponent, LayerViewComponent, SelectionViewComponent, FeatureLayerComponent, ControlPanelComponent, MeasureLengthLayerComponent, MeasureAreaLayerComponent, LegendGraphicViewComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class AppComponent {

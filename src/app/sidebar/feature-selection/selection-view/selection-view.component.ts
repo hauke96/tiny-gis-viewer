@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {LucideAngularModule} from 'lucide-angular';
 import {Layer} from '../../../map/layer';
 import {Feature} from 'ol';
@@ -21,6 +21,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     IconButtonComponent
   ],
   templateUrl: './selection-view.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './selection-view.component.scss'
 })
 export class SelectionViewComponent {

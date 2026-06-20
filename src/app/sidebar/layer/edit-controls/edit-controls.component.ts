@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {LucideAngularModule} from 'lucide-angular';
 import {DialogComponent} from '../../../common/dialog/dialog.component';
 
@@ -19,6 +19,7 @@ import {LayerService} from '../../../map/layer.service';
     TranslatePipe
 ],
   templateUrl: './edit-controls.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './edit-controls.component.scss'
 })
 export class EditControlsComponent {

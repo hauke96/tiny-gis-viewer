@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
 
@@ -6,6 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
   selector: 'app-language-selection',
   imports: [],
   templateUrl: './language-selection.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './language-selection.component.scss'
 })
 export class LanguageSelectionComponent {
