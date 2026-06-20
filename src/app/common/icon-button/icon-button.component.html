@@ -4,5 +4,5 @@
         [class.small]="size === 'small'"
         (click)="onClick($event)"
         [disabled]="!enabled">
-  <lucide-angular [name]="iconName"></lucide-angular>
+  <svg [lucideIcon]="iconName"></svg>
 </button>

@@ -1,16 +1,15 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 import {Layer} from '../../../map/layer';
 import {LayerService} from '../../../map/layer.service';
-
-import {LucideAngularModule} from 'lucide-angular';
+import {LucideDynamicIcon, LucideLayers2, provideLucideIcons} from '@lucide/angular';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-legend-graphic-view',
   imports: [
     IconButtonComponent,
-    LucideAngularModule
+    LucideDynamicIcon,
   ],
   templateUrl: './legend-graphic-view.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

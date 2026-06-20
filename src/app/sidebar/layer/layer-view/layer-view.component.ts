@@ -3,7 +3,6 @@ import {environment} from '../../../../environments/environment';
 import packageInfo from '../../../../../package.json';
 import {LayerListComponent} from '../layer-list/layer-list.component';
 import {LanguageSelectionComponent} from '../language-selection/language-selection.component';
-import {LucideAngularModule} from 'lucide-angular';
 
 import {EditControlsComponent} from '../edit-controls/edit-controls.component';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
@@ -13,7 +12,6 @@ import {IconButtonComponent} from '../../../common/icon-button/icon-button.compo
   imports: [
     LayerListComponent,
     LanguageSelectionComponent,
-    LucideAngularModule,
     EditControlsComponent,
     IconButtonComponent
   ],

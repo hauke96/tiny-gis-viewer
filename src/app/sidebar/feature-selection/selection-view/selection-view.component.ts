@@ -1,5 +1,4 @@
 import {Component, ChangeDetectionStrategy} from '@angular/core';
-import {LucideAngularModule} from 'lucide-angular';
 import {Layer} from '../../../map/layer';
 import {Feature} from 'ol';
 import {FeatureSelectionMenuComponent} from '../feature-selection-menu/feature-selection-menu.component';
@@ -14,7 +13,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-selection-view',
   imports: [
-    LucideAngularModule,
     FeatureSelectionMenuComponent,
     TranslatePipe,
     FeatureDetailsComponent,

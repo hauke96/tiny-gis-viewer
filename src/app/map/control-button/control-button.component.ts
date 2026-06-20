@@ -1,11 +1,9 @@
 import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
-import {LucideAngularModule} from "lucide-angular";
 import {IconButtonComponent} from '../../common/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-control-button',
   imports: [
-    LucideAngularModule,
     IconButtonComponent
   ],
   templateUrl: './control-button.component.html',

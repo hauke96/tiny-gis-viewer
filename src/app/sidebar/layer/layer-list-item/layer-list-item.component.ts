@@ -4,7 +4,6 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CheckboxComponent} from '../../../common/checkbox/checkbox.component';
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
 
-import {LucideAngularModule} from 'lucide-angular';
 import {LayerService} from '../../../map/layer.service';
 
 @Component({
@@ -12,8 +11,7 @@ import {LayerService} from '../../../map/layer.service';
   imports: [
     CheckboxComponent,
     IconButtonComponent,
-    TranslatePipe,
-    LucideAngularModule
+    TranslatePipe
 ],
   templateUrl: './layer-list-item.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

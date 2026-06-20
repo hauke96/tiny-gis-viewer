@@ -1,11 +1,9 @@
 import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
-import {LucideAngularModule} from "lucide-angular";
 import {IconButtonComponent} from '../icon-button/icon-button.component';
 
 @Component({
   selector: 'app-dialog',
   imports: [
-    LucideAngularModule,
     IconButtonComponent
   ],
   templateUrl: './dialog.component.html',

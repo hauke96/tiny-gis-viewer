@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
-import {LucideAngularModule} from "lucide-angular";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {LucideDynamicIcon} from '@lucide/angular';
 
 @Component({
   selector: 'app-icon-button',
   imports: [
-    LucideAngularModule
+    LucideDynamicIcon,
   ],
   templateUrl: './icon-button.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -22,7 +22,7 @@ export class IconButtonComponent {
   @Input()
   public active: boolean = false;
   @Input()
-  public size: "normal"|"small" = "normal";
+  public size: "normal" | "small" = "normal";
 
   @Output()
   public click: EventEmitter<void> = new EventEmitter();

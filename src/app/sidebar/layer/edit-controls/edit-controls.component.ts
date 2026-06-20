@@ -1,5 +1,4 @@
 import {Component, ChangeDetectionStrategy} from '@angular/core';
-import {LucideAngularModule} from 'lucide-angular';
 import {DialogComponent} from '../../../common/dialog/dialog.component';
 
 import {IconButtonComponent} from '../../../common/icon-button/icon-button.component';
@@ -12,7 +11,6 @@ import {LayerService} from '../../../map/layer.service';
 @Component({
   selector: 'app-edit-controls',
   imports: [
-    LucideAngularModule,
     DialogComponent,
     IconButtonComponent,
     LayerCreationFormComponent,

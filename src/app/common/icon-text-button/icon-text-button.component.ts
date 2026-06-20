@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
-import {LucideAngularModule} from "lucide-angular";
+import {LucideDynamicIcon} from '@lucide/angular';
 
 @Component({
   selector: 'app-icon-text-button',
   imports: [
-    LucideAngularModule
+    LucideDynamicIcon,
   ],
   templateUrl: './icon-text-button.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

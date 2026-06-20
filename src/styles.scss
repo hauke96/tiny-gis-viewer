@@ -90,10 +90,8 @@ button {
     color: $color-gray-mid;
     pointer-events: none;
 
-    lucide-angular {
-      svg {
-        stroke: $color-gray-mid;
-      }
+    .lucide {
+      stroke: $color-gray-mid;
     }
   }
 }
@@ -124,16 +122,14 @@ textarea {
   }
 }
 
-lucide-angular {
+.lucide {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  svg {
-    width: $space-base * 1.5;
-    height: $space-base * 1.5;
-    stroke-width: 1.65;
-  }
+  width: $space-base * 1.5;
+  height: $space-base * 1.5;
+  stroke-width: 1.65;
 }
 
 select {

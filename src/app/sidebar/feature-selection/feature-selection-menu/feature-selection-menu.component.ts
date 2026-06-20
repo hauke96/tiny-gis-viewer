@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {Feature} from 'ol';
 
 import {FormsModule} from '@angular/forms';
 import {Layer, WmsLayer} from '../../../map/layer';
-import {LucideAngularModule} from 'lucide-angular';
+import {LucideDynamicIcon} from '@lucide/angular';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
@@ -11,7 +11,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   selector: 'app-feature-selection-menu',
   imports: [
     FormsModule,
-    LucideAngularModule
+    LucideDynamicIcon,
   ],
   templateUrl: './feature-selection-menu.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

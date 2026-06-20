@@ -4,7 +4,7 @@ button {
   display: flex;
   flex-direction: row;
 
-  lucide-angular {
+  .lucide {
     margin-right: styles.$space-small;
   }
 
@@ -21,10 +21,8 @@ button {
     color: styles.$color-gray-mid;
     pointer-events: none;
 
-    lucide-angular {
-      svg {
-        color: styles.$color-gray-mid !important;
-      }
+    .lucide {
+      color: styles.$color-gray-mid !important;
     }
   }
 }
